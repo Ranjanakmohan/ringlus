@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include ringlus *.css
+recursive-include ringlus *.csv
+recursive-include ringlus *.html
+recursive-include ringlus *.ico
+recursive-include ringlus *.js
+recursive-include ringlus *.json
+recursive-include ringlus *.md
+recursive-include ringlus *.png
+recursive-include ringlus *.py
+recursive-include ringlus *.svg
+recursive-include ringlus *.txt
+recursive-exclude ringlus *.pyc
