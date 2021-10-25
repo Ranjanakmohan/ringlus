@@ -31,7 +31,11 @@ app_license = "MIT"
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
+doctype_js = {
+	"Purchase Order" : "public/js/purchase_order.js",
+	"Quotation" : "public/js/quotation.js",
+	"Material Request" : "public/js/material_request.js",
+}
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -89,14 +93,36 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
-
+doc_events = {
+	"Quotation": {
+		"on_submit": "load_controls.doc_events.quotation.submit_q",
+		"on_cancel": "load_controls.doc_events.quotation.cancel_q",
+	},
+	"Material Request": {
+		"validate": "load_controls.doc_events.material_request.validate_mr",
+		"on_cancel": "load_controls.doc_events.material_request.cancel_mr",
+		"on_trash": "load_controls.doc_events.material_request.on_trash",
+	},
+	"Purchase Order": {
+		"on_submit": "load_controls.doc_events.purchase_order.on_submit_po",
+	},
+	"Purchase Invoice": {
+		"on_submit": "load_controls.doc_events.purchase_receipt.on_submit_pr",
+	},
+	"Purchase Receipt": {
+		"on_submit": "load_controls.doc_events.purchase_receipt.on_submit_pr",
+	},
+	"Sales Order": {
+		"on_submit": "load_controls.doc_events.sales_order.on_submit_so",
+		"on_cancel": "load_controls.doc_events.sales_order.on_cancel_so",
+	},
+	"Delivery Note": {
+		"on_submit": "load_controls.doc_events.sales_order.on_submit_dn",
+	},
+	"Sales Invoice": {
+		"on_submit": "load_controls.doc_events.sales_order.on_submit_dn",
+	}
+}
 # Scheduled Tasks
 # ---------------
 
@@ -173,3 +199,69 @@ user_data_fields = [
 # 	"ringlus.auth.validate"
 # ]
 
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Quotation-budget_bom",
+                    "Quotation-reference",
+                    "Quotation-budget_bom_reference",
+                    "Quotation-opportunities",
+                    "Quotation-budget_bom_opportunity",
+                    "Quotation-additional_operating_cost",
+                    "Sales Order-budget_bom_reference",
+                    "Sales Order-reference",
+                    "Sales Order-additional_operating_cost",
+                    "BOM-budget_bom",
+                    "Material Request Item-budget_bom_rate",
+                    "Material Request-budget_bom",
+                    "Purchase Order Item-budget_bom_rate",
+                    "Manufacturing Settings-default_routing",
+                    "Manufacturing Settings-default_operation",
+                    "Manufacturing Settings-mechanical_bom_default_operation",
+                    "Manufacturing Settings-enclosure_default_operation",
+                    "Manufacturing Settings-default_workstation",
+                    "Manufacturing Settings-default_raw_material_warehouse",
+                    "Purchase Order-approve_po_rate",
+                    "Workstation-operation_time",
+                    "Opportunity-budget_bom",
+                    "Purchase Order-budget_bom",
+                    "Purchase Invoice-budget_bom",
+                    "Purchase Receipt-budget_bom",
+                    "Sales Invoice-budget_bom_reference",
+                    "Sales Invoice-references",
+                    "Delivery Note-budget_bom_reference",
+                    "Delivery Note-references",
+                    "BOM Item-operation_time_in_minutes",
+                    "Material Request Item-budget_bom_raw_material",
+                    "Purchase Invoice-budget_bom_reference",
+                    "Purchase Invoice-reference",
+                    "Purchase Receipt-reference",
+                    "Purchase Receipt-budget_bom_reference",
+					"Purchase Order-reference",
+                    "Purchase Order-budget_bom_reference",
+					"Material Request-reference_bom",
+                    "Material Request-budget_bom_reference",
+				]
+			]
+		]
+	},
+	{
+		"doctype": "Property Setter",
+		"filters": [
+			[
+				"name",
+				"in",
+				[
+					"Purchase Order Item-schedule_date-in_list_view",
+					"Work Order-additional_operating_cost-fetch_from",
+					"Work Order-additional_operating_cost-fetch_if_empty",
+				]
+			]
+		]
+	}
+]
