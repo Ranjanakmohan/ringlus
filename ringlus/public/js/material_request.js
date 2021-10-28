@@ -37,7 +37,7 @@ frappe.ui.form.on("Material Request", {
                  budget_boms = Array.from(cur_frm.doc.budget_bom_reference, x => "budget_bom" in x ? x.budget_bom:"")
             }
                     var query_args = {
-                        query:"load_controls.doc_events.material_request.get_budget_bom",
+                        query:"ringlus.doc_events.material_request.get_budget_bom",
                         filters: {data: budget_boms}
                     }
 					 var d = new frappe.ui.form.MultiSelectDialog({

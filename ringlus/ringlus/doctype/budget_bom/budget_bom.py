@@ -8,6 +8,79 @@ from erpnext.stock.stock_ledger import get_previous_sle
 
 class BudgetBOM(Document):
     @frappe.whitelist()
+    def generate_opportunity_items(self):
+        if not self.opportunity or not self.sellable_product:
+            frappe.throw("Please select valid Opportunity or Sellable Product")
+
+        for i in ["FG","EB", "MB", "ENC"]:
+            table_name = "electrical_bom_details" if i == "EB" else "mechanical_bom_details" if i == "MB" else "fg_bom_details" if i == "FG" else "fg_sellable_bom_details"
+            obj = {
+                "doctype": "Item",
+                "item_code": self.opportunity + "-" + self.sellable_product + "_" + i,
+                "item_name": self.opportunity + "-" + self.sellable_product + "_" + i,
+                "description": self.opportunity + "-" + self.sellable_product + "_" + i,
+                "stock_uom": "Nos",
+                "item_group": "All Item Groups",
+            }
+            item_created = frappe.get_doc(obj).insert()
+            self.__dict__[table_name][0].item_code = item_created.item_code
+            self.__dict__[table_name][0].item_name = item_created.item_name
+            self.__dict__[table_name][0].uom = item_created.stock_uom
+    @frappe.whitelist()
+    def get_modular_assembly_templates(self, templates):
+        raw_material_warehouse = frappe.db.get_single_value('Manufacturing Settings', 'default_raw_material_warehouse')
+        for i in templates:
+            template = frappe.get_doc("Modular Assembly", i)
+
+            for x in template.raw_material:
+                if not self.existing_item(x, "fg_sellable_bom_raw_material", "item_code"):
+                    item_master = frappe.get_doc("Item", x.item_code)
+                    rate = get_rate(x.item_code, "",self.rate_of_materials_based_on if self.rate_of_materials_based_on else "", self.price_list if self.price_list else "")
+                    obj = {
+                        'item_code': x.item_code,
+                        'item_name': item_master.item_name,
+                        'uom': item_master.stock_uom,
+                        'qty': x.qty,
+                        'warehouse': raw_material_warehouse,
+                        'rate': rate[0],
+                        'amount': rate[0] * x.qty,
+                        # 'discount_rate': 0
+                    }
+                    # discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_code=%s """,(self.opportunity, x.item_code),as_dict=1)
+                    # if len(discount) > 0:
+                    #     obj['discount_rate'] = discount[0].discount_rate
+                    #     obj['link_discount_amount'] = discount[0].name
+                    #     obj['discount_amount'] = discount[0].discount_amount
+                    #     obj['discount_percentage'] = discount[0].discount_percentage
+                    #     obj['rate'] = (discount[0].discount_rate * x.qty) + discount[0].discount_amount
+                    #     obj['amount'] = (discount[0].discount_rate * x.qty)
+                    self.append("fg_sellable_bom_raw_material",obj)
+
+            for xx in template.modular_assembly:
+                if not self.existing_item(xx,"modular_assembly_details", "item_code"):
+                    obj = {
+                        'item_code': xx.item_code,
+                        'qty': xx.qty,
+                        'workstation': xx.workstation,
+                        'operation': xx.operation,
+                    }
+                    # discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_code=%s """,(self.opportunity, x.item_code),as_dict=1)
+                    # if len(discount) > 0:
+                    #     obj['discount_rate'] = discount[0].discount_rate
+                    #     obj['link_discount_amount'] = discount[0].name
+                    #     obj['discount_amount'] = discount[0].discount_amount
+                    #     obj['discount_percentage'] = discount[0].discount_percentage
+                    #     obj['rate'] = (discount[0].discount_rate * x.qty) + discount[0].discount_amount
+                    #     obj['amount'] = (discount[0].discount_rate * x.qty)
+                    self.append("modular_assembly_details", obj)
+    @frappe.whitelist()
+    def existing_item(self, xx, table, item_field_name):
+        for i in self.__dict__[table]:
+            if i.__dict__[item_field_name] == xx.__dict__[item_field_name]:
+                i.qty += xx.qty
+                return True
+        return False
+    @frappe.whitelist()
     def get_templates(self, templates, raw_material_table):
         raw_material_warehouse = frappe.db.get_single_value('Manufacturing Settings', 'default_raw_material_warehouse')
         for i in templates:

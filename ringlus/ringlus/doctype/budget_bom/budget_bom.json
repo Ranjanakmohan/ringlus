@@ -8,14 +8,18 @@
  "field_order": [
   "status",
   "naming_series",
+  "sellable_product",
   "opportunity",
   "customer",
   "customer_name",
+  "create_items",
   "column_break_5",
   "posting_date",
   "expected_closing_date",
   "rate_of_materials_based_on",
   "price_list",
+  "fg_bom_section",
+  "fg_bom_details",
   "electrical_bom_section",
   "electrical_bom_details",
   "electrical_from_template",
@@ -29,13 +33,14 @@
   "generate_mechanical_item_template",
   "mechanical_bom_raw_material",
   "fgsellable_bom_section",
+  "fg_sellable_bom_details",
   "fg_sellable_bom_raw_material",
   "fg_sellable_from_template",
   "fg_sellable_item_template",
   "generate_fg_sellable_item_template",
-  "fgsellable_bom_detail_section",
-  "fg_sellable_bom_details",
   "section_break_29",
+  "modular_assembly_details",
+  "section_break_34",
   "total_operation_cost",
   "discount_percentage",
   "discount_amount",
@@ -158,13 +163,14 @@
    "bold": 1,
    "fieldname": "fg_sellable_bom_details",
    "fieldtype": "Table",
+   "label": "Enclosure",
    "options": "Budget BOM FG Details"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "fg_sellable_bom_raw_material",
    "fieldtype": "Table",
-   "label": "Enclosure",
+   "label": "Modular Assembly Raw Material",
    "options": "Budget BOM Raw Material"
   },
   {
@@ -357,12 +363,6 @@
    "read_only": 1
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "fgsellable_bom_detail_section",
-   "fieldtype": "Section Break",
-   "label": "Finished Goods BOM Details"
-  },
-  {
    "default": "0",
    "fieldname": "quotation_cancelled",
    "fieldtype": "Check",
@@ -380,12 +380,46 @@
    "fieldname": "declined",
    "fieldtype": "Check",
    "label": "Declined"
+  },
+  {
+   "fieldname": "sellable_product",
+   "fieldtype": "Link",
+   "label": "Sellable Product",
+   "options": "Sellable Product",
+   "reqd": 1
+  },
+  {
+   "fieldname": "create_items",
+   "fieldtype": "Button",
+   "label": "Create Items",
+   "options": "generate_opportunity_items"
+  },
+  {
+   "fieldname": "section_break_34",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "modular_assembly_details",
+   "fieldtype": "Table",
+   "label": "Modular Assembly",
+   "options": "Modular Assembly Details"
+  },
+  {
+   "fieldname": "fg_bom_section",
+   "fieldtype": "Section Break",
+   "label": "FG BOM"
+  },
+  {
+   "fieldname": "fg_bom_details",
+   "fieldtype": "Table",
+   "label": "FG BOM Detals",
+   "options": "Budget BOM Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-25 17:05:51.710202",
+ "modified": "2021-10-28 14:22:10.099756",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -2,7 +2,7 @@
 frappe.ui.form.on('Purchase Order', {
 	refresh: function () {
         frappe.call({
-            method: "load_controls.doc_events.purchase_order.check_gate_pass",
+            method: "ringlus.doc_events.purchase_order.check_gate_pass",
             args: {
                 name: cur_frm.doc.name
             },

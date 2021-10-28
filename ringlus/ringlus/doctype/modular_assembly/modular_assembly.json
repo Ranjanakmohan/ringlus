@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2021-10-28 10:42:34.648902",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "opportunity",
+  "sellable_product",
+  "modular_assembly",
+  "raw_material",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity"
+  },
+  {
+   "fieldname": "sellable_product",
+   "fieldtype": "Link",
+   "label": "Sellable Product",
+   "options": "Sellable Product"
+  },
+  {
+   "fieldname": "modular_assembly",
+   "fieldtype": "Table",
+   "label": "Modular Assembly",
+   "options": "Modular Assembly Details"
+  },
+  {
+   "fieldname": "raw_material",
+   "fieldtype": "Table",
+   "label": "Raw Material",
+   "options": "Modular Assembly Raw Material"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Modular Assembly",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "MA-"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-10-28 13:48:34.728509",
+ "modified_by": "Administrator",
+ "module": "Ringlus",
+ "name": "Modular Assembly",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
