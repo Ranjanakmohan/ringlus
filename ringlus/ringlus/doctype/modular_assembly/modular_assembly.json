@@ -18,14 +18,18 @@
   {
    "fieldname": "opportunity",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Opportunity",
-   "options": "Opportunity"
+   "options": "Opportunity",
+   "reqd": 1
   },
   {
    "fieldname": "sellable_product",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Sellable Product",
-   "options": "Sellable Product"
+   "options": "Sellable Product",
+   "reqd": 1
   },
   {
    "fieldname": "modular_assembly",
@@ -49,16 +53,18 @@
    "read_only": 1
   },
   {
+   "default": ".{opportunity}.-.{sellable_product}.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Series",
-   "options": "MA-"
+   "options": ".{opportunity}.-.{sellable_product}.-"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-28 13:48:34.728509",
+ "modified": "2021-10-29 09:50:36.901183",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly",

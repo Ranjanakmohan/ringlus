@@ -42,16 +42,9 @@
   "modular_assembly_details",
   "section_break_34",
   "total_operation_cost",
-  "discount_percentage",
-  "discount_amount",
   "column_break_32",
-  "total_additional_operation_cost",
-  "margin_",
   "column_break_35",
   "total_raw_material_cost",
-  "total_cost",
-  "additional_operational_cost_section",
-  "additional_operation_cost",
   "more_information_section",
   "rejection_note",
   "amended_from",
@@ -266,18 +259,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "additional_operation_cost",
-   "fieldtype": "Table",
-   "options": "Additional Operational Cost"
-  },
-  {
-   "default": "0",
-   "fieldname": "margin_",
-   "fieldtype": "Data",
-   "label": "Margin %"
-  },
-  {
    "fieldname": "column_break_35",
    "fieldtype": "Column Break"
   },
@@ -290,20 +271,6 @@
    "read_only": 1
   },
   {
-   "allow_on_submit": 1,
-   "default": "0",
-   "fieldname": "total_cost",
-   "fieldtype": "Currency",
-   "label": "Total Cost",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "additional_operational_cost_section",
-   "fieldtype": "Section Break",
-   "label": "Additional Operational Cost"
-  },
-  {
    "default": "To Quotation",
    "fieldname": "status",
    "fieldtype": "Select",
@@ -312,17 +279,10 @@
    "read_only": 1
   },
   {
-   "allow_on_submit": 1,
-   "default": "0",
-   "fieldname": "total_additional_operation_cost",
-   "fieldtype": "Currency",
-   "label": "Total Additional Operation Cost",
-   "read_only": 1
-  },
-  {
    "default": "0",
    "fieldname": "quotation_amended",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Quotation Amended"
   },
   {
@@ -347,31 +307,17 @@
    "options": "Standard Buying\nStandard Selling"
   },
   {
-   "allow_on_submit": 1,
-   "default": "0",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount",
-   "read_only": 1
-  },
-  {
-   "allow_on_submit": 1,
-   "default": "0",
-   "fieldname": "discount_percentage",
-   "fieldtype": "Data",
-   "label": "Discount Percentage",
-   "read_only": 1
-  },
-  {
    "default": "0",
    "fieldname": "quotation_cancelled",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Quotation Cancelled"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "old_data",
    "fieldtype": "Long Text",
+   "hidden": 1,
    "label": "Old Data",
    "read_only": 1
   },
@@ -379,6 +325,7 @@
    "default": "0",
    "fieldname": "declined",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Declined"
   },
   {
@@ -419,7 +366,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-28 14:22:10.099756",
+ "modified": "2021-10-29 09:59:27.832999",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -479,7 +479,6 @@ frappe.ui.form.on('Budget BOM', {
         }
 
             compute_total_operation_cost(cur_frm)
-            compute_total_cost_expense(cur_frm)
 	},
     electrical_item_template: function(frm) {
         get_template(cur_frm.doc.electrical_item_template, "electrical_bom_raw_material")
@@ -489,24 +488,6 @@ frappe.ui.form.on('Budget BOM', {
 	},
     fg_sellable_item_template: function(frm) {
         get_template(cur_frm.doc.fg_sellable_item_template, "fg_sellable_bom_raw_material")
-	},
-
-     total_operation_cost: function(frm) {
-        compute_total_cost_expense(cur_frm)
-	},
-    total_additional_operation_cost: function(frm) {
-        compute_total_cost_expense(cur_frm)
-	},
-    discount_amount: function(frm) {
-        compute_total_cost_expense(cur_frm)
-	},
-    discount_percentage: function(frm) {
-	    cur_frm.doc.discount_amount = (cur_frm.doc.discount_percentage / 100) * cur_frm.doc.total_raw_material_cost
-        cur_frm.refresh_field("discount_amount")
-        compute_total_cost_expense(cur_frm)
-	},
-    margin_: function(frm) {
-        compute_total_cost_expense(cur_frm)
 	},
     material_request: function(frm) {
        frappe.model.open_mapped_doc({
@@ -740,14 +721,9 @@ frappe.ui.form.on('Additional Operational Cost', {
 frappe.ui.form.on('Budget BOM Details', {
     workstation: function(frm, cdt, cdn) {
        compute_total_operation_cost(cur_frm)
-        compute_total_cost_expense(cur_frm)
 	}
 });
-function compute_total_cost_expense(cur_frm) {
-    var total_cost = (cur_frm.doc.total_operation_cost + cur_frm.doc.total_additional_operation_cost + cur_frm.doc.total_raw_material_cost) - cur_frm.doc.discount_amount
-   cur_frm.doc.total_cost = ( total_cost * (parseFloat(cur_frm.doc.margin_ ? cur_frm.doc.margin_ : 0) / 100)) + total_cost
-    cur_frm.refresh_field("total_cost")
-}
+
 function compute_total_cost(cur_frm) {
     var fieldnames = ['electrical_bom_raw_material','mechanical_bom_raw_material','fg_sellable_bom_raw_material']
     var total = 0
