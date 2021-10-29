@@ -5,4 +5,5 @@
 from frappe.model.document import Document
 
 class ModularComponent(Document):
-	pass
+	def autoname(self):
+		self.name = self.items[0].item_name

@@ -7,31 +7,26 @@
  "engine": "InnoDB",
  "field_order": [
   "items",
-  "raw_materials",
-  "modular_component_details"
+  "raw_materials"
  ],
  "fields": [
   {
    "fieldname": "items",
    "fieldtype": "Table",
    "label": "Items",
-   "options": "Modular Component Details"
+   "options": "Modular Component Details",
+   "reqd": 1
   },
   {
    "fieldname": "raw_materials",
    "fieldtype": "Table",
    "label": "Raw Materials",
    "options": "Modular Assembly Raw Material"
-  },
-  {
-   "fieldname": "modular_component_details",
-   "fieldtype": "Table",
-   "options": "Modular Component Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-29 09:43:52.202771",
+ "modified": "2021-10-29 10:26:05.005326",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Component",
