@@ -54,7 +54,7 @@
   },
   {
    "fieldname": "workstation_1",
-   "fieldtype": "Long Text",
+   "fieldtype": "Link",
    "label": "Workstation 1",
    "options": "Workstation"
   },
@@ -193,7 +193,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-29 10:51:09.345727",
+ "modified": "2021-10-29 10:59:57.243366",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Component Details",
