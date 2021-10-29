@@ -7,7 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "items",
-  "raw_materials"
+  "raw_materials",
+  "amended_from"
  ],
  "fields": [
   {
@@ -22,11 +23,21 @@
    "fieldtype": "Table",
    "label": "Raw Materials",
    "options": "Modular Assembly Raw Material"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Modular Component",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-10-29 10:26:05.005326",
+ "modified": "2021-10-29 10:55:57.950732",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Component",
