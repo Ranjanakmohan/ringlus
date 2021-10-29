@@ -61,7 +61,8 @@ frappe.ui.form.on('Modular Assembly Details', {
 });
 
 function check_items(item, cur_frm) {
-        for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
+	if(cur_frm.doc.raw_material){
+		 for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
             var item_row = cur_frm.doc.raw_material[x]
             if(item_row.item_code === item.item_code){
                 item_row.qty += item.qty
@@ -70,4 +71,6 @@ function check_items(item, cur_frm) {
             }
         }
         return false
+	}
+
 }
