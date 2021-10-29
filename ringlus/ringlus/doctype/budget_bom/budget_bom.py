@@ -44,35 +44,22 @@ class BudgetBOM(Document):
                         'warehouse': raw_material_warehouse,
                         'rate': rate[0],
                         'amount': rate[0] * x.qty,
-                        # 'discount_rate': 0
                     }
-                    # discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_code=%s """,(self.opportunity, x.item_code),as_dict=1)
-                    # if len(discount) > 0:
-                    #     obj['discount_rate'] = discount[0].discount_rate
-                    #     obj['link_discount_amount'] = discount[0].name
-                    #     obj['discount_amount'] = discount[0].discount_amount
-                    #     obj['discount_percentage'] = discount[0].discount_percentage
-                    #     obj['rate'] = (discount[0].discount_rate * x.qty) + discount[0].discount_amount
-                    #     obj['amount'] = (discount[0].discount_rate * x.qty)
+
                     self.append("fg_sellable_bom_raw_material",obj)
 
+            workstations = ["workstation_1","workstation_2","workstation_3","workstation_4","workstation_5"]
+            operations = ["operation_1","operation_2","operation_3","operation_4","operation_5"]
             for xx in template.modular_assembly:
-                if not self.existing_item(xx,"modular_assembly_details", "item_code"):
-                    obj = {
-                        'item_code': xx.item_code,
-                        'qty': xx.qty,
-                        'workstation': xx.workstation,
-                        'operation': xx.operation,
-                    }
-                    # discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_code=%s """,(self.opportunity, x.item_code),as_dict=1)
-                    # if len(discount) > 0:
-                    #     obj['discount_rate'] = discount[0].discount_rate
-                    #     obj['link_discount_amount'] = discount[0].name
-                    #     obj['discount_amount'] = discount[0].discount_amount
-                    #     obj['discount_percentage'] = discount[0].discount_percentage
-                    #     obj['rate'] = (discount[0].discount_rate * x.qty) + discount[0].discount_amount
-                    #     obj['amount'] = (discount[0].discount_rate * x.qty)
-                    self.append("modular_assembly_details", obj)
+                for b in range(0, len(workstations)):
+                    if xx.__dict__[workstations[b]] or xx.__dict__[operations[b]]:
+                        obj = {
+                            'item_code': xx.item_code,
+                            'qty': xx.qty,
+                            'workstation': xx.__dict__[workstations[b]],
+                            'operation': xx.__dict__[operations[b]],
+                        }
+                        self.append("modular_assembly_details", obj)
     @frappe.whitelist()
     def existing_item(self, xx, table, item_field_name):
         for i in self.__dict__[table]:

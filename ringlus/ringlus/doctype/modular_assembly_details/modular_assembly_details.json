@@ -8,8 +8,30 @@
  "field_order": [
   "item_code",
   "qty",
-  "operation",
-  "workstation"
+  "workstation_section",
+  "workstation_1",
+  "workstation_2",
+  "workstation_3",
+  "workstation_4",
+  "workstation_5",
+  "column_break_13",
+  "net_hour_rate_1",
+  "net_hour_rate_2",
+  "net_hour_rate_3",
+  "net_hour_rate_4",
+  "net_hour_rate_5",
+  "operations_section",
+  "operation_1",
+  "operation_2",
+  "operation_3",
+  "operation_4",
+  "operation_5",
+  "column_break_21",
+  "operation_time_in_minutes_1",
+  "operation_time_in_minutes_2",
+  "operation_time_in_minutes_3",
+  "operation_time_in_minutes_4",
+  "operation_time_in_minutes_5"
  ],
  "fields": [
   {
@@ -20,18 +42,141 @@
    "label": "Qty"
   },
   {
-   "fieldname": "operation",
+   "fieldname": "workstation_section",
+   "fieldtype": "Section Break",
+   "label": "Workstation"
+  },
+  {
+   "fieldname": "workstation_1",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Operation",
+   "label": "Workstation 1",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "workstation_2",
+   "fieldtype": "Link",
+   "label": "Workstation 2",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "workstation_3",
+   "fieldtype": "Link",
+   "label": "Workstation 3",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "workstation_4",
+   "fieldtype": "Link",
+   "label": "Workstation 4",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "workstation_5",
+   "fieldtype": "Link",
+   "label": "Workstation 5",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "column_break_13",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "net_hour_rate_1",
+   "fieldtype": "Data",
+   "label": "Net Hour Rate 1"
+  },
+  {
+   "default": "0",
+   "fieldname": "net_hour_rate_2",
+   "fieldtype": "Data",
+   "label": "Net Hour Rate 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "net_hour_rate_3",
+   "fieldtype": "Data",
+   "label": "Net Hour Rate 3"
+  },
+  {
+   "default": "0",
+   "fieldname": "net_hour_rate_4",
+   "fieldtype": "Data",
+   "label": "Net Hour Rate 4"
+  },
+  {
+   "default": "0",
+   "fieldname": "net_hour_rate_5",
+   "fieldtype": "Data",
+   "label": "Net Hour Rate 5"
+  },
+  {
+   "fieldname": "operations_section",
+   "fieldtype": "Section Break",
+   "label": "Operations"
+  },
+  {
+   "fieldname": "operation_1",
+   "fieldtype": "Link",
+   "label": "Operation 1",
    "options": "Operation"
   },
   {
-   "fieldname": "workstation",
+   "fieldname": "operation_2",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Workstation",
-   "options": "Workstation"
+   "label": "Operation 2",
+   "options": "Operation"
+  },
+  {
+   "fieldname": "operation_3",
+   "fieldtype": "Link",
+   "label": "Operation 3",
+   "options": "Operation"
+  },
+  {
+   "fieldname": "operation_4",
+   "fieldtype": "Link",
+   "label": "Operation 4",
+   "options": "Operation"
+  },
+  {
+   "fieldname": "operation_5",
+   "fieldtype": "Link",
+   "label": "Operation 5",
+   "options": "Operation"
+  },
+  {
+   "fieldname": "column_break_21",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "operation_time_in_minutes_1",
+   "fieldtype": "Float",
+   "label": "Operation Time in Minutes 1"
+  },
+  {
+   "default": "0",
+   "fieldname": "operation_time_in_minutes_2",
+   "fieldtype": "Float",
+   "label": "Operation Time in Minutes 2"
+  },
+  {
+   "default": "0",
+   "fieldname": "operation_time_in_minutes_3",
+   "fieldtype": "Float",
+   "label": "Operation Time in Minutes 3"
+  },
+  {
+   "default": "0",
+   "fieldname": "operation_time_in_minutes_4",
+   "fieldtype": "Float",
+   "label": "Operation Time in Minutes 4"
+  },
+  {
+   "fieldname": "operation_time_in_minutes_5",
+   "fieldtype": "Float",
+   "label": "Operation Time in Minutes 5"
   },
   {
    "fieldname": "item_code",
@@ -44,7 +189,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-29 09:48:28.867425",
+ "modified": "2021-10-29 11:38:40.770158",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly Details",

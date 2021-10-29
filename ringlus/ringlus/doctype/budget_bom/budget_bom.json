@@ -349,7 +349,7 @@
    "fieldname": "modular_assembly_details",
    "fieldtype": "Table",
    "label": "Modular Assembly",
-   "options": "Modular Assembly Details"
+   "options": "Budget BOM Modular Assembly"
   },
   {
    "fieldname": "fg_bom_section",
@@ -366,7 +366,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-29 09:59:27.832999",
+ "modified": "2021-10-29 12:18:48.139011",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

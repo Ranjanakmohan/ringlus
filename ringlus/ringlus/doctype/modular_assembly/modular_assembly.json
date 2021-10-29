@@ -34,7 +34,7 @@
   {
    "fieldname": "modular_assembly",
    "fieldtype": "Table",
-   "label": "Modular Assembly",
+   "label": "Modular Component",
    "options": "Modular Assembly Details"
   },
   {
@@ -64,7 +64,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-29 09:50:36.901183",
+ "modified": "2021-10-29 11:48:23.023166",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly",
