@@ -26,6 +26,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Modular Component",
+   "link_to": "Modular Component",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Modular Assembly",
    "link_to": "Modular Assembly",
    "link_type": "DocType",
@@ -166,7 +175,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-29 07:22:24.632964",
+ "modified": "2021-10-29 08:01:38.539371",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Ringlus",
