@@ -108,6 +108,10 @@ cur_frm.cscript.generate_item_template = function () {
 
 frappe.ui.form.on('Budget BOM', {
 	refresh: function(frm) {
+	    if(cur_frm.is_new()) {
+            cur_frm.doc.status = "Pending"
+            cur_frm.refresh_field(status)
+        }
 	    cur_frm.set_query("opportunity", () => {
 	        return {
 	            filters:{
@@ -242,7 +246,26 @@ frappe.ui.form.on('Budget BOM', {
 
                 })
 
-        if(cur_frm.doc.docstatus && cur_frm.doc.status === "To Quotation" && !has_quotation){
+        if(cur_frm.doc.docstatus && cur_frm.doc.status === "Pending"){
+	        if(frappe.user.has_role("Sales User") || frappe.user.has_role("MD")){
+	            frm.add_custom_button(__("Approve"), () => {
+                    cur_frm.call({
+                        doc: cur_frm.doc,
+                        method: 'action_to_design',
+                        args: {
+                            status: "To Quotation"
+                        },
+                        freeze: true,
+                        freeze_message: "Amending Quotation...",
+                        callback: (r) => {
+                            cur_frm.reload_doc()
+                        }
+                    })
+                })
+            }
+
+        } else if(cur_frm.doc.docstatus && cur_frm.doc.status === "To Quotation" && !has_quotation){
+
 	            frm.add_custom_button(__("Quotation"), () => {
                     cur_frm.call({
                         doc: cur_frm.doc,
@@ -419,10 +442,24 @@ frappe.ui.form.on('Budget BOM', {
                  cur_frm.set_df_property(fields_for_cancel[ii], "read_only",(!cur_frm.doc.quotation_cancelled && !cur_frm.doc.quotation_amended))
              }
          }
+         if(cur_frm.doc.docstatus && cur_frm.doc.status === 'Quotation In Progress' && has_quotation && (frappe.user.has_role("Sales User") || frappe.user.has_role("MD"))){
+	            frm.add_custom_button(__("Re Open"), () => {
+                    cur_frm.call({
+                        doc: cur_frm.doc,
+                        method: 'amend_quotation',
+                        args: {},
+                        freeze: true,
+                        freeze_message: "Reopening Budget BOM...",
+                        callback: (r) => {
+                            cur_frm.reload_doc()
+                        }
+                    })
+                })
+        }
     },
 	onload_post_render: function(frm) {
 	    if(cur_frm.is_new()){
-	        cur_frm.doc.status = "To Quotation"
+	        cur_frm.doc.status = "Pending"
             cur_frm.refresh_field(status)
             if(cur_frm.doc.fg_bom_details.length === 0){
                 cur_frm.add_child("fg_bom_details", {
@@ -713,6 +750,11 @@ frappe.ui.form.on('Additional Operational Cost', {
         }
         cur_frm.doc.total_additional_operation_cost = total
         cur_frm.refresh_field("total_additional_operation_cost")
+	}
+});
+frappe.ui.form.on('Budget BOM Modular Assembly', {
+    modular_assembly_details_remove: function(frm, cdt, cdn) {
+       compute_total_operation_cost(cur_frm)
 	}
 });
 frappe.ui.form.on('Budget BOM Details', {

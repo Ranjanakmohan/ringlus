@@ -95,32 +95,32 @@ doctype_js = {
 
 doc_events = {
 	"Quotation": {
-		"on_submit": "load_controls.doc_events.quotation.submit_q",
-		"on_cancel": "load_controls.doc_events.quotation.cancel_q",
+		"on_submit": "ringlus.doc_events.quotation.submit_q",
+		"on_cancel": "ringlus.doc_events.quotation.cancel_q",
 	},
 	"Material Request": {
-		"validate": "load_controls.doc_events.material_request.validate_mr",
-		"on_cancel": "load_controls.doc_events.material_request.cancel_mr",
-		"on_trash": "load_controls.doc_events.material_request.on_trash",
+		"validate": "ringlus.doc_events.material_request.validate_mr",
+		"on_cancel": "ringlus.doc_events.material_request.cancel_mr",
+		"on_trash": "ringlus.doc_events.material_request.on_trash",
 	},
 	"Purchase Order": {
-		"on_submit": "load_controls.doc_events.purchase_order.on_submit_po",
+		"on_submit": "ringlus.doc_events.purchase_order.on_submit_po",
 	},
 	"Purchase Invoice": {
-		"on_submit": "load_controls.doc_events.purchase_receipt.on_submit_pr",
+		"on_submit": "ringlus.doc_events.purchase_receipt.on_submit_pr",
 	},
 	"Purchase Receipt": {
-		"on_submit": "load_controls.doc_events.purchase_receipt.on_submit_pr",
+		"on_submit": "ringlus.doc_events.purchase_receipt.on_submit_pr",
 	},
 	"Sales Order": {
-		"on_submit": "load_controls.doc_events.sales_order.on_submit_so",
-		"on_cancel": "load_controls.doc_events.sales_order.on_cancel_so",
+		"on_submit": "ringlus.doc_events.sales_order.on_submit_so",
+		"on_cancel": "ringlus.doc_events.sales_order.on_cancel_so",
 	},
 	"Delivery Note": {
-		"on_submit": "load_controls.doc_events.sales_order.on_submit_dn",
+		"on_submit": "ringlus.doc_events.sales_order.on_submit_dn",
 	},
 	"Sales Invoice": {
-		"on_submit": "load_controls.doc_events.sales_order.on_submit_dn",
+		"on_submit": "ringlus.doc_events.sales_order.on_submit_dn",
 	}
 }
 # Scheduled Tasks
@@ -213,6 +213,8 @@ fixtures = [
                     "Quotation-opportunities",
                     "Quotation-budget_bom_opportunity",
                     "Quotation-additional_operating_cost",
+
+
                     "Sales Order-budget_bom_reference",
                     "Sales Order-reference",
                     "Sales Order-additional_operating_cost",
@@ -246,6 +248,39 @@ fixtures = [
                     "Purchase Order-budget_bom_reference",
 					"Material Request-reference_bom",
                     "Material Request-budget_bom_reference",
+
+					"Quotation Item-column_break_16",
+					"Quotation Item-column_break_26",
+					"Quotation Item-estimated_bom_material_cost",
+					"Quotation Item-estimated_bom_operation_cost",
+					"Quotation Item-material_cost",
+					"Quotation Item-material_margin",
+					"Quotation Item-material_margin_amount",
+					"Quotation Item-material_overhead",
+					"Quotation Item-material_overhead_amount",
+					"Quotation Item-operation_cost",
+					"Quotation Item-operation_margin",
+					"Quotation Item-operation_margin_amount",
+					"Quotation Item-operation_overhead",
+					"Quotation Item-operation_overhead_amount",
+					"Quotation Item-section_break_11",
+					"Quotation Item-section_break_21",
+					"Quotation Item-total_cost",
+					"Quotation Item-total_margin_cost",
+					"Quotation Item-total_operation_cost",
+
+					"Quotation-additional_operating_cost",
+					"Quotation-budget_bom_opportunity",
+					"Quotation-budget_bom_reference",
+					"Quotation-column_break_39",
+					"Quotation-default_material_margin",
+					"Quotation-default_material_overhead",
+					"Quotation-default_operation_margin",
+					"Quotation-default_operation_overhead",
+					"Quotation-margin_and_overaged_values",
+					"Quotation-opportunities",
+					"Quotation-reference",
+
 				]
 			]
 		]

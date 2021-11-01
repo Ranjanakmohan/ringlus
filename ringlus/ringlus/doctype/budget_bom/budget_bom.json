@@ -274,11 +274,11 @@
    "read_only": 1
   },
   {
-   "default": "To Quotation",
+   "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "To Quotation\nTo Design\nPending\nRejected\nTo Purchase Order\nQuotation In Progress\nUpdated Changes\nTo Material Request\nDeclined\nTo PO and SO\nTo PO\nTo SO",
+   "options": "To Quotation\nTo Design\nPending\nRejected\nTo Purchase Order\nQuotation In Progress\nUpdated Changes\nTo Material Request\nDeclined\nTo PO and SO\nTo PO\nTo SO\nApproved",
    "read_only": 1
   },
   {
@@ -369,7 +369,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-01 09:48:59.357683",
+ "modified": "2021-11-01 18:38:25.353515",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",
