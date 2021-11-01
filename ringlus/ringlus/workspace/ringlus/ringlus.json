@@ -26,6 +26,24 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Discount",
+   "link_to": "Discount",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "BOM Item Template",
+   "link_to": "BOM Item Template",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Sellable Product Category",
    "link_to": "Sellable Product Category",
    "link_type": "DocType",
@@ -193,7 +211,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-29 08:04:38.697436",
+ "modified": "2021-10-29 10:39:28.732251",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Ringlus",
