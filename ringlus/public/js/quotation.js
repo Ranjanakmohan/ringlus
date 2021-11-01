@@ -1,3 +1,23 @@
+frappe.ui.form.on('Quotation Item', {
+    estimated_bom_material_cost: function(frm) {
+        compute_margin_operations(cur_frm)
+    },
+    estimated_bom_operation_cost: function(frm) {
+        compute_margin_operations(cur_frm)
+    },
+    material_margin: function(frm) {
+        compute_margin_operations(cur_frm)
+    },
+    operation_margin: function(frm) {
+        compute_margin_operations(cur_frm)
+    },
+    material_overhead: function(frm) {
+        compute_margin_operations(cur_frm)
+    },
+    operation_overhead: function(frm) {
+        compute_margin_operations(cur_frm)
+    }
+})
 frappe.ui.form.on('Quotation', {
 	default_material_overhead: function(frm) {
         compute_margin_operations(cur_frm)
@@ -11,6 +31,7 @@ frappe.ui.form.on('Quotation', {
     default_operation_margin: function(frm) {
         compute_margin_operations(cur_frm)
     },
+
 	refresh: function(frm) {
 
         cur_frm.add_custom_button(__('Opportunity with Budget BOM'),
