@@ -87,11 +87,12 @@ class BudgetBOM(Document):
             template = frappe.get_doc("BOM Item Template", i)
 
             for x in template.items:
+                item_master = frappe.get_doc("Item", x.item_code)
                 rate = get_rate(x.item_code, "",self.rate_of_materials_based_on if self.rate_of_materials_based_on else "", self.price_list if self.price_list else "")
                 obj = {
                     'item_code': x.item_code,
                     'item_name': x.item_name,
-                    'item_group': x.item_group,
+                    'item_group': item_master.item_group,
                     'uom': x.uom,
                     'qty': x.qty,
                     'warehouse': raw_material_warehouse,
@@ -99,7 +100,7 @@ class BudgetBOM(Document):
                     'amount': rate[0] * x.qty,
                     'discount_rate': 0
                 }
-                discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,(self.opportunity, x.item_group),as_dict=1)
+                discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,(self.opportunity, item_master.item_group),as_dict=1)
                 if len(discount) > 0:
                     obj['discount_rate'] = discount[0].discount_rate
                     obj['link_discount_amount'] = discount[0].name
