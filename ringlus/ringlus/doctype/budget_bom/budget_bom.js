@@ -281,20 +281,7 @@ frappe.ui.form.on('Budget BOM', {
                     })
                 })
         } else if(cur_frm.doc.docstatus && cur_frm.doc.status === "To Design"){
-            if(frappe.user.has_role("Sales User")) {
-                frm.add_custom_button(__("Amend Quotation"), () => {
-                    cur_frm.call({
-                        doc: cur_frm.doc,
-                        method: 'amend_quotation',
-                        args: {},
-                        freeze: true,
-                        freeze_message: "Amending Quotation...",
-                        callback: (r) => {
-                            cur_frm.reload_doc()
-                        }
-                    })
-                })
-            }
+
             if(frappe.user.has_role("Mechanical")){
 	                 frm.add_custom_button(__("Approve"), () => {
                     cur_frm.call({
@@ -467,7 +454,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: electrical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time
+                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
                 })
             }
             if(cur_frm.doc.electrical_bom_details.length === 0){
@@ -476,7 +463,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: electrical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time
+                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
                 })
             }
             if(cur_frm.doc.mechanical_bom_details.length === 0){
@@ -485,7 +472,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: mechanical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time
+                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
                 })
             }
             if(cur_frm.doc.fg_sellable_bom_details.length === 0){
@@ -495,7 +482,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation:fg_sellable_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time
+                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
                 })
             }
 

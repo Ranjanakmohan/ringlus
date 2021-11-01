@@ -3,7 +3,7 @@ import frappe
 def on_submit_so(doc, method):
     for i in doc.budget_bom_reference:
         if i.budget_bom:
-            frappe.db.sql(""" UPDATE `tabBudget BOM` SET status=%s WHERE name=%s  """, ("To Design", i.budget_bom))
+            frappe.db.sql(""" UPDATE `tabBudget BOM` SET status=%s WHERE name=%s  """, ("To Material Request", i.budget_bom))
             frappe.db.commit()
 
 

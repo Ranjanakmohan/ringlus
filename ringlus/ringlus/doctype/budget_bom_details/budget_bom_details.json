@@ -77,13 +77,14 @@
   {
    "fieldname": "operation_time_in_minutes",
    "fieldtype": "Data",
-   "label": "Operation Time in Minutes"
+   "label": "Operation Time in Minutes",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-19 20:39:05.936714",
+ "modified": "2021-11-01 20:01:46.380038",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Details",
