@@ -50,6 +50,8 @@ class BudgetBOM(Document):
 
             workstations = ["workstation_1","workstation_2","workstation_3","workstation_4","workstation_5"]
             operations = ["operation_1","operation_2","operation_3","operation_4","operation_5"]
+            operation_time_in_minutes = ["operation_time_in_minutes_1","operation_time_in_minutes_2","operation_time_in_minutes_3","operation_time_in_minutes_4","operation_time_in_minutes_5"]
+            net_hour_rate = ["net_hour_rate_1","net_hour_rate_2","net_hour_rate_3","net_hour_rate_4","net_hour_rate_5"]
             for xx in template.modular_assembly:
                 for b in range(0, len(workstations)):
                     if xx.__dict__[workstations[b]] or xx.__dict__[operations[b]]:
@@ -58,6 +60,8 @@ class BudgetBOM(Document):
                             'qty': xx.qty,
                             'workstation': xx.__dict__[workstations[b]],
                             'operation': xx.__dict__[operations[b]],
+                            'operation_time_in_minutes': xx.__dict__[operation_time_in_minutes[b]],
+                            'net_hour_rate': xx.__dict__[net_hour_rate[b]],
                         }
                         self.append("modular_assembly_details", obj)
     @frappe.whitelist()
@@ -111,8 +115,8 @@ class BudgetBOM(Document):
             'discount_rate': 0
 
         }
-        discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_code=%s """,
-                                 (self.opportunity, item['item_code']), as_dict=1)
+        discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,
+                                 (self.opportunity, item['item_group']), as_dict=1)
         if len(discount) > 0:
             obj['discount_rate'] = discount[0].discount_rate
             obj['link_discount_amount'] = discount[0].name

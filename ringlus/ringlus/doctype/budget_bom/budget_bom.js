@@ -43,7 +43,9 @@ function get_modular_assembly_template(template_names, cur_frm){
         freeze: true,
         freeze_message: "Get Modular AssemblyTemplates...",
         async:false,
-        callback: (r) => {}
+        callback: (r) => {
+            compute_total_operation_cost(cur_frm)
+         }
     })
 }
 cur_frm.cscript.item_templates = function () {
@@ -575,7 +577,6 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
         }
         compute_total_cost(cur_frm)
-        compute_total_cost_expense(cur_frm)
 
 	},
     rate: function(frm, cdt, cdn) {
@@ -599,7 +600,6 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
         }
         compute_total_cost(cur_frm)
-        compute_total_cost_expense(cur_frm)
 
 	},
     item_code: function (frm, cdt, cdn) {
@@ -627,7 +627,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                     console.log("ITEM CODEEEE TRIGGER")
                     console.log(r.message.discount_rate)
                         var values = r.message
-                                console.log(values.discount_rate)
+                            console.log(values.discount_rate)
 
                             d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
                           d.link_discount_amount = values.link_discount_amount
@@ -660,7 +660,6 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
         }
          compute_total_cost(cur_frm)
-        compute_total_cost_expense(cur_frm)
 
 
     },
@@ -679,17 +678,16 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
         }
         compute_total_cost(cur_frm)
-        compute_total_cost_expense(cur_frm)
 
     },
     save_discount_amount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
-        if(d.discount_rate > 0 && d.item_code){
+        if(d.discount_rate > 0 && d.item_group){
             frappe.db.insert({
                 doctype: 'Discount',
                 opportunity: cur_frm.doc.opportunity,
-                item_code: d.item_code,
-                item_name: d.item_name,
+                sellable_product: cur_frm.doc.sellable_product,
+                item_group: d.item_group,
                 discount_amount: d.discount_amount,
                 discount_rate: d.discount_rate,
                 discount_percentage: d.discount_percentage,
@@ -715,7 +713,6 @@ frappe.ui.form.on('Additional Operational Cost', {
         }
         cur_frm.doc.total_additional_operation_cost = total
         cur_frm.refresh_field("total_additional_operation_cost")
-         compute_total_cost_expense(cur_frm)
 	}
 });
 frappe.ui.form.on('Budget BOM Details', {
@@ -730,7 +727,7 @@ function compute_total_cost(cur_frm) {
     for(var i=0;i<fieldnames.length;i+=1){
         if(cur_frm.doc[fieldnames[i]]){
             for(var ii=0;ii<cur_frm.doc[fieldnames[i]].length;ii+=1){
-                total += cur_frm.doc[fieldnames[i]][ii].amount
+                total += cur_frm.doc[fieldnames[i]][ii].discount_rate
             }
         }
 
@@ -739,12 +736,15 @@ function compute_total_cost(cur_frm) {
     cur_frm.refresh_field("total_raw_material_cost")
 }
 function compute_total_operation_cost(cur_frm) {
-    var fieldnames = ['electrical_bom_details','mechanical_bom_details','fg_sellable_bom_details']
+    var fieldnames = ['electrical_bom_details','mechanical_bom_details','fg_sellable_bom_details','modular_assembly_details']
     var total_hour_rate = 0
     for(var i=0;i<fieldnames.length;i+=1){
         if(cur_frm.doc[fieldnames[i]]){
             for(var ii=0;ii<cur_frm.doc[fieldnames[i]].length;ii+=1){
-                total_hour_rate += parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate)
+                if(parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate) > 0){
+                    total_hour_rate += parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate)
+                }
+
             }
         }
 
