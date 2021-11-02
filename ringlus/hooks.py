@@ -214,6 +214,8 @@ fixtures = [
                     "Quotation-budget_bom_opportunity",
                     "Quotation-additional_operating_cost",
 
+					"Opportunity-budget_bom_reference",
+                    "Opportunity-reference",
 
                     "Sales Order-budget_bom_reference",
                     "Sales Order-reference",

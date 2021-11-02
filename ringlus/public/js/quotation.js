@@ -70,8 +70,6 @@ function fetch_boms(cur_frm, selections) {
     for(var x=0;x<selections.length;x+=1){
         var check_opp = check_opportunity(selections[x])
         if(!check_opp){
-            console.log(check_opp)
-            console.log("NISULOD UNA")
             cur_frm.add_child("budget_bom_opportunity",{
                 opportunity: selections[x]
             })
@@ -79,61 +77,63 @@ function fetch_boms(cur_frm, selections) {
 
             frappe.db.get_list('Budget BOM', {
                 filters: {
-                   opportunity: selections[x]
+                   opportunity: selections[x],
+                    status: 'To Quotation'
                 }
             }).then(records => {
-                if(records.length > 0){
+                console.log("recoooords")
+                console.log(records)
+                for(var x=0;x<records.length;x+=1){
+                    frappe.db.get_doc('Budget BOM', records[x].name)
+                        .then(doc => {
+                            cur_frm.doc.party_name = doc.customer
+                            cur_frm.doc.customer_name = doc.customer_name
+                            cur_frm.refresh_field("party_name")
+                            cur_frm.refresh_field("customer_name")
+                            cur_frm.add_child("budget_bom_reference",{
+                                budget_bom: doc.name
+                            })
+                            cur_frm.refresh_field("budget_bom_reference")
 
-                    frappe.db.get_doc('Budget BOM', null, { opportunity: selections[x]})
-                    .then(doc => {
-                        cur_frm.doc.party_name = doc.customer
-                        cur_frm.doc.customer_name = doc.customer_name
-                        cur_frm.refresh_field("party_name")
-                        cur_frm.refresh_field("customer_name")
-                        cur_frm.add_child("budget_bom_reference",{
-                            budget_bom: doc.name
+                            cur_frm.clear_table("items")
+                            if(!check_items(doc.fg_sellable_bom_details[0], cur_frm)){
+                                  cur_frm.add_child("items",{
+                                        "item_code": doc.fg_sellable_bom_details[0].item_code,
+                                        "item_name": doc.fg_sellable_bom_details[0].item_name,
+                                        "description": doc.fg_sellable_bom_details[0].item_name,
+                                        "qty": doc.fg_sellable_bom_details[0].qty,
+                                        "uom": doc.fg_sellable_bom_details[0].uom,
+                                        "rate": doc.total_cost,
+                                        "amount": doc.total_cost * doc.fg_sellable_bom_details[0].qty,
+
+                                        "estimated_bom_material_cost": doc.total_raw_material_cost,
+                                        "material_overhead": cur_frm.doc.default_material_overhead,
+                                        "material_overhead_amount": doc.total_raw_material_cost * cur_frm.doc.default_material_overhead,
+                                        "material_cost": doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead),
+
+                                        "estimated_bom_operation_cost": doc.total_operation_cost,
+                                        "operation_overhead": cur_frm.doc.default_operation_overhead,
+                                        "operation_overhead_amount": doc.total_operation_cost * cur_frm.doc.default_operation_overhead,
+                                        "operation_cost": doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead),
+
+                                        "material_margin": cur_frm.doc.default_material_margin,
+                                        "material_margin_amount": cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)),
+                                        "total_margin_cost": (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)),
+
+                                        "operation_margin": cur_frm.doc.default_operation_margin,
+                                        "operation_margin_amount": cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead)),
+                                        "total_operation_cost": doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))),
+
+                                        "total_cost": ((doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))))),
+
+                                    })
+                                    cur_frm.refresh_field("items")
+                            }
+
+
+
                         })
-                        cur_frm.refresh_field("budget_bom_reference")
-
-                        cur_frm.clear_table("items")
-                        if(!check_items(doc.fg_sellable_bom_details[0], cur_frm)){
-                              cur_frm.add_child("items",{
-                                    "item_code": doc.fg_sellable_bom_details[0].item_code,
-                                    "item_name": doc.fg_sellable_bom_details[0].item_name,
-                                    "description": doc.fg_sellable_bom_details[0].item_name,
-                                    "qty": doc.fg_sellable_bom_details[0].qty,
-                                    "uom": doc.fg_sellable_bom_details[0].uom,
-                                    "rate": doc.total_cost,
-                                    "amount": doc.total_cost * doc.fg_sellable_bom_details[0].qty,
-
-                                    "estimated_bom_material_cost": doc.total_raw_material_cost,
-                                    "material_overhead": cur_frm.doc.default_material_overhead,
-                                    "material_overhead_amount": doc.total_raw_material_cost * cur_frm.doc.default_material_overhead,
-                                    "material_cost": doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead),
-
-                                    "estimated_bom_operation_cost": doc.total_operation_cost,
-                                    "operation_overhead": cur_frm.doc.default_operation_overhead,
-                                    "operation_overhead_amount": doc.total_operation_cost * cur_frm.doc.default_operation_overhead,
-                                    "operation_cost": doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead),
-
-                                    "material_margin": cur_frm.doc.default_material_margin,
-                                    "material_margin_amount": cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)),
-                                    "total_margin_cost": (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)),
-
-                                    "operation_margin": cur_frm.doc.default_operation_margin,
-                                    "operation_margin_amount": cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead)),
-                                    "total_operation_cost": doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))),
-
-                                    "total_cost": ((doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))))),
-
-                                })
-                                cur_frm.refresh_field("items")
-                        }
-
-
-
-                    })
-                }
+                    }
             })
         }
 

@@ -139,11 +139,16 @@ class BudgetBOM(Document):
 
         return obj
     @frappe.whitelist()
-    def validate(self):
+    def on_submit(self):
         if self.opportunity:
-            frappe.db.sql(""" UPDATE `tabOpportunity` SET budget_bom=%s WHERE name=%s""", (self.name, self.opportunity))
-            frappe.db.commit()
+            opp = frappe.get_doc("Opportunity", self.opportunity)
+            opp.append("budget_bom_reference", {
+                "budget_bom": self.name
+            })
+            # frappe.db.sql(""" UPDATE `tabOpportunity` SET budget_bom=%s WHERE name=%s""", (self.name, self.opportunity))
+            # frappe.db.commit()
 
+            opp.save()
     @frappe.whitelist()
     def generate_quotation(self):
         obj = {
