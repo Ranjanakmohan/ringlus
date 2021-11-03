@@ -664,9 +664,10 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                           d.rate = values.rate
                           d.amount = values.amount
                             cur_frm.refresh_field(d.parentfield)
+
                  }
             })
-
+ compute_total_cost(cur_frm)
         }
 
     },
@@ -798,7 +799,9 @@ function get_template(template_names, raw_material_table, cur_frm){
         freeze: true,
         freeze_message: "Get Templates...",
         async:false,
-        callback: (r) => {}
+        callback: (r) => {
+             compute_total_cost(cur_frm)
+         }
     })
 }
 

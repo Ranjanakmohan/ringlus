@@ -150,6 +150,17 @@ class BudgetBOM(Document):
 
             opp.save()
     @frappe.whitelist()
+    def get_quotation_items(self):
+        items = []
+        for i in self.fg_bom_details:
+            items.append({
+                "item_code": i.item_code,
+                "item_name": i.item_name,
+                "qty": i.qty,
+                "uom": i.uom,
+            })
+        return items
+    @frappe.whitelist()
     def generate_quotation(self):
         obj = {
             "doctype": "Quotation",
@@ -160,12 +171,7 @@ class BudgetBOM(Document):
             "budget_bom_reference": [{
                 "budget_bom": self.name
             }],
-            "items": [{
-                "item_code": self.fg_bom_details[0].item_code,
-                "item_name": self.fg_bom_details[0].item_name,
-                "qty": self.fg_bom_details[0].qty,
-                "uom": self.fg_bom_details[0].uom,
-            }]
+            "items": self.get_quotation_items()
         }
         quotation = frappe.get_doc(obj).insert()
         frappe.db.sql(""" UPDATE `tabBudget BOM` SET status='To Quotation', quotation_amended=0 WHERE name=%s """,
