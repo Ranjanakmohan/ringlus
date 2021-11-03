@@ -761,7 +761,7 @@ function compute_total_cost(cur_frm) {
     for(var i=0;i<fieldnames.length;i+=1){
         if(cur_frm.doc[fieldnames[i]]){
             for(var ii=0;ii<cur_frm.doc[fieldnames[i]].length;ii+=1){
-                total += cur_frm.doc[fieldnames[i]][ii].discount_rate
+                total += cur_frm.doc[fieldnames[i]][ii].amount
             }
         }
 
