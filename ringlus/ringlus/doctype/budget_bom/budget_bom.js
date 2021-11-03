@@ -430,17 +430,21 @@ frappe.ui.form.on('Budget BOM', {
              }
          }
          if(cur_frm.doc.docstatus && cur_frm.doc.status === 'Quotation In Progress' && has_quotation && (frappe.user.has_role("Sales User") || frappe.user.has_role("MD"))){
-	            frm.add_custom_button(__("Re Open"), () => {
-                    cur_frm.call({
-                        doc: cur_frm.doc,
-                        method: 'amend_quotation',
-                        args: {},
-                        freeze: true,
-                        freeze_message: "Reopening Budget BOM...",
-                        callback: (r) => {
-                            cur_frm.reload_doc()
-                        }
-                    })
+
+            frm.add_custom_button(__("Re Open"), () => {
+                frappe.confirm(' Permanently Cancel the Quoataion?',
+                    () => {
+                         cur_frm.call({
+                            doc: cur_frm.doc,
+                            method: 'amend_quotation',
+                            args: {},
+                            freeze: true,
+                            freeze_message: "Reopening Budget BOM...",
+                            callback: (r) => {
+                                cur_frm.reload_doc()
+                            }
+                        })
+                    }, () => {})
                 })
         }
     },

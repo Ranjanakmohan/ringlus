@@ -161,10 +161,10 @@ class BudgetBOM(Document):
                 "budget_bom": self.name
             }],
             "items": [{
-                "item_code": self.fg_sellable_bom_details[0].item_code,
-                "item_name": self.fg_sellable_bom_details[0].item_name,
-                "qty": self.fg_sellable_bom_details[0].qty,
-                "uom": self.fg_sellable_bom_details[0].uom,
+                "item_code": self.fg_bom_details[0].item_code,
+                "item_name": self.fg_bom_details[0].item_name,
+                "qty": self.fg_bom_details[0].qty,
+                "uom": self.fg_bom_details[0].uom,
             }]
         }
         quotation = frappe.get_doc(obj).insert()
@@ -420,12 +420,15 @@ def make_mr(source_name, target_doc=None):
             "doctype": "Material Request",
             "validation": {
                 "docstatus": ["=", 1]
+            },
+            "field_map": {
+                "expected_closing_date": "schedule_date",
             }
         },
         "Budget BOM Raw Material": {
             "doctype": "Material Request Item",
             "field_map":{
-                "name": "budget_bom_raw_material"
+                "name": "budget_bom_raw_material",
             }
         }
 
@@ -435,7 +438,7 @@ def make_mr(source_name, target_doc=None):
     doc.schedule_date = str(frappe.db.get_value("Budget BOM", source_name, "expected_closing_date"))
     for i in doc.items:
         i.schedule_date = str(frappe.db.get_value("Budget BOM", source_name, "expected_closing_date"))
-
+        i.conversion_factor = 1
     doc.append("budget_bom_reference", {
         "budget_bom": source_name
     })

@@ -1,6 +1,11 @@
 import frappe
 
-
+@frappe.whitelist()
+def on_submit_mr(doc, method):
+    for i in doc.budget_bom_reference:
+        if i.budget_bom:
+            frappe.db.sql(""" UPDATE `tabBudget BOM` SET status='To BOM' WHERE name=%s """, i.budget_bom)
+            frappe.db.commit()
 @frappe.whitelist()
 def get_budget_bom(doctype,target,e,r,t,filter):
     print("FILTEEEEEEEEEEEEEEEER")

@@ -18,6 +18,30 @@ frappe.ui.form.on('Quotation Item', {
         compute_margin_operations(cur_frm)
     }
 })
+function update_items(item, cur_frm) {
+        for(var x=0;x<cur_frm.doc.items.length;x+=1){
+            var item_row = cur_frm.doc.items[x]
+            console.log(item_row.item_code)
+            console.log(item)
+            if(item_row.item_code === item.item_code){
+                item_row.rate = item.total_cost
+                item_row.amount = item.total_cost * item_row.qty
+                cur_frm.refresh_field("items")
+                cur_frm.trigger("rate")
+            }
+        }
+        compute_total(cur_frm)
+}
+function compute_total(cur_frm) {
+    var total = 0
+    $.each(cur_frm.doc.items || [], function(i, items) {
+        total += items.amount
+    });
+    cur_frm.doc.total = total
+    cur_frm.doc.grand_total = total - cur_frm.doc.discount_amount
+    cur_frm.doc.rounded_total =  cur_frm.doc.grand_total
+    cur_frm.refresh_fields(["total",'grand_total','rounded_total'])
+}
 frappe.ui.form.on('Quotation', {
 	default_material_overhead: function(frm) {
         compute_margin_operations(cur_frm)
@@ -31,8 +55,28 @@ frappe.ui.form.on('Quotation', {
     default_operation_margin: function(frm) {
         compute_margin_operations(cur_frm)
     },
-
+    update_cost: function(frm) {
+	    cur_frm.clear_table("payment_schedule")
+	    cur_frm.refresh_field("payment_schedule")
+	    frappe.call({
+            method: "ringlus.doc_events.quotation.get_updated_costs",
+            args: {
+                budget_boms: cur_frm.doc.budget_bom_reference ? cur_frm.doc.budget_bom_reference : []
+            },
+            async: false,
+            callback: function (r) {
+                console.log(r.message)
+                for(var x=0;x<r.message.length;x+=1){
+                    update_items(r.message[0][x], cur_frm)
+                }
+            }
+        })
+    },
 	refresh: function(frm) {
+        cur_frm.fields_dict["items"].grid.add_custom_button(__('Update Cost'),
+			function() {
+	        cur_frm.trigger("update_cost")
+        }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
 
         cur_frm.add_custom_button(__('Opportunity with Budget BOM'),
 				function() {
