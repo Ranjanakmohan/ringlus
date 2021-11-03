@@ -140,15 +140,17 @@ function fetch_boms(cur_frm, selections) {
                             cur_frm.refresh_field("budget_bom_reference")
 
                             cur_frm.clear_table("items")
-                            if(!check_items(doc.fg_sellable_bom_details[0], cur_frm)){
+                    for(var ii=0;ii<doc.fg_bom_details.length;ii+=1){
+
+                            if(!check_items(doc.fg_bom_details[ii], cur_frm)){
                                   cur_frm.add_child("items",{
-                                        "item_code": doc.fg_sellable_bom_details[0].item_code,
-                                        "item_name": doc.fg_sellable_bom_details[0].item_name,
-                                        "description": doc.fg_sellable_bom_details[0].item_name,
-                                        "qty": doc.fg_sellable_bom_details[0].qty,
-                                        "uom": doc.fg_sellable_bom_details[0].uom,
+                                        "item_code": doc.fg_bom_details[ii].item_code,
+                                        "item_name": doc.fg_bom_details[ii].item_name,
+                                        "description": doc.fg_bom_details[ii].item_name,
+                                        "qty": doc.fg_bom_details[ii].qty,
+                                        "uom": doc.fg_bom_details[ii].uom,
                                         "rate": doc.total_cost,
-                                        "amount": doc.total_cost * doc.fg_sellable_bom_details[0].qty,
+                                        "amount": doc.total_cost * doc.fg_bom_details[ii].qty,
 
                                         "estimated_bom_material_cost": doc.total_raw_material_cost,
                                         "material_overhead": cur_frm.doc.default_material_overhead,
@@ -176,6 +178,7 @@ function fetch_boms(cur_frm, selections) {
 
 
 
+                    }
                         })
                     }
             })
