@@ -8,18 +8,18 @@
  "field_order": [
   "status",
   "naming_series",
+  "sellable_product",
   "opportunity",
   "customer",
   "customer_name",
+  "create_items",
   "column_break_5",
   "posting_date",
   "expected_closing_date",
   "rate_of_materials_based_on",
   "price_list",
-  "activity_section",
-  "activity_details",
-  "service_item_section",
-  "service_item_details",
+  "fg_bom_section",
+  "fg_bom_details",
   "electrical_bom_section",
   "electrical_bom_details",
   "electrical_from_template",
@@ -33,18 +33,18 @@
   "generate_mechanical_item_template",
   "mechanical_bom_raw_material",
   "fgsellable_bom_section",
+  "fg_sellable_bom_details",
   "fg_sellable_bom_raw_material",
   "fg_sellable_from_template",
   "fg_sellable_item_template",
   "generate_fg_sellable_item_template",
-  "fgsellable_bom_detail_section",
-  "fg_sellable_bom_details",
   "section_break_29",
+  "modular_assembly_details",
+  "section_break_34",
   "total_operation_cost",
+  "column_break_32",
   "column_break_35",
   "total_raw_material_cost",
-  "additional_operational_cost_section",
-  "additional_operation_cost",
   "more_information_section",
   "rejection_note",
   "amended_from",
@@ -55,10 +55,13 @@
  ],
  "fields": [
   {
+   "default": "BUDGET-.{opportunity}.-.{sellable_product}.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "BOM Series",
-   "options": "BUDGET-.YYYY.-"
+   "options": "BUDGET-.{opportunity}.-.{sellable_product}.-",
+   "read_only": 1
   },
   {
    "fieldname": "opportunity",
@@ -112,13 +115,12 @@
   {
    "fieldname": "electrical_bom_section",
    "fieldtype": "Section Break",
-   "label": "Raw Materials"
+   "label": "Electrical BOM"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "electrical_bom_details",
    "fieldtype": "Table",
-   "hidden": 1,
    "label": "Electrical BOM Detail",
    "options": "Budget BOM Details"
   },
@@ -126,13 +128,12 @@
    "allow_on_submit": 1,
    "fieldname": "electrical_bom_raw_material",
    "fieldtype": "Table",
-   "label": "Raw Material Details",
+   "label": "Electrical Raw Material",
    "options": "Budget BOM Raw Material"
   },
   {
    "fieldname": "mechanical_bom_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "Mechanical BOM"
   },
   {
@@ -152,20 +153,20 @@
   {
    "fieldname": "fgsellable_bom_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "Enclosure"
   },
   {
    "bold": 1,
    "fieldname": "fg_sellable_bom_details",
    "fieldtype": "Table",
+   "label": "Enclosure",
    "options": "Budget BOM FG Details"
   },
   {
    "allow_on_submit": 1,
    "fieldname": "fg_sellable_bom_raw_material",
    "fieldtype": "Table",
-   "label": "Enclosure",
+   "label": "Modular Assembly Raw Material",
    "options": "Budget BOM Raw Material"
   },
   {
@@ -253,8 +254,12 @@
    "default": "0",
    "fieldname": "total_operation_cost",
    "fieldtype": "Currency",
-   "label": "Total Activity Cost",
+   "label": "Total Operation Cost",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_32",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_35",
@@ -269,7 +274,7 @@
    "read_only": 1
   },
   {
-   "default": "To Quotation",
+   "default": "Pending",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -327,52 +332,44 @@
    "label": "Declined"
   },
   {
-   "fieldname": "activity_section",
-   "fieldtype": "Section Break",
-   "label": "Activity"
+   "fieldname": "sellable_product",
+   "fieldtype": "Link",
+   "label": "Sellable Product",
+   "options": "Sellable Product",
+   "reqd": 1
   },
   {
-   "fieldname": "activity_details",
+   "fieldname": "create_items",
+   "fieldtype": "Button",
+   "label": "Create Items",
+   "options": "generate_opportunity_items"
+  },
+  {
+   "fieldname": "section_break_34",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "modular_assembly_details",
    "fieldtype": "Table",
-   "label": "Activity Details",
-   "options": "Activity BOM"
+   "label": "Modular Assembly",
+   "options": "Budget BOM Modular Assembly"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "fgsellable_bom_detail_section",
+   "fieldname": "fg_bom_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Finished Goods BOM Details"
+   "label": "FG BOM"
   },
   {
-   "allow_on_submit": 1,
-   "fieldname": "additional_operational_cost_section",
-   "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Additional Operational Cost"
-  },
-  {
-   "allow_on_submit": 1,
-   "fieldname": "additional_operation_cost",
+   "fieldname": "fg_bom_details",
    "fieldtype": "Table",
-   "options": "Additional Operational Cost"
-  },
-  {
-   "fieldname": "service_item_section",
-   "fieldtype": "Section Break",
-   "label": "Service Item"
-  },
-  {
-   "fieldname": "service_item_details",
-   "fieldtype": "Table",
-   "label": "Service Item Details",
-   "options": "Service Item"
+   "label": "FG BOM Detals",
+   "options": "Budget BOM Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-03 10:18:08.300642",
+ "modified": "2021-11-01 18:36:15.966758",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",
