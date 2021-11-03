@@ -122,13 +122,18 @@ function fetch_boms(cur_frm, selections) {
             frappe.db.get_list('Budget BOM', {
                 filters: {
                    opportunity: selections[x],
-                    status: 'To Quotation'
+                    status: 'To Quotation',
+                    docstatus: 1
                 }
             }).then(records => {
                 console.log("recoooords")
                 console.log(records)
-                for(var x=0;x<records.length;x+=1){
-                    frappe.db.get_doc('Budget BOM', records[x].name)
+            if(cur_frm.doc.items && !cur_frm.doc.items[0].item_code){
+                                cur_frm.clear_table("items")
+                                cur_frm.refresh_field("items")
+                            }
+                for(var xx=0;xx<records.length;xx+=1){
+                    frappe.db.get_doc('Budget BOM', records[xx].name)
                         .then(doc => {
                             cur_frm.doc.party_name = doc.customer
                             cur_frm.doc.customer_name = doc.customer_name
@@ -139,10 +144,8 @@ function fetch_boms(cur_frm, selections) {
                             })
                             cur_frm.refresh_field("budget_bom_reference")
 
-                            cur_frm.clear_table("items")
                     for(var ii=0;ii<doc.fg_bom_details.length;ii+=1){
-
-                            if(!check_items(doc.fg_bom_details[ii], cur_frm)){
+                                console.log("ITEEEEEEEEEEEEEEEEEEEEMS")
                                   cur_frm.add_child("items",{
                                         "item_code": doc.fg_bom_details[ii].item_code,
                                         "item_name": doc.fg_bom_details[ii].item_name,
@@ -174,7 +177,6 @@ function fetch_boms(cur_frm, selections) {
 
                                     })
                                     cur_frm.refresh_field("items")
-                            }
 
 
 
