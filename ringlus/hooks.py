@@ -122,6 +122,9 @@ doc_events = {
 	},
 	"Sales Invoice": {
 		"on_submit": "ringlus.doc_events.sales_order.on_submit_dn",
+	},
+	"Job Card": {
+		"on_submit": "ringlus.doc_events.job_card.validate_job_card",
 	}
 }
 # Scheduled Tasks
