@@ -354,7 +354,7 @@ frappe.ui.form.on('Budget BOM', {
                 frm.add_custom_button(__("Material Request"), () => {
                     cur_frm.trigger("material_request")
                 })
-        } else if(cur_frm.doc.docstatus && ["To Material Request", "To SO", "To PO", "To PO and SO"].includes(cur_frm.doc.status)){
+        } else if(cur_frm.doc.docstatus && ["To BOM", "To SO", "To PO", "To PO and SO"].includes(cur_frm.doc.status)){
 
               if(!check_bom) {
                     frm.add_custom_button(__("Create BOM"), () => {
@@ -505,10 +505,10 @@ frappe.ui.form.on('Budget BOM', {
             cur_frm.refresh_field("mechanical_bom_details")
             cur_frm.refresh_field("fg_sellable_bom_details")
 
-
+            compute_total_operation_cost(cur_frm)
         }
 
-            compute_total_operation_cost(cur_frm)
+
 	},
     electrical_item_template: function(frm) {
         get_template(cur_frm.doc.electrical_item_template, "electrical_bom_raw_material")
@@ -744,9 +744,15 @@ frappe.ui.form.on('Additional Operational Cost', {
         cur_frm.refresh_field("total_additional_operation_cost")
 	}
 });
-frappe.ui.form.on('Budget BOM Modular Assembly', {
-    modular_assembly_details_remove: function(frm, cdt, cdn) {
-       compute_total_operation_cost(cur_frm)
+frappe.ui.form.on('Budget BOM Raw Material', {
+    electrical_bom_raw_material_remove: function(frm, cdt, cdn) {
+       compute_total_cost(cur_frm)
+	},
+    mechanical_bom_raw_material_remove: function(frm, cdt, cdn) {
+       compute_total_cost(cur_frm)
+	},
+	fg_sellable_bom_raw_material_remove: function(frm, cdt, cdn) {
+       compute_total_cost(cur_frm)
 	}
 });
 frappe.ui.form.on('Budget BOM Details', {

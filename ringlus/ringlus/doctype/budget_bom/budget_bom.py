@@ -158,6 +158,8 @@ class BudgetBOM(Document):
                 "item_name": i.item_name,
                 "qty": i.qty,
                 "uom": i.uom,
+                "estimated_bom_material_cost": self.total_raw_material_cost,
+                "estimated_bom_operation_cost": self.total_operation_cost,
             })
         return items
     @frappe.whitelist()
@@ -170,6 +172,9 @@ class BudgetBOM(Document):
             "party_name": self.customer,
             "budget_bom_reference": [{
                 "budget_bom": self.name
+            }],
+            "budget_bom_opportunity": [{
+                "opportunity": self.opportunity
             }],
             "items": self.get_quotation_items()
         }
@@ -283,6 +288,8 @@ class BudgetBOM(Document):
             print(obj)
             bom = frappe.get_doc(obj).insert()
             bom.submit()
+            print("FIRST")
+
             self.first_bom = bom.name
 
             self.create_second_bom()
@@ -301,6 +308,7 @@ class BudgetBOM(Document):
             }
             bom = frappe.get_doc(obj).insert()
             bom.submit()
+            print("SECOND")
 
             self.second_bom = bom.name
             self.create_third_bom()
@@ -315,10 +323,31 @@ class BudgetBOM(Document):
                 "with_operations": 1,
                 "budget_bom": self.name,
                 "rm_cost_as_per": self.rate_of_materials_based_on,
-                "items": self.get_raw_materials("mechanical_bom_details", "Third") + self.get_raw_materials("electrical_bom_details", "Third") + self.get_raw_materials("fg_sellable_bom_raw_material"),
-                "operations": self.get_operations("fg_sellable_bom_details")
+                "items": self.get_raw_materials("fg_sellable_bom_raw_material"),
+                "operations": self.get_assembly_operations()
             }
 
+            bom = frappe.get_doc(obj).insert()
+            bom.submit()
+            print("THIRD")
+
+            self.third_bom = bom.name
+            self.create_fourth_bom()
+
+    @frappe.whitelist()
+    def create_fourth_bom(self):
+        for i in self.fg_bom_details:
+            obj = {
+                "doctype": "BOM",
+                "item": i.item_code,
+                "quantity": i.qty,
+                "with_operations": 1,
+                "budget_bom": self.name,
+                "rm_cost_as_per": self.rate_of_materials_based_on,
+                "items": self.get_raw_materials("mechanical_bom_details", "Fourth") + self.get_raw_materials("electrical_bom_details", "Fourth") + self.get_raw_materials("fg_sellable_bom_raw_material", "Fourth"),
+                "operations": self.get_operations("fg_bom_details") + self.get_assembly_operations()
+            }
+            print("FOURTH")
             bom = frappe.get_doc(obj).insert()
             bom.submit()
 
@@ -327,16 +356,33 @@ class BudgetBOM(Document):
 
         operations = []
         for i in self.__dict__[raw_material]:
-            operation_record= frappe.db.sql(""" SELECT * FROM `tabWorkstation` WHERE name=%s""", i.workstation, as_dict=1)
-            operation_time = operation_record[0].operation_time if len(operation_record) > 0 else 0
+            # operation_record= frappe.db.sql(""" SELECT * FROM `tabWorkstation` WHERE name=%s""", i.workstation, as_dict=1)
+            # operation_time = operation_record[0].operation_time if len(operation_record) > 0 else 0
 
             operations.append({
                 "operation": i.operation,
                 "workstation": i.workstation,
-                "time_in_mins": operation_time,
+                "time_in_mins": i.operation_time_in_minutes,
                 "operating_cost": i.net_hour_rate,
             })
         return operations
+
+    @frappe.whitelist()
+    def get_assembly_operations(self):
+
+        operations = []
+        for i in self.__dict__['modular_assembly_details']:
+            # operation_record = frappe.db.sql(""" SELECT * FROM `tabWorkstation` WHERE name=%s""", i.workstation, as_dict=1)
+            # operation_time = operation_record[0].operation_time if len(operation_record) > 0 else 0
+
+            operations.append({
+                "operation": i.operation,
+                "workstation": i.workstation,
+                "time_in_mins": i.operation_time_in_minutes,
+                "operating_cost": i.net_hour_rate,
+            })
+        return operations
+
     @frappe.whitelist()
     def get_raw_materials(self, raw_material, bom = None):
         items = []
@@ -350,11 +396,14 @@ class BudgetBOM(Document):
                 "operation_time_in_minutes": i.operation_time_in_minutes if 'operation_time_in_minutes' in i.__dict__ else 0,
                 "amount": i.qty * i.rate if 'rate' in i.__dict__ else 0,
             }
-            if bom == "Third" and raw_material == "mechanical_bom_details":
+            if bom == "Fourth" and raw_material == "mechanical_bom_details":
                 obj['bom_no'] = self.second_bom
 
-            elif bom == "Third" and raw_material == "electrical_bom_details":
+            elif bom == "Fourth" and raw_material == "electrical_bom_details":
                 obj['bom_no'] = self.first_bom
+
+            elif bom == "Fourth" and raw_material == "fg_sellable_bom_raw_material":
+                obj['bom_no'] = self.third_bom
 
             items.append(obj)
 

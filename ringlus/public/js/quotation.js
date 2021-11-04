@@ -21,13 +21,33 @@ frappe.ui.form.on('Quotation Item', {
 function update_items(item, cur_frm) {
         for(var x=0;x<cur_frm.doc.items.length;x+=1){
             var item_row = cur_frm.doc.items[x]
-            console.log(item_row.item_code)
-            console.log(item)
             if(item_row.item_code === item.item_code){
-                item_row.rate = item.total_cost
-                item_row.amount = item.total_cost * item_row.qty
+                item_row.estimated_bom_material_cost  = item.total_raw_material_cost
+                item_row.estimated_bom_operation_cost  = item.total_operation_cost
+
+                item_row.material_overhead_amount = item_row.estimated_bom_material_cost * item_row.material_overhead
+                item_row.material_cost = item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)
+
+                item_row.operation_overhead_amount = item_row.estimated_bom_operation_cost * item_row.operation_overhead
+                item_row.operation_cost = item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)
+
+                item_row.material_margin_amount = item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))
+                item_row.total_margin_cost = (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))
+                item_row.operation_margin_amount = item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead))
+                item_row.total_operation_cost = item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))
+
+                item_row.total_cost = ((item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))) + ((item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))))
+                item_row.rate = item_row.total_cost
+                item_row.base_rate = item_row.total_cost
+                item_row.net_rate = item_row.total_cost
+                item_row.base_net_rate = item_row.total_cost
+                item_row.amount = item_row.rate * item_row.qty
+                item_row.base_amount = item_row.amount
+                item_row.net_amount = item_row.amount
+                item_row.base_net_amount = item_row.amount
+
                 cur_frm.refresh_field("items")
-                cur_frm.trigger("rate")
+
             }
         }
         compute_total(cur_frm)
@@ -152,7 +172,6 @@ function fetch_boms(cur_frm, selections) {
                                         "description": doc.fg_bom_details[ii].item_name,
                                         "qty": doc.fg_bom_details[ii].qty,
                                         "uom": doc.fg_bom_details[ii].uom,
-                                        "rate": doc.total_cost,
                                         "amount": doc.total_cost * doc.fg_bom_details[ii].qty,
 
                                         "estimated_bom_material_cost": doc.total_raw_material_cost,
@@ -174,7 +193,7 @@ function fetch_boms(cur_frm, selections) {
                                         "total_operation_cost": doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))),
 
                                         "total_cost": ((doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))))),
-
+                                        "rate": ((doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))))) > 0? ((doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead)) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * cur_frm.doc.default_material_overhead))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * cur_frm.doc.default_operation_overhead))))) : 0
                                     })
                                     cur_frm.refresh_field("items")
 
@@ -240,7 +259,14 @@ function compute_margin_operations(cur_frm) {
             item_row.total_operation_cost = item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))
 
             item_row.total_cost = ((item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))) + ((item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))))
-
+            item_row.rate = item_row.total_cost
+            item_row.base_rate = item_row.total_cost
+            item_row.net_rate = item_row.total_cost
+            item_row.base_net_rate = item_row.total_cost
+            item_row.amount = item_row.rate * item_row.qty
+            item_row.base_amount = item_row.amount
+            item_row.net_amount = item_row.amount
+            item_row.base_net_amount = item_row.amount
             cur_frm.refresh_field("items")
 
         }

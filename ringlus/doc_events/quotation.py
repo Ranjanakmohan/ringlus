@@ -41,8 +41,8 @@ def get_updated_costs(budget_boms):
     data = json.loads(budget_boms)
     items = []
     for i in data:
-        print("BUDGET BOOOOOOOOOOOOOOOOOOOOOM")
-        print(i['budget_bom'])
-        bb = frappe.db.sql(""" SELECT BBFD.item_code, BB.total_cost FROM `tabBudget BOM` BB INNER JOIN `tabBudget BOM FG Details` BBFD ON BBFD.parent=BB.name WHERE BB.name=%s """, i['budget_bom'], as_dict=1)
+        bb = frappe.db.sql(""" SELECT BBFD.item_code, BB.total_raw_material_cost, BB.total_operation_cost FROM `tabBudget BOM` BB INNER JOIN `tabBudget BOM Details` BBFD ON BBFD.parent=BB.name and BBFD.parentfield='fg_bom_details' WHERE BB.name=%s """, i['budget_bom'], as_dict=1)
+        print("===================================")
+        print(bb)
         items.append(bb)
     return items
