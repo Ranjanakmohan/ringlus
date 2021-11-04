@@ -9,7 +9,8 @@
   "workstation",
   "net_hour_rate",
   "operation",
-  "operation_time_in_minutes"
+  "operation_time_in_minutes",
+  "reference"
  ],
  "fields": [
   {
@@ -40,12 +41,18 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Operation Time in Minutes"
+  },
+  {
+   "fieldname": "reference",
+   "fieldtype": "Data",
+   "label": "Reference",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-11-05 01:00:38.954540",
+ "modified": "2021-11-05 01:32:15.498444",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Operational Cost",

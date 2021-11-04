@@ -3,8 +3,10 @@
 
 frappe.ui.form.on('Modular Component', {
 	refresh: function(frm) {
-cur_frm.get_field("items").grid.cannot_add_rows = true;
-cur_frm.refresh_field("items")
+		cur_frm.get_field("items").grid.cannot_add_rows = true;
+		cur_frm.refresh_field("items")
+
+
 	}
 });
 frappe.ui.form.on('Modular Assembly Raw Material', {

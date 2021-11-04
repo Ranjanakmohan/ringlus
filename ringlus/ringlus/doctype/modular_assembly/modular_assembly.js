@@ -10,6 +10,17 @@ frappe.ui.form.on('Modular Assembly', {
                 }
             }
         })
+
+         cur_frm.fields_dict.modular_assembly.grid.get_field("item_code").get_query =
+                function() {
+            var names = Array.from(cur_frm.doc.modular_assembly, x => "item_code" in x ? x.item_code:"")
+                    var filters =  [
+                        ["name", "not in", names]
+                    ]
+                    return {
+                         filters: filters
+                    }
+                }
 	}
 });
 
@@ -39,6 +50,7 @@ frappe.ui.form.on('Modular Assembly Details', {
                                 net_hour_rate: doc.operational_cost[x].net_hour_rate,
                                 operation: doc.operational_cost[x].operation,
                                 operation_time_in_minutes: doc.operational_cost[x].operation_time_in_minutes,
+                                reference: d.item_code,
                             })
 
                             cur_frm.refresh_field('operational_cost')
@@ -50,15 +62,34 @@ frappe.ui.form.on('Modular Assembly Details', {
 							cur_frm.add_child("raw_material", {
 								item_code: doc.raw_materials[i].item_code,
 								qty: doc.raw_materials[i].qty,
+								uom: doc.raw_materials[i].uom,
+								reference: d.item_code,
 							})
 							cur_frm.refresh_field('raw_material')
 						}
 					}
 			})
 		}
-	}
+	},
+	before_modular_assembly_remove: function (frm, cdt, cdn) {
+	    console.log("naa man")
+        var d = locals[cdt][cdn]
+	    remove_row(cur_frm, d, 'raw_material')
+	    remove_row(cur_frm, d, 'operational_cost')
+    }
 });
 
+function remove_row(cur_frm, d, table_name) {
+    if(cur_frm.doc[table_name]) {
+        for (var x = cur_frm.doc[table_name].length - 1; x >= 0; x -= 1) {
+            if (cur_frm.doc[table_name][x].reference === d.item_code) {
+                console.log("SPLIICE")
+                cur_frm.doc[table_name].splice(x, 1);
+                cur_frm.refresh_field(table_name)
+            }
+        }
+    }
+}
 function check_items(item, cur_frm) {
 	if(cur_frm.doc.raw_material){
 		 for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
