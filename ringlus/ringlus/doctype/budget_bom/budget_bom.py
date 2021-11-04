@@ -98,7 +98,7 @@ class BudgetBOM(Document):
                     'warehouse': raw_material_warehouse,
                     'rate': rate[0],
                     'amount': rate[0] * x.qty,
-                    'discount_rate': 0
+                    'discount_rate': rate[0] / x.qty if rate[0] > 0 else 0
                 }
                 discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,(self.opportunity, item_master.item_group),as_dict=1)
                 if len(discount) > 0:
