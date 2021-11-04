@@ -108,7 +108,7 @@ doc_events = {
 		"on_submit": "ringlus.doc_events.purchase_order.on_submit_po",
 	},
 	"Purchase Invoice": {
-		"on_submit": "ringlus.doc_events.purchase_receipt.on_submit_pr",
+		"on_submit": "ringlus.doc_events.purchase_invoice.on_submit_pi",
 	},
 	"Purchase Receipt": {
 		"on_submit": "ringlus.doc_events.purchase_receipt.on_submit_pr",
@@ -121,7 +121,7 @@ doc_events = {
 		"on_submit": "ringlus.doc_events.sales_order.on_submit_dn",
 	},
 	"Sales Invoice": {
-		"on_submit": "ringlus.doc_events.sales_order.on_submit_dn",
+		"on_submit": "ringlus.doc_events.purchase_invoice.on_submit_si",
 	},
 	"Job Card": {
 		"on_submit": "ringlus.doc_events.job_card.validate_job_card",
