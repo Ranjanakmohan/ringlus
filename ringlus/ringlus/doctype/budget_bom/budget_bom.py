@@ -350,6 +350,7 @@ class BudgetBOM(Document):
             print("FOURTH")
             bom = frappe.get_doc(obj).insert()
             bom.submit()
+            self.action_to_design("To Purchase Order")
 
     @frappe.whitelist()
     def get_operations(self,raw_material):
