@@ -61,12 +61,12 @@ class BudgetBOM(Document):
             operations = ["operation_1","operation_2","operation_3","operation_4","operation_5"]
             operation_time_in_minutes = ["operation_time_in_minutes_1","operation_time_in_minutes_2","operation_time_in_minutes_3","operation_time_in_minutes_4","operation_time_in_minutes_5"]
             net_hour_rate = ["net_hour_rate_1","net_hour_rate_2","net_hour_rate_3","net_hour_rate_4","net_hour_rate_5"]
-            for xx in template.modular_assembly:
+            for xx in template.operational_cost:
                 for b in range(0, len(workstations)):
                     if xx.__dict__[workstations[b]] or xx.__dict__[operations[b]]:
                         obj = {
-                            'item_code': xx.item_code,
-                            'qty': xx.qty,
+                            'item_code': template.modular_assembly[0].item_code,
+                            'qty': template.modular_assembly[0].qty,
                             'workstation': xx.__dict__[workstations[b]],
                             'operation': xx.__dict__[operations[b]],
                             'operation_time_in_minutes': xx.__dict__[operation_time_in_minutes[b]],
