@@ -7,7 +7,9 @@
  "engine": "InnoDB",
  "field_order": [
   "item_name",
-  "qty"
+  "qty",
+  "uom",
+  "remarks"
  ],
  "fields": [
   {
@@ -18,16 +20,30 @@
    "reqd": 1
   },
   {
+   "default": "1",
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Qty"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Remarks"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-11-05 12:03:57.243366",
+ "modified": "2021-11-05 00:31:26.635907",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Component Details",

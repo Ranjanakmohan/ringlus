@@ -40,7 +40,7 @@ class BudgetBOM(Document):
                         'item_code': x.item_code,
                         'item_name': item_master.item_name,
                         'item_group': item_master.item_group,
-                        'uom': item_master.stock_uom,
+                        'uom': x.uom,
                         'qty': x.qty,
                         'warehouse': raw_material_warehouse,
                         'rate': rate[0],
@@ -57,13 +57,13 @@ class BudgetBOM(Document):
                         obj['amount'] = (discount[0].discount_rate * x.qty)
                     self.append("fg_sellable_bom_raw_material",obj)
 
-            workstations = ["workstation_1","workstation_2","workstation_3","workstation_4","workstation_5"]
-            operations = ["operation_1","operation_2","operation_3","operation_4","operation_5"]
-            operation_time_in_minutes = ["operation_time_in_minutes_1","operation_time_in_minutes_2","operation_time_in_minutes_3","operation_time_in_minutes_4","operation_time_in_minutes_5"]
-            net_hour_rate = ["net_hour_rate_1","net_hour_rate_2","net_hour_rate_3","net_hour_rate_4","net_hour_rate_5"]
+            workstations = ["workstation"]
+            operations = ["operation"]
+            operation_time_in_minutes = ["operation_time_in_minutes"]
+            net_hour_rate = ["net_hour_rate"]
             for xx in template.operational_cost:
                 for b in range(0, len(workstations)):
-                    if xx.__dict__[workstations[b]] or xx.__dict__[operations[b]]:
+                    if xx.__dict__[workstations[b]] and xx.__dict__[operations[b]]:
                         obj = {
                             'item_code': template.modular_assembly[0].item_code,
                             'qty': template.modular_assembly[0].qty,
@@ -73,6 +73,7 @@ class BudgetBOM(Document):
                             'net_hour_rate': xx.__dict__[net_hour_rate[b]],
                         }
                         self.append("modular_assembly_details", obj)
+
     @frappe.whitelist()
     def existing_item(self, xx, table, item_field_name):
         for i in self.__dict__[table]:
