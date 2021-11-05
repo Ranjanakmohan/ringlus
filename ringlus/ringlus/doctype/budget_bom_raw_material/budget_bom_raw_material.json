@@ -23,7 +23,6 @@
   "batch",
   "discount_rate",
   "save_discount_amount",
-  "update_discount",
   "link_discount_amount"
  ],
  "fields": [
@@ -161,17 +160,12 @@
    "fieldtype": "Link",
    "label": "Item Group",
    "options": "Item Group"
-  },
-  {
-   "fieldname": "update_discount",
-   "fieldtype": "Button",
-   "label": "Update Discount"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-11-05 11:08:31.355595",
+ "modified": "2021-11-05 13:38:30.939803",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",

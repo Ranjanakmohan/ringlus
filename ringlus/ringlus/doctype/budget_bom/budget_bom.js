@@ -25,7 +25,11 @@ cur_frm.cscript.modular_assembly_templates = function () {
         date_field: "posting_date",
         get_query() {
             return {
-                filters: { docstatus: ['!=', 2] }
+                filters: {
+                    docstatus: ['!=', 2],
+                    sellable_product: cur_frm.doc.sellable_product,
+                    opportunity: cur_frm.doc.opportunity,
+                }
             }
         },
         action(selections) {
@@ -111,6 +115,9 @@ cur_frm.cscript.generate_item_template = function () {
 
 frappe.ui.form.on('Budget BOM', {
 	refresh: function(frm) {
+        document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
+       document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
+       document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
 	    if(cur_frm.is_new()) {
             cur_frm.doc.status = "Pending"
             cur_frm.refresh_field(status)
@@ -675,7 +682,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
                  }
             })
- compute_total_cost(cur_frm)
+            compute_total_cost(cur_frm)
         }
 
     },
@@ -830,6 +837,10 @@ function compute_total_operation_cost(cur_frm) {
     cur_frm.refresh_field("total_operation_cost")
 }
 function get_template(template_names, raw_material_table, cur_frm){
+    if(cur_frm.doc[raw_material_table].length > 0 && !cur_frm.doc[raw_material_table][0].item_code){
+        cur_frm.clear_table(raw_material_table)
+        cur_frm.refresh_field(raw_material_table)
+    }
      cur_frm.call({
         doc: cur_frm.doc,
         method: 'get_templates',

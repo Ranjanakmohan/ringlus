@@ -8,6 +8,26 @@ from erpnext.stock.stock_ledger import get_previous_sle
 
 class BudgetBOM(Document):
     @frappe.whitelist()
+    def update_discounts(self):
+        fields = ['electrical_bom_raw_material','mechanical_bom_raw_material','fg_sellable_bom_raw_material']
+        for i in fields:
+            for ii in self.__dict__[i]:
+                obj = self.update_discount(ii.__dict__)
+
+    @frappe.whitelist()
+    def update_discount(self, item):
+        discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,
+                                 (self.opportunity, item['item_group']), as_dict=1)
+
+        if len(discount) > 0:
+            item['discount_rate'] = discount[0].discount_rate
+            item['link_discount_amount'] = discount[0].name
+            item['discount_amount'] = discount[0].discount_amount
+            item['discount_percentage'] = discount[0].discount_percentage
+            item['rate'] = (discount[0].discount_rate * item['qty']) + discount[0].discount_amount
+            item['amount'] = (discount[0].discount_rate * item['qty'])
+
+    @frappe.whitelist()
     def generate_opportunity_items(self):
         if not self.opportunity or not self.sellable_product:
             frappe.throw("Please select valid Opportunity or Sellable Product")
@@ -141,21 +161,6 @@ class BudgetBOM(Document):
 
         return obj
 
-    @frappe.whitelist()
-    def update_discount(self, item):
-        obj = {}
-        discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,
-                                 (self.opportunity, item['item_group']), as_dict=1)
-
-        if len(discount) > 0:
-            obj['discount_rate'] = discount[0].discount_rate
-            obj['link_discount_amount'] = discount[0].name
-            obj['discount_amount'] = discount[0].discount_amount
-            obj['discount_percentage'] = discount[0].discount_percentage
-            obj['rate'] = (discount[0].discount_rate * item['qty']) + discount[0].discount_amount
-            obj['amount'] = (discount[0].discount_rate * item['qty'])
-
-        return obj
     @frappe.whitelist()
     def on_submit(self):
         if self.opportunity:
@@ -439,7 +444,7 @@ def set_available_qty(items):
 
         previous_sle = get_previous_sle({
             "item_code": d['item_code'],
-            "warehouse": d['warehouse'],
+            "warehouse": d['warehouse'] if 'warehouse' in d else "",
             "posting_date": date,
             "posting_time": time
         })

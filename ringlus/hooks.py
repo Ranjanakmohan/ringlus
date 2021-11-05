@@ -112,6 +112,7 @@ doc_events = {
 	},
 	"Purchase Receipt": {
 		"on_submit": "ringlus.doc_events.purchase_receipt.on_submit_pr",
+		"on_cancel": "ringlus.doc_events.purchase_receipt.on_cancel_pr",
 	},
 	"Sales Order": {
 		"on_submit": "ringlus.doc_events.sales_order.on_submit_so",
@@ -125,6 +126,9 @@ doc_events = {
 	},
 	"Job Card": {
 		"on_submit": "ringlus.doc_events.job_card.validate_job_card",
+	},
+	"Stock Entry": {
+		"on_submit": "ringlus.doc_events.stock_entry.on_submit_se",
 	}
 }
 # Scheduled Tasks
@@ -287,9 +291,13 @@ fixtures = [
 					"Quotation-opportunities",
 					"Quotation-reference",
 
+					"Work Order-reference",
+					"Work Order-budget_bom_reference",
+
 					"Manufacturing Settings-mechanical_operation_time_in_minute",
 					"Manufacturing Settings-fg_operation_time_in_minute",
 					"Manufacturing Settings-electrical_operation_time_in_minute",
+
 
 				]
 			]

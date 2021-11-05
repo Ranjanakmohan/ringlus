@@ -18,6 +18,7 @@
   "expected_closing_date",
   "rate_of_materials_based_on",
   "price_list",
+  "update_discounts",
   "fg_bom_section",
   "fg_bom_details",
   "electrical_bom_section",
@@ -367,12 +368,18 @@
    "fieldtype": "Table",
    "label": "FG BOM Detals",
    "options": "Budget BOM Details"
+  },
+  {
+   "fieldname": "update_discounts",
+   "fieldtype": "Button",
+   "label": "Update Discounts",
+   "options": "update_discounts"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-05 11:13:09.996484",
+ "modified": "2021-11-05 13:29:38.193984",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",
