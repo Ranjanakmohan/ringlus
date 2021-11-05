@@ -42,7 +42,7 @@ frappe.ui.form.on('Modular Assembly Details', {
 		if(d.item_code){
        		frappe.db.get_doc("Modular Component", d.item_code)
 				.then(doc => {
-					console.log(doc)
+
             if(cur_frm.doc.operational_cost.length > 0 && !cur_frm.doc.operational_cost[0].workstation){
                 cur_frm.clear_table("operational_cost")
                 cur_frm.refresh_field("operational_cost")
@@ -51,6 +51,11 @@ frappe.ui.form.on('Modular Assembly Details', {
                 cur_frm.clear_table("raw_material")
                 cur_frm.refresh_field("raw_material")
             }
+                for(var xy=0;xy<doc.items.length;xy+=1){
+                        d.uom = doc.items[0].uom
+                        d.remarks= doc.items[0].item_description
+                    cur_frm.refresh_field("modular_assembly")
+                    }
 					for(var x=0;x<doc.operational_cost.length;x+=1){
 						if(!check_operational_cost(doc.operational_cost[x], cur_frm)) {
                             cur_frm.add_child("operational_cost", {
