@@ -12,6 +12,9 @@ var check_bom = false
 var table_name = ""
 var net_hour_rate = 0
 var operation_time = 0
+var fg_operation_time_in_minute = 0
+var mechanical_operation_time_in_minute = 0
+var electrical_operation_time_in_minute = 0
 var raw_material_warehouse = 0
 cur_frm.cscript.modular_assembly_templates = function () {
     var d = new frappe.ui.form.MultiSelectDialog({
@@ -214,7 +217,6 @@ frappe.ui.form.on('Budget BOM', {
                         frappe.db.get_doc('Workstation', d_workstation)
                         .then(doc => {
                             net_hour_rate = doc.hour_rate
-                            operation_time = doc.operation_time
                         })
                 }
 
@@ -230,21 +232,27 @@ frappe.ui.form.on('Budget BOM', {
 
             })
 
-            frappe.db.get_single_value("Manufacturing Settings","default_routing")
-                .then(d_routing => {
-                    routing = d_routing
-
-            })
         frappe.db.get_single_value("Manufacturing Settings","default_raw_material_warehouse")
                 .then(warehouse => {
                     raw_material_warehouse = warehouse
 
             })
-            frappe.db.get_single_value("Manufacturing Settings","enclosure_default_operation")
-                    .then(d_operation => {
-                        fg_sellable_operation = d_operation
 
-                })
+        frappe.db.get_single_value("Manufacturing Settings","fg_operation_time_in_minute")
+                .then(time => {
+                    fg_operation_time_in_minute = time
+
+            })
+        frappe.db.get_single_value("Manufacturing Settings","mechanical_operation_time_in_minute")
+                .then(time => {
+                    mechanical_operation_time_in_minute = time
+
+            })
+        frappe.db.get_single_value("Manufacturing Settings","electrical_operation_time_in_minute")
+                .then(time => {
+                    electrical_operation_time_in_minute = time
+
+            })
 
         if(cur_frm.doc.docstatus && cur_frm.doc.status === "Pending"){
 	        if(frappe.user.has_role("Sales User") || frappe.user.has_role("MD")){
@@ -458,7 +466,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: electrical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
+                    operation_time_in_minutes: fg_operation_time_in_minute > 0 ? fg_operation_time_in_minute : ""
                 })
             }
             if(cur_frm.doc.electrical_bom_details.length === 0){
@@ -467,7 +475,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: electrical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
+                    operation_time_in_minutes: electrical_operation_time_in_minute > 0 ? electrical_operation_time_in_minute : ""
                 })
             }
             if(cur_frm.doc.mechanical_bom_details.length === 0){
@@ -476,7 +484,7 @@ frappe.ui.form.on('Budget BOM', {
                     operation: mechanical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
+                    operation_time_in_minutes: mechanical_operation_time_in_minute > 0 ? mechanical_operation_time_in_minute : ""
                 })
             }
             if(cur_frm.doc.fg_sellable_bom_details.length === 0){
@@ -729,9 +737,36 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                 cur_frm.refresh_field(d.parentfield)
             })
         }
+    },
+    update_discount: function (frm, cdt, cdn) {
+        var d = locals[cdt][cdn]
+        if(d.item_group){
+            cur_frm.call({
+                doc: cur_frm.doc,
+                method: 'update_discount',
+                args: {
+                    item: d
+                },
+                freeze: true,
+                freeze_message: "Get Templates...",
+                async:false,
+                callback: (r) => {
+                    console.log("ITEM CODEEEE TRIGGER")
+                    console.log(r.message.discount_rate)
+                        var values = r.message
+                            console.log(values.discount_rate)
 
+                            d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
+                          d.link_discount_amount = values.link_discount_amount
+                          d.discount_amount = values.discount_amount
+                          d.discount_percentage = values.discount_percentage
+                          d.rate = values.rate
+                          d.amount = values.amount
+                            cur_frm.refresh_field(d.parentfield)
 
-
+                 }
+            })
+        }
     }
 });
 frappe.ui.form.on('Additional Operational Cost', {

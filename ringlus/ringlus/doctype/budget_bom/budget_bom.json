@@ -129,7 +129,8 @@
    "fieldname": "electrical_bom_raw_material",
    "fieldtype": "Table",
    "label": "Electrical Raw Material",
-   "options": "Budget BOM Raw Material"
+   "options": "Budget BOM Raw Material",
+   "reqd": 1
   },
   {
    "fieldname": "mechanical_bom_section",
@@ -148,7 +149,8 @@
    "fieldname": "mechanical_bom_raw_material",
    "fieldtype": "Table",
    "label": "Mechanical Raw Material",
-   "options": "Budget BOM Raw Material"
+   "options": "Budget BOM Raw Material",
+   "reqd": 1
   },
   {
    "fieldname": "fgsellable_bom_section",
@@ -167,7 +169,8 @@
    "fieldname": "fg_sellable_bom_raw_material",
    "fieldtype": "Table",
    "label": "Modular Assembly Raw Material",
-   "options": "Budget BOM Raw Material"
+   "options": "Budget BOM Raw Material",
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
@@ -369,7 +372,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-01 18:36:15.966758",
+ "modified": "2021-11-05 11:13:09.996484",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -24,28 +24,32 @@
    "fieldname": "raw_materials",
    "fieldtype": "Table",
    "label": "Raw Materials",
-   "options": "Modular Assembly Raw Material"
+   "options": "Modular Assembly Raw Material",
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Amended From",
    "no_copy": 1,
    "options": "Modular Component",
    "print_hide": 1,
-   "read_only": 1
+   "read_only": 1,
+   "reqd": 1
   },
   {
    "fieldname": "operational_cost",
    "fieldtype": "Table",
    "label": "Operational Cost",
-   "options": "Operational Cost"
+   "options": "Operational Cost",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-05 01:56:10.496420",
+ "modified": "2021-11-05 11:17:22.567605",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Component",

@@ -24,7 +24,8 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Item Name",
-   "options": "Modular Component"
+   "options": "Modular Component",
+   "reqd": 1
   },
   {
    "fieldname": "uom",
@@ -43,7 +44,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-11-05 01:20:21.099747",
+ "modified": "2021-11-05 11:18:29.815727",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly Details",

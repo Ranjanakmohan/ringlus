@@ -287,6 +287,10 @@ fixtures = [
 					"Quotation-opportunities",
 					"Quotation-reference",
 
+					"Manufacturing Settings-mechanical_operation_time_in_minute",
+					"Manufacturing Settings-fg_operation_time_in_minute",
+					"Manufacturing Settings-electrical_operation_time_in_minute",
+
 				]
 			]
 		]

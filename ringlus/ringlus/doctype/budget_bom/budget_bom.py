@@ -140,6 +140,22 @@ class BudgetBOM(Document):
             obj['amount'] = (discount[0].discount_rate * item['qty'])
 
         return obj
+
+    @frappe.whitelist()
+    def update_discount(self, item):
+        obj = {}
+        discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,
+                                 (self.opportunity, item['item_group']), as_dict=1)
+
+        if len(discount) > 0:
+            obj['discount_rate'] = discount[0].discount_rate
+            obj['link_discount_amount'] = discount[0].name
+            obj['discount_amount'] = discount[0].discount_amount
+            obj['discount_percentage'] = discount[0].discount_percentage
+            obj['rate'] = (discount[0].discount_rate * item['qty']) + discount[0].discount_amount
+            obj['amount'] = (discount[0].discount_rate * item['qty'])
+
+        return obj
     @frappe.whitelist()
     def on_submit(self):
         if self.opportunity:

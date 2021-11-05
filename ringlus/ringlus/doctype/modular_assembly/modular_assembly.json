@@ -37,13 +37,15 @@
    "fieldname": "modular_assembly",
    "fieldtype": "Table",
    "label": "Modular Component",
-   "options": "Modular Assembly Details"
+   "options": "Modular Assembly Details",
+   "reqd": 1
   },
   {
    "fieldname": "raw_material",
    "fieldtype": "Table",
    "label": "Raw Material",
-   "options": "Modular Assembly Raw Material"
+   "options": "Modular Assembly Raw Material",
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
@@ -66,13 +68,14 @@
    "fieldname": "operational_cost",
    "fieldtype": "Table",
    "label": "Operational Cost",
-   "options": "Operational Cost"
+   "options": "Operational Cost",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-05 01:55:56.765772",
+ "modified": "2021-11-05 11:18:23.918910",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly",
