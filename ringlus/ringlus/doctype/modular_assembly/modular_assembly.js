@@ -43,6 +43,14 @@ frappe.ui.form.on('Modular Assembly Details', {
        		frappe.db.get_doc("Modular Component", d.item_code)
 				.then(doc => {
 					console.log(doc)
+            if(cur_frm.doc.operation_cost && !cur_frm.doc.operational_cost[0].workstation){
+                cur_frm.clear_table("operational_cost")
+                cur_frm.refresh_field("operational_cost")
+            }
+            if(cur_frm.doc.raw_material && !cur_frm.doc.raw_material[0].item_code){
+                cur_frm.clear_table("raw_material")
+                cur_frm.refresh_field("raw_material")
+            }
 					for(var x=0;x<doc.operational_cost.length;x+=1){
 						if(!check_operational_cost(doc.operational_cost[x], cur_frm)) {
                             cur_frm.add_child("operational_cost", {
@@ -109,12 +117,8 @@ function check_operational_cost(operational_cost, cur_frm) {
 		var existing = false
 		 for(var x=0;x<cur_frm.doc.operational_cost.length;x+=1){
             var item_row = cur_frm.doc.operational_cost[x]
-            if(item_row.workstation === operational_cost.workstation){
+            if(item_row.workstation === operational_cost.workstation && item_row.operation === operational_cost.operation){
                 item_row.net_hour_rate += operational_cost.net_hour_rate
-                cur_frm.refresh_field("operational_cost")
-                existing = true
-            }
-            if(item_row.operation === operational_cost.operation){
                 item_row.operation_time_in_minutes += operational_cost.operation_time_in_minutes
                 cur_frm.refresh_field("operational_cost")
                 existing = true
