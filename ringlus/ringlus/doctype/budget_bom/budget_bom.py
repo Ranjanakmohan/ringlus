@@ -141,9 +141,10 @@ class BudgetBOM(Document):
 
         rate = get_rate(item['item_code'], "", self.rate_of_materials_based_on if self.rate_of_materials_based_on else "",
                         self.price_list if self.price_list else "")
+        item_name = frappe.db.get_value("Item", item['item_code'],"item_name")
         obj = {
             'item_code': item['item_code'],
-            'item_name': item['item_name'],
+            'item_name': item_name,
             'item_group': item['item_group'],
             'uom': item['uom'],
             'qty': item['qty'],
