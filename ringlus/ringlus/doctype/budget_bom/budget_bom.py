@@ -84,6 +84,10 @@ class BudgetBOM(Document):
             net_hour_rate = ["net_hour_rate"]
             for xx in template.operational_cost:
                 for b in range(0, len(workstations)):
+                    if not xx.__dict__[workstations[b]] and xx.__dict__[operations[b]]:
+                        xx.__dict__[workstations[b]] = frappe.db.get_value("Operation", xx.__dict__[operations[b]], "workstation")
+                        if xx.__dict__[workstations[b]]:
+                            xx.__dict__[net_hour_rate[b]] = frappe.db.get_value("Workstation", xx.__dict__[workstations[b]], "hour_rate")
                     if xx.__dict__[workstations[b]] and xx.__dict__[operations[b]]:
                         obj = {
                             'item_code': template.modular_assembly[0].item_code,
