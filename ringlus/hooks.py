@@ -292,8 +292,7 @@ fixtures = [
 					"Quotation-opportunities",
 					"Quotation-reference",
 
-					"Work Order-reference",
-					"Work Order-budget_bom_reference",
+					"Work Order-budget_bom",
 
 					"Manufacturing Settings-mechanical_operation_time_in_minute",
 					"Manufacturing Settings-fg_operation_time_in_minute",
