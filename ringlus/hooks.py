@@ -35,6 +35,7 @@ doctype_js = {
 	"Purchase Order" : "public/js/purchase_order.js",
 	"Quotation" : "public/js/quotation.js",
 	"Material Request" : "public/js/material_request.js",
+	"Sales Order" : "public/js/sales_order.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -296,7 +297,11 @@ fixtures = [
 
 					"Manufacturing Settings-mechanical_operation_time_in_minute",
 					"Manufacturing Settings-fg_operation_time_in_minute",
-					"Manufacturing Settings-electrical_operation_time_in_minute",
+
+					"Sales Order Item-references",
+					"Sales Order Item-project_code",
+					"Sales Order-cost_center",
+					"Sales Order-generate_project_code",
 
 
 				]

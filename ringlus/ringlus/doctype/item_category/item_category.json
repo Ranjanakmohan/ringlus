@@ -1,33 +1,23 @@
 {
  "actions": [],
- "allow_import": 1,
  "allow_rename": 1,
- "autoname": "field:sellable_product",
- "creation": "2021-10-28 10:39:30.064942",
+ "creation": "2021-11-19 09:08:48.629275",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "sellable_product",
-  "description",
-  "sellable_product_category"
+  "item",
+  "description"
  ],
  "fields": [
   {
-   "fieldname": "sellable_product_category",
+   "fieldname": "item",
    "fieldtype": "Link",
-   "label": "Sellable Product Category",
-   "options": "Sellable Product Category"
+   "label": "Item",
+   "options": "Item"
   },
   {
-   "fieldname": "sellable_product",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Name",
-   "reqd": 1,
-   "unique": 1
-  },
-  {
+   "fetch_from": "item.description",
    "fieldname": "description",
    "fieldtype": "Data",
    "label": "Description"
@@ -35,10 +25,10 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-19 09:00:15.923306",
+ "modified": "2021-11-19 09:08:48.629275",
  "modified_by": "Administrator",
  "module": "Ringlus",
- "name": "Sellable Product",
+ "name": "Item Category",
  "owner": "Administrator",
  "permissions": [
   {
@@ -46,7 +36,6 @@
    "delete": 1,
    "email": 1,
    "export": 1,
-   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
