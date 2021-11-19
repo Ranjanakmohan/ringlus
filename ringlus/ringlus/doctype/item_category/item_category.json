@@ -1,12 +1,13 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:description",
+ "autoname": "field:category",
  "creation": "2021-11-19 09:08:48.629275",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "category",
   "description"
  ],
  "fields": [
@@ -18,11 +19,18 @@
    "label": "Description",
    "reqd": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "label": "Category",
+   "reqd": 1,
+   "unique": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-19 13:47:51.540843",
+ "modified": "2021-11-19 14:00:44.240803",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Item Category",
