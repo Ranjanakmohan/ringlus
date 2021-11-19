@@ -778,13 +778,11 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 });
 frappe.ui.form.on('Additional Operational Cost', {
     amount: function(frm, cdt, cdn) {
-        var total=0
-       for(var ii=0;ii<cur_frm.doc.additional_operation_cost.length;ii+=1){
-            total += cur_frm.doc.additional_operation_cost[ii].amount
-        }
-        cur_frm.doc.total_additional_operation_cost = total
-        cur_frm.refresh_field("total_additional_operation_cost")
-	}
+        compute_total_operation_cost(cur_frm)
+	},
+    operational_costs_remove: function () {
+        compute_total_operation_cost(cur_frm)
+    }
 });
 frappe.ui.form.on('Budget BOM Raw Material', {
     electrical_bom_raw_material_remove: function(frm, cdt, cdn) {
@@ -814,6 +812,7 @@ function compute_total_cost(cur_frm) {
         }
 
     }
+
     cur_frm.doc.total_raw_material_cost = total
     cur_frm.refresh_field("total_raw_material_cost")
 }
@@ -831,8 +830,11 @@ function compute_total_operation_cost(cur_frm) {
         }
 
     }
-    console.log("TOTAL HOUR RATE")
-    console.log(total_hour_rate)
+    if(cur_frm.doc.operational_costs) {
+        for (var xxx = 0; xxx < cur_frm.doc.operational_costs.length; xxx += 1) {
+            total_hour_rate += cur_frm.doc.operational_costs[xxx].amount
+        }
+    }
     cur_frm.doc.total_operation_cost = total_hour_rate
     cur_frm.refresh_field("total_operation_cost")
 }

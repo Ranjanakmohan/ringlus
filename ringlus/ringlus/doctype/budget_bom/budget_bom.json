@@ -42,8 +42,9 @@
   "section_break_29",
   "modular_assembly_details",
   "section_break_34",
+  "operational_costs",
+  "section_break_38",
   "total_operation_cost",
-  "column_break_32",
   "column_break_35",
   "total_raw_material_cost",
   "more_information_section",
@@ -262,10 +263,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_32",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_35",
    "fieldtype": "Column Break"
   },
@@ -350,7 +347,8 @@
   },
   {
    "fieldname": "section_break_34",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Additional Operational Cost"
   },
   {
    "fieldname": "modular_assembly_details",
@@ -374,12 +372,22 @@
    "fieldtype": "Button",
    "label": "Update Discounts",
    "options": "update_discounts"
+  },
+  {
+   "fieldname": "operational_costs",
+   "fieldtype": "Table",
+   "label": "Operational Costs",
+   "options": "Additional Operational Cost"
+  },
+  {
+   "fieldname": "section_break_38",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-05 13:29:38.193984",
+ "modified": "2021-11-19 17:12:21.250834",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",
