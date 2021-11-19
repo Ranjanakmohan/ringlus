@@ -302,6 +302,7 @@ fixtures = [
 					"Sales Order Item-project_code",
 					"Sales Order-cost_center",
 					"Sales Order-generate_project_code",
+					"Item-item_category",
 
 
 				]

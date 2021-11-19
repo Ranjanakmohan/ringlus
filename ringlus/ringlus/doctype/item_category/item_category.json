@@ -6,26 +6,21 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item",
   "description"
  ],
  "fields": [
   {
-   "fieldname": "item",
-   "fieldtype": "Link",
-   "label": "Item",
-   "options": "Item"
-  },
-  {
    "fetch_from": "item.description",
    "fieldname": "description",
    "fieldtype": "Data",
-   "label": "Description"
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-19 09:08:48.629275",
+ "modified": "2021-11-19 09:43:26.454625",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Item Category",
