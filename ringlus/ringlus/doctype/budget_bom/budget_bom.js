@@ -120,7 +120,7 @@ frappe.ui.form.on('Budget BOM', {
        document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
 	    if(cur_frm.is_new()) {
             cur_frm.doc.status = "Pending"
-            cur_frm.refresh_field(status)
+            cur_frm.refresh_field("status")
         }
 	    cur_frm.set_query("opportunity", () => {
 	        return {
@@ -778,12 +778,22 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 });
 frappe.ui.form.on('Additional Operational Cost', {
     amount: function(frm, cdt, cdn) {
-        compute_total_operation_cost(cur_frm)
+        compute_additional_costs(cur_frm)
 	},
     operational_costs_remove: function () {
-        compute_total_operation_cost(cur_frm)
+        compute_additional_costs(cur_frm)
     }
 });
+function compute_additional_costs(cur_frm) {
+    var total = 0
+    if(cur_frm.doc.operational_costs) {
+        for (var xxx = 0; xxx < cur_frm.doc.operational_costs.length; xxx += 1) {
+            total += cur_frm.doc.operational_costs[xxx].amount
+        }
+    }
+    cur_frm.doc.total_additional_operational_cost = total
+    cur_frm.refresh_field("total_additional_operational_cost")
+}
 frappe.ui.form.on('Budget BOM Raw Material', {
     electrical_bom_raw_material_remove: function(frm, cdt, cdn) {
        compute_total_cost(cur_frm)
@@ -830,11 +840,7 @@ function compute_total_operation_cost(cur_frm) {
         }
 
     }
-    if(cur_frm.doc.operational_costs) {
-        for (var xxx = 0; xxx < cur_frm.doc.operational_costs.length; xxx += 1) {
-            total_hour_rate += cur_frm.doc.operational_costs[xxx].amount
-        }
-    }
+
     cur_frm.doc.total_operation_cost = total_hour_rate
     cur_frm.refresh_field("total_operation_cost")
 }

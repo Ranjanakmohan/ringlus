@@ -45,6 +45,7 @@
   "operational_costs",
   "section_break_38",
   "total_operation_cost",
+  "total_additional_operational_cost",
   "column_break_35",
   "total_raw_material_cost",
   "more_information_section",
@@ -382,12 +383,18 @@
   {
    "fieldname": "section_break_38",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_additional_operational_cost",
+   "fieldtype": "Currency",
+   "label": "Total Additional Operational Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-11-19 17:12:21.250834",
+ "modified": "2021-11-19 21:26:50.381280",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

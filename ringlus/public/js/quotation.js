@@ -146,9 +146,7 @@ function fetch_boms(cur_frm, selections) {
                     docstatus: 1
                 }
             }).then(records => {
-                console.log("recoooords")
-                console.log(records)
-            if(cur_frm.doc.items && !cur_frm.doc.items[0].item_code){
+                         if(cur_frm.doc.items && !cur_frm.doc.items[0].item_code){
                                 cur_frm.clear_table("items")
                                 cur_frm.refresh_field("items")
                             }
@@ -157,15 +155,14 @@ function fetch_boms(cur_frm, selections) {
                         .then(doc => {
                             cur_frm.doc.party_name = doc.customer
                             cur_frm.doc.customer_name = doc.customer_name
-                            cur_frm.refresh_field("party_name")
-                            cur_frm.refresh_field("customer_name")
+                            cur_frm.doc.additional_operating_cost += doc.total_additional_operational_cost
+                            cur_frm.refresh_fields(["party_name","additional_operating_cost", "customer_name"])
                             cur_frm.add_child("budget_bom_reference",{
                                 budget_bom: doc.name
                             })
                             cur_frm.refresh_field("budget_bom_reference")
 
                     for(var ii=0;ii<doc.fg_bom_details.length;ii+=1){
-                                console.log("ITEEEEEEEEEEEEEEEEEEEEMS")
                                   cur_frm.add_child("items",{
                                         "item_code": doc.fg_bom_details[ii].item_code,
                                         "item_name": doc.fg_bom_details[ii].item_name,

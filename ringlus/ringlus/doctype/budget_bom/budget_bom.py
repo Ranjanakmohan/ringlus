@@ -204,7 +204,8 @@ class BudgetBOM(Document):
             "budget_bom_opportunity": [{
                 "opportunity": self.opportunity
             }],
-            "items": self.get_quotation_items()
+            "items": self.get_quotation_items(),
+            "additional_operating_cost": self.total_additional_operational_cost
         }
         quotation = frappe.get_doc(obj).insert()
         frappe.db.sql(""" UPDATE `tabBudget BOM` SET status='To Quotation', quotation_amended=0 WHERE name=%s """,
