@@ -369,7 +369,7 @@ frappe.ui.form.on('Budget BOM', {
                 frm.add_custom_button(__("Material Request"), () => {
                     cur_frm.trigger("material_request")
                 })
-        } else if(cur_frm.doc.docstatus && ["To BOM", "To SO", "To PO", "To PO and SO"].includes(cur_frm.doc.status)){
+        }
 
               if(!check_bom) {
                     frm.add_custom_button(__("Create BOM"), () => {
@@ -390,7 +390,7 @@ frappe.ui.form.on('Budget BOM', {
                     })
                 }
 
-        }
+
          if(cur_frm.doc.docstatus && frappe.user.has_role("Sales User") && !(cur_frm.doc.status === "Updated Changes")) {
 
              cur_frm.set_df_property("electrical_bom_raw_material", "read_only", (!cur_frm.doc.quotation_cancelled && !cur_frm.doc.quotation_amended))
