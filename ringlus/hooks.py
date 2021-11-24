@@ -36,6 +36,8 @@ doctype_js = {
 	"Quotation" : "public/js/quotation.js",
 	"Material Request" : "public/js/material_request.js",
 	"Sales Order" : "public/js/sales_order.js",
+	"Additional Salary": "public/js/additional_salary.js",
+
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -303,7 +305,15 @@ fixtures = [
 					"Sales Order-generate_project_code",
 					"Item-item_category",
 
+					"Attendance Request-salary_structure",
+                    "Attendance Request-base",
+                    "Attendance Request-overtime_hour",
+                    "Attendance Request-overtime_amount",
 
+
+                    "Additional Salary-additional_request_reference",
+                    "Additional Salary-additional_request",
+                    "Additional Salary-fetch_attendance_requests"
 				]
 			]
 		]
