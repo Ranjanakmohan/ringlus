@@ -43,10 +43,7 @@ frappe.ui.form.on('Modular Assembly Details', {
        		frappe.db.get_doc("Modular Component", d.item_code)
 				.then(doc => {
 
-            if(cur_frm.doc.operational_cost.length > 0 && !cur_frm.doc.operational_cost[0].workstation){
-                cur_frm.clear_table("operational_cost")
-                cur_frm.refresh_field("operational_cost")
-            }
+
             if(cur_frm.doc.raw_material.length > 0 && !cur_frm.doc.raw_material[0].item_code){
                 cur_frm.clear_table("raw_material")
                 cur_frm.refresh_field("raw_material")
