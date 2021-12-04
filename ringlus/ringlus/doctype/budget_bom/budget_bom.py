@@ -146,14 +146,18 @@ class BudgetBOM(Document):
             'item_code': item['item_code'],
             'item_name': item_name,
             'item_group': item['item_group'],
-            'uom': item['uom'],
             'qty': item['qty'],
             'warehouse': raw_material_warehouse,
             'rate': rate[0],
             'amount': rate[0] * item['qty'],
             'discount_rate': 0
-
         }
+        uom_options = []
+        uoms = frappe.db.sql(""" SELECT * FROM `tabUOM Conversion Detail` WHERE parent=%s""", item['item_code'], as_dict=1)
+        if len(uoms) > 0:
+            uom_options = [i.uom for i in uoms]
+
+        obj['uom_options'] = uom_options
         discount = frappe.db.sql(""" SELECT * FROm `tabDiscount` WHERE opportunity=%s and item_group=%s """,
                                  (self.opportunity, item['item_group']), as_dict=1)
         if len(discount) > 0:
@@ -163,6 +167,7 @@ class BudgetBOM(Document):
             obj['discount_percentage'] = discount[0].discount_percentage
             obj['rate'] = (discount[0].discount_rate * item['qty']) + discount[0].discount_amount
             obj['amount'] = (discount[0].discount_rate * item['qty'])
+
 
         return obj
 
@@ -568,3 +573,13 @@ def get_rate(item_code, warehouse, based_on,price_list):
         rate = item_record[0].last_purchase_rate if len(item_record) > 0 else 0
 
     return rate, balance
+
+
+@frappe.whitelist()
+def get_conversion_factor(item_code, uoms):
+    uom = frappe.db.sql(""" SELECT * FROm `tabUOM Conversion Detail` WHERE parent=%s and uom=%s""",(item_code, uoms),as_dict=1)
+
+    if len(uom) > 0:
+        return uom[0].conversion_factor
+
+    return 1

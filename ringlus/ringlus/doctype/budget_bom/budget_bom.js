@@ -115,6 +115,7 @@ cur_frm.cscript.generate_item_template = function () {
 
 frappe.ui.form.on('Budget BOM', {
 	refresh: function(frm) {
+
         document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
        document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
        document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
@@ -597,10 +598,47 @@ cur_frm.cscript.refresh_fg_sellable_available_stock = function () {
             }
         })
 }
+function filter_uom_link_field(uom_options, cur_frm, table_name) {
+    console.log("UOOOOOM OPTIONS")
+    console.log(uom_options)
+    console.log(table_name)
+    cur_frm.set_query("uoms", table_name, () => {
+        return {
+            filters: {
+                name: ['in', uom_options]
+            }
+        }
+    })
+}
 frappe.ui.form.on('Budget BOM Raw Material', {
+    uoms: function(frm, cdt, cdn) {
+        var d = locals[cdt][cdn]
+
+        if(d.uoms){
+            frappe.call({
+                method: "ringlus.ringlus.doctype.budget_bom.budget_bom.get_conversion_factor",
+                args: {
+                    item_code: d.item_code,
+                    uoms: d.uoms
+                },
+                async: false,
+                callback: function (r) {
+                    d.uom_conversion_factor = r.message
+                    d.stock_qty = d.qty * r.message
+                    d.rate = d.initial_rate * d.stock_qty
+                    d.amount = d.rate * d.qty
+                    cur_frm.refresh_field(d.parentfield)
+                     compute_total_cost(cur_frm)
+                }
+            })
+        }
+    },
     qty: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn]
+         d.stock_qty = d.qty * d.uom_conversion_factor
+        d.rate = d.initial_rate * d.stock_qty
         d.amount = d.qty * d.rate
+
         cur_frm.refresh_field(d.parentfield)
 
 
@@ -624,6 +662,8 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 	},
     rate: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn]
+        d.stock_qty = d.qty * d.uom_conversion_factor
+        d.rate = d.initial_rate * d.stock_qty
         d.amount = d.qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
@@ -648,7 +688,6 @@ frappe.ui.form.on('Budget BOM Raw Material', {
     item_code: function (frm, cdt, cdn) {
          var d = locals[cdt][cdn]
         if(d.item_code){
-
             var fieldname = d.parentfield === "electrical_bom_raw_material" ? "refresh_electrical_available_stock" :
                             d.parentfield === "mechanical_bom_raw_material" ? "refresh_mechanical_available_stock" :
                                 d.parentfield === "fg_sellable_bom_raw_material" ? "refresh_fg_sellable_available_stock" : ""
@@ -677,8 +716,9 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                           d.discount_amount = values.discount_amount
                           d.discount_percentage = values.discount_percentage
                           d.rate = values.rate
+                          d.initial_rate = values.rate
                           d.amount = values.amount
-                            cur_frm.refresh_field(d.parentfield)
+                                                cur_frm.refresh_field(d.parentfield)
 
                  }
             })
@@ -688,6 +728,8 @@ frappe.ui.form.on('Budget BOM Raw Material', {
     },
     discount_percentage: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
+        d.stock_qty = d.qty * d.uom_conversion_factor
+        d.rate = d.initial_rate * d.stock_qty
          d.amount = d.qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
@@ -709,6 +751,8 @@ frappe.ui.form.on('Budget BOM Raw Material', {
     },
     discount_amount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
+        d.stock_qty = d.qty * d.uom_conversion_factor
+        d.rate = d.initial_rate * d.stock_qty
          d.amount = d.qty * d.rate
         cur_frm.refresh_field(d.parentfield)
         if(d.amount > 0){
@@ -768,6 +812,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                           d.discount_amount = values.discount_amount
                           d.discount_percentage = values.discount_percentage
                           d.rate = values.rate
+                          d.initial_rate = values.rate
                           d.amount = values.amount
                             cur_frm.refresh_field(d.parentfield)
 
