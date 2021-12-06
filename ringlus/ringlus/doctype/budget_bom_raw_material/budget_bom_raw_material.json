@@ -13,6 +13,7 @@
   "uoms",
   "stock_qty",
   "stock_uom",
+  "initial_rate",
   "rate",
   "discount_rate",
   "amount",
@@ -26,8 +27,7 @@
   "discount_percentage",
   "discount_amount",
   "save_discount_amount",
-  "link_discount_amount",
-  "initial_rate"
+  "link_discount_amount"
  ],
  "fields": [
   {
@@ -189,14 +189,14 @@
   {
    "fieldname": "initial_rate",
    "fieldtype": "Currency",
-   "hidden": 1,
-   "label": "Initial Rate"
+   "label": "Initial Rate",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-06 14:21:00.955346",
+ "modified": "2021-12-06 14:44:25.896862",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
