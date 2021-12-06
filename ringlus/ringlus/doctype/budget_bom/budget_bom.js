@@ -116,9 +116,9 @@ cur_frm.cscript.generate_item_template = function () {
 frappe.ui.form.on('Budget BOM', {
 	refresh: function(frm) {
 
-        document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
-       document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
-       document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
+       //  document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
+       // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
+       // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
 	    if(cur_frm.is_new()) {
             cur_frm.doc.status = "Pending"
             cur_frm.refresh_field("status")
