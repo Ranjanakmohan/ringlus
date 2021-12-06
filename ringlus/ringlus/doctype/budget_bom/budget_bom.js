@@ -741,8 +741,8 @@ if(d.rate > 0 && d.discount_percentage > 0){
                             d.item_name = values.item_name
                             d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
                           d.link_discount_amount = values.link_discount_amount
-                          d.discount_amount = values.discount_amount
-                          d.discount_percentage = values.discount_percentage
+                          d.discount_amount = values.discount_amount ? values.discount_amount : 0
+                          d.discount_percentage = values.discount_percentage ? values.discount_percentage : 0
                           d.rate = values.rate
                           d.initial_rate = values.rate
                           d.amount = values.amount

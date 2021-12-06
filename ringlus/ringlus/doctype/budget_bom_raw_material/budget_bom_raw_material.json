@@ -112,6 +112,7 @@
    "label": "Discount Percentage"
   },
   {
+   "default": "0",
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
    "label": "Discount on Rate"
@@ -196,7 +197,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-06 14:44:25.896862",
+ "modified": "2021-12-06 22:34:52.044791",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
