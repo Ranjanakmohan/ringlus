@@ -168,7 +168,8 @@
    "default": "1",
    "fieldname": "stock_qty",
    "fieldtype": "Float",
-   "label": "Stock QTY"
+   "label": "Stock QTY",
+   "precision": "9"
   },
   {
    "default": "1",
@@ -194,7 +195,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-06 14:09:22.081336",
+ "modified": "2021-12-06 14:17:43.723664",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
