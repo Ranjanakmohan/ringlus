@@ -147,42 +147,42 @@ class BudgetBOM(Document):
     @frappe.whitelist()
     def get_discount(self, item,raw_material_table):
         raw_material_warehouse = frappe.db.get_single_value('Manufacturing Settings', 'default_raw_material_warehouse')
+        if 'item_code' in item:
+            rate = get_rate(item['item_code'], "", self.rate_of_materials_based_on if self.rate_of_materials_based_on else "",
+                            self.price_list if self.price_list else "")
+            item_name = frappe.db.get_value("Item", item['item_code'],"item_name")
+            item_master = frappe.get_doc("Item", item['item_code'])
 
-        rate = get_rate(item['item_code'], "", self.rate_of_materials_based_on if self.rate_of_materials_based_on else "",
-                        self.price_list if self.price_list else "")
-        item_name = frappe.db.get_value("Item", item['item_code'],"item_name")
-        item_master = frappe.get_doc("Item", item['item_code'])
+            obj = {
+                'item_code': item['item_code'],
+                'item_name': item_name,
+                'item_group': item_master.item_group,
+                'stock_uom': item_master.stock_uom,
+                'qty': item['qty'],
+                'warehouse': raw_material_warehouse,
+                'rate': rate[0],
+                'amount': rate[0] * item['qty'],
+                'discount_rate': 0
+            }
+            uom_options = []
+            uoms = frappe.db.sql(""" SELECT * FROM `tabUOM Conversion Detail` WHERE parent=%s""", item['item_code'], as_dict=1)
+            if len(uoms) > 0:
+                uom_options = [i.uom for i in uoms]
 
-        obj = {
-            'item_code': item['item_code'],
-            'item_name': item_name,
-            'item_group': item_master.item_group,
-            'stock_uom': item_master.stock_uom,
-            'qty': item['qty'],
-            'warehouse': raw_material_warehouse,
-            'rate': rate[0],
-            'amount': rate[0] * item['qty'],
-            'discount_rate': 0
-        }
-        uom_options = []
-        uoms = frappe.db.sql(""" SELECT * FROM `tabUOM Conversion Detail` WHERE parent=%s""", item['item_code'], as_dict=1)
-        if len(uoms) > 0:
-            uom_options = [i.uom for i in uoms]
+            obj['uom_options'] = uom_options
+            discount = frappe.db.sql(""" 
+                                    SELECT D.name, DD.item_group, DD.discount_percentage, DD.remarks FROM `tabDiscount` D INNER JOIN `tabDiscount Details` DD ON DD.parent = D.name WHERE D.opportunity=%s and DD.item_group=%s """,
+                                     (self.opportunity, item_master.item_group), as_dict=1)
+            if len(discount) > 0:
+                obj['discount_percentage'] = discount[0].discount_percentage
+                obj['discount_amount'] = (discount[0].discount_percentage / 100) * rate[0] * item['qty']
+                obj['amount'] = (rate[0] * item['qty']) - obj['discount_amount']
+                obj['discount_rate'] = obj['amount'] / item['qty']
+                obj['remarks'] = discount[0].remarks
+                obj['link_discount_amount'] = discount[0].name
+                obj['rate'] = (obj['discount_rate'] * item['qty']) + obj['discount_amount']
 
-        obj['uom_options'] = uom_options
-        discount = frappe.db.sql(""" 
-                                SELECT D.name, DD.item_group, DD.discount_percentage, DD.remarks FROM `tabDiscount` D INNER JOIN `tabDiscount Details` DD ON DD.parent = D.name WHERE D.opportunity=%s and DD.item_group=%s """,
-                                 (self.opportunity, item_master.item_group), as_dict=1)
-        if len(discount) > 0:
-            obj['discount_percentage'] = discount[0].discount_percentage
-            obj['discount_amount'] = (discount[0].discount_percentage / 100) * rate[0] * item['qty']
-            obj['amount'] = (rate[0] * item['qty']) - obj['discount_amount']
-            obj['discount_rate'] = obj['amount'] / item['qty']
-            obj['remarks'] = discount[0].remarks
-            obj['link_discount_amount'] = discount[0].name
-            obj['rate'] = (obj['discount_rate'] * item['qty']) + obj['discount_amount']
-
-        return obj
+            return obj
 
     @frappe.whitelist()
     def on_submit(self):
@@ -483,7 +483,7 @@ def get_template_items(items):
             "item_name": i['item_name'],
             "batch": i['batch'] if 'batch' in i and i['batch'] else "",
             "qty": i['qty'],
-            "uom": i['uom'] if 'uom' in i and i['uom'] else "",
+            "uom": i['stock_uom'] if 'stock_uom' in i and i['stock_uom'] else "",
         })
     return items_
 @frappe.whitelist()
