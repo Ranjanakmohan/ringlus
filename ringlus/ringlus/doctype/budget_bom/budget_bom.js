@@ -641,6 +641,9 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                         d.discount_rate = d.rate - d.discount_amount
                         d.amount = d.stock_qty * d.discount_rate
                         cur_frm.refresh_field(d.parentfield)
+                    } else {
+                        d.discount_rate = d.rate
+                        cur_frm.refresh_field(d.parentfield)
                     }
 
 
@@ -672,7 +675,10 @@ frappe.ui.form.on('Budget BOM Raw Material', {
             d.discount_rate = d.rate - d.discount_amount
             d.amount = d.stock_qty * d.discount_rate
             cur_frm.refresh_field(d.parentfield)
-        }
+        } else {
+                        d.discount_rate = d.rate
+                        cur_frm.refresh_field(d.parentfield)
+                    }
 
 
                     //  if(d.amount > 0 && d.qty > 0){
@@ -697,6 +703,9 @@ if(d.rate > 0 && d.discount_percentage > 0){
                     } else if (d.rate > 0 && d.discount_amount > 0){
                         d.discount_rate = d.rate - d.discount_amount
                         d.amount = d.stock_qty * d.discount_rate
+                        cur_frm.refresh_field(d.parentfield)
+                    } else {
+                        d.discount_rate = d.rate
                         cur_frm.refresh_field(d.parentfield)
                     }
 
@@ -730,20 +739,20 @@ if(d.rate > 0 && d.discount_percentage > 0){
                 freeze_message: "Get Templates...",
                 async:false,
                 callback: (r) => {
-                    console.log("ITEM CODEEEE TRIGGER")
-                    console.log(r.message.discount_rate)
                         var values = r.message
-                            console.log(values.discount_rate)
-                            d.stock_uom = values.stock_uom
-                            d.item_name = values.item_name
-                            d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
-                          d.link_discount_amount = values.link_discount_amount
-                          d.discount_amount = values.discount_amount ? values.discount_amount : 0
-                          d.discount_percentage = values.discount_percentage ? values.discount_percentage : 0
-                          d.rate = values.rate
-                          d.initial_rate = values.rate
-                          d.amount = values.amount
-                                                cur_frm.refresh_field(d.parentfield)
+                        console.log(values)
+                        d.uom_conversion_factor = values.conversion_factor
+                        d.stock_qty = d.qty * values.conversion_factor
+                        d.stock_uom = values.stock_uom
+                        d.item_name = values.item_name
+                        d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
+                        d.link_discount_amount = values.link_discount_amount
+                        d.discount_amount = values.discount_amount ? values.discount_amount : 0
+                        d.discount_percentage = values.discount_percentage ? values.discount_percentage : 0
+                        d.rate = values.rate
+                        d.initial_rate = values.rate
+                        d.amount = values.amount * values.conversion_factor
+                        cur_frm.refresh_field(d.parentfield)
 
                  }
             })

@@ -152,13 +152,20 @@ class BudgetBOM(Document):
                             self.price_list if self.price_list else "")
             item_name = frappe.db.get_value("Item", item['item_code'],"item_name")
             item_master = frappe.get_doc("Item", item['item_code'])
+            conversion_factor = 1
+            if 'uoms' in item:
+                uom = frappe.db.sql(""" SELECT * FROm `tabUOM Conversion Detail` WHERE parent=%s and uom=%s""",
+                                    (item['item_code'], item['uoms']), as_dict=1)
 
+                if len(uom) > 0:
+                    conversion_factor = uom[0].conversion_factor
             obj = {
                 'item_code': item['item_code'],
                 'item_name': item_name,
                 'item_group': item_master.item_group,
                 'stock_uom': item_master.stock_uom,
                 'qty': item['qty'],
+                'conversion_factor': conversion_factor,
                 'warehouse': raw_material_warehouse,
                 'rate': rate[0],
                 'amount': rate[0] * item['qty'],
