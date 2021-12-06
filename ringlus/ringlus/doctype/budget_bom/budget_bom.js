@@ -631,7 +631,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                     d.uom_conversion_factor = r.message
                     d.stock_qty = d.qty * r.message
                     d.rate = d.initial_rate * d.stock_qty
-                    d.amount = d.rate * d.qty
+                    d.amount = d.rate * d.stock_qty
                     if(d.amount > 0 && d.discount_percentage > 0){
                         d.discount_amount = (d.discount_percentage / 100) * d.amount
                         d.amount = d.amount - d.discount_amount
@@ -657,7 +657,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         var d = locals[cdt][cdn]
          d.stock_qty = d.qty * d.uom_conversion_factor
         d.rate = d.initial_rate * d.stock_qty
-        d.amount = d.qty * d.rate
+        d.amount = d.stock_qty * d.rate
 
         cur_frm.refresh_field(d.parentfield)
 
@@ -684,7 +684,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
         d.rate = d.initial_rate * d.stock_qty
-        d.amount = d.qty * d.rate
+        d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
 
@@ -751,7 +751,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
         d.rate = d.initial_rate * d.stock_qty
-         d.amount = d.qty * d.rate
+         d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
         if(d.amount > 0 && d.discount_percentage > 0){
@@ -774,7 +774,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
         d.rate = d.initial_rate * d.stock_qty
-         d.amount = d.qty * d.rate
+         d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
         if(d.amount > 0){
             d.amount = d.amount - d.discount_amount
