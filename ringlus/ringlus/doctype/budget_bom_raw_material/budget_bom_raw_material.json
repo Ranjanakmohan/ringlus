@@ -13,7 +13,6 @@
   "uoms",
   "stock_qty",
   "stock_uom",
-  "initial_rate",
   "rate",
   "discount_rate",
   "amount",
@@ -186,18 +185,12 @@
    "fieldtype": "Link",
    "label": "Estimated UOM",
    "options": "UOM"
-  },
-  {
-   "fieldname": "initial_rate",
-   "fieldtype": "Currency",
-   "label": "Initial Rate",
-   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-06 22:34:52.044791",
+ "modified": "2021-12-06 23:05:30.295794",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",

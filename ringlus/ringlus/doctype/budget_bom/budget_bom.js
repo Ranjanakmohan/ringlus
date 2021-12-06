@@ -630,12 +630,11 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                 callback: function (r) {
                     d.uom_conversion_factor = r.message
                     d.stock_qty = d.qty * r.message
-                    d.rate = d.initial_rate * d.stock_qty
                     d.amount = d.rate * d.stock_qty
 
                     if(d.rate > 0 && d.discount_percentage > 0){
                         d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
-                        // d.discount_amount = (d.discount_percentage / 100) * d.amount
+                        d.discount_amount = (d.discount_percentage / 100) * d.rate
                         d.amount = d.stock_qty * d.discount_rate
                         cur_frm.refresh_field(d.parentfield)
                     } else if (d.rate > 0 && d.discount_amount > 0){
@@ -659,22 +658,21 @@ frappe.ui.form.on('Budget BOM Raw Material', {
     qty: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn]
          d.stock_qty = d.qty * d.uom_conversion_factor
-        d.rate = d.initial_rate * d.stock_qty
         d.amount = d.stock_qty * d.rate
 
         cur_frm.refresh_field(d.parentfield)
 
 
         if(d.rate > 0 && d.discount_percentage > 0){
-                        d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
-                        // d.discount_amount = (d.discount_percentage / 100) * d.amount
-                        d.amount = d.stock_qty * d.discount_rate
-                        cur_frm.refresh_field(d.parentfield)
-                    } else if (d.rate > 0 && d.discount_amount > 0){
-                        d.discount_rate = d.rate - d.discount_amount
-                        d.amount = d.stock_qty * d.discount_rate
-                        cur_frm.refresh_field(d.parentfield)
-                    }
+            d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
+            d.discount_amount = (d.discount_percentage / 100) * d.rate
+            d.amount = d.stock_qty * d.discount_rate
+            cur_frm.refresh_field(d.parentfield)
+        } else if (d.rate > 0 && d.discount_amount > 0){
+            d.discount_rate = d.rate - d.discount_amount
+            d.amount = d.stock_qty * d.discount_rate
+            cur_frm.refresh_field(d.parentfield)
+        }
 
 
                     //  if(d.amount > 0 && d.qty > 0){
@@ -688,13 +686,12 @@ frappe.ui.form.on('Budget BOM Raw Material', {
     rate: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
-        d.rate = d.initial_rate * d.stock_qty
         d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
 if(d.rate > 0 && d.discount_percentage > 0){
                         d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
-                        // d.discount_amount = (d.discount_percentage / 100) * d.amount
+                        d.discount_amount = (d.discount_percentage / 100) * d.rate
                         d.amount = d.stock_qty * d.discount_rate
                         cur_frm.refresh_field(d.parentfield)
                     } else if (d.rate > 0 && d.discount_amount > 0){
@@ -757,13 +754,12 @@ if(d.rate > 0 && d.discount_percentage > 0){
     discount_percentage: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
-        d.rate = d.initial_rate * d.stock_qty
          d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
                     if(d.rate > 0){
                         d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
-                        // d.discount_amount = (d.discount_percentage / 100) * d.amount
+                       d.discount_amount = (d.discount_percentage / 100) * d.rate
                         d.amount = d.stock_qty * d.discount_rate
                         cur_frm.refresh_field(d.parentfield)
                     }
@@ -780,7 +776,6 @@ if(d.rate > 0 && d.discount_percentage > 0){
     discount_amount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         d.stock_qty = d.qty * d.uom_conversion_factor
-        d.rate = d.initial_rate * d.stock_qty
          d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
        if (d.rate > 0){
