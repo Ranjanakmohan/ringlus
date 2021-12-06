@@ -2,19 +2,14 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "naming_series:",
- "creation": "2021-10-25 11:57:28.530736",
+ "creation": "2021-12-06 11:57:28.530736",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "naming_series",
   "opportunity",
-  "item_group",
-  "sellable_product",
-  "column_break_4",
-  "discount_rate",
-  "discount_amount",
-  "discount_percentage"
+  "discount_details"
  ],
  "fields": [
   {
@@ -26,50 +21,23 @@
    "reqd": 1
   },
   {
-   "fieldname": "column_break_4",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "discount_amount",
-   "fieldtype": "Currency",
-   "label": "Discount Amount"
-  },
-  {
-   "default": "D-.{opportunity}.-.{sellable_product}.-",
+   "default": "D-.{opportunity}.-",
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "D-.{opportunity}.-.{sellable_product}.-",
+   "options": "D-.{opportunity}.-",
    "read_only": 1
   },
   {
-   "fieldname": "discount_rate",
-   "fieldtype": "Currency",
-   "label": "Discount Rate"
-  },
-  {
-   "fieldname": "discount_percentage",
-   "fieldtype": "Data",
-   "label": "Discount Percentage"
-  },
-  {
-   "fieldname": "item_group",
-   "fieldtype": "Link",
-   "label": "Item Group",
-   "options": "Item Group"
-  },
-  {
-   "fieldname": "sellable_product",
-   "fieldtype": "Link",
-   "label": "Sellable Product",
-   "options": "Sellable Product",
-   "reqd": 1
+   "fieldname": "discount_details",
+   "fieldtype": "Table",
+   "label": "Discount Details",
+   "options": "Discount Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-01 09:44:38.329603",
+ "modified": "2021-12-06 11:57:28.530736",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Discount",
