@@ -464,15 +464,16 @@ def set_available_qty(items):
     data = json.loads(items)
     time = frappe.utils.now_datetime().time()
     date = frappe.utils.now_datetime().date()
-    for d in data:
 
-        previous_sle = get_previous_sle({
-            "item_code": d['item_code'],
-            "warehouse": d['warehouse'] if 'warehouse' in d else "",
-            "posting_date": date,
-            "posting_time": time
-        })
-        d['available_qty'] = previous_sle.get("qty_after_transaction") or 0
+    for d in data:
+        if 'item_code' in d and d['item_code']:
+            previous_sle = get_previous_sle({
+                "item_code": d['item_code'],
+                "warehouse": d['warehouse'] if 'warehouse' in d else "",
+                "posting_date": date,
+                "posting_time": time
+            })
+            d['available_qty'] = previous_sle.get("qty_after_transaction") or 0
     print(data)
     return data
 def get_template_items(items):
