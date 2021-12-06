@@ -174,7 +174,9 @@
    "default": "1",
    "fieldname": "uom_conversion_factor",
    "fieldtype": "Float",
+   "in_list_view": 1,
    "label": "UOM Conversion Factor",
+   "precision": "7",
    "read_only": 1
   },
   {
@@ -193,7 +195,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-04 21:30:18.151140",
+ "modified": "2021-12-06 12:12:07.965213",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
