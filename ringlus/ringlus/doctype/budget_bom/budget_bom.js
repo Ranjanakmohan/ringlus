@@ -730,6 +730,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
                     console.log(r.message.discount_rate)
                         var values = r.message
                             console.log(values.discount_rate)
+                            d.stock_uom = values.stock_uom
                             d.item_name = values.item_name
                             d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
                           d.link_discount_amount = values.link_discount_amount
