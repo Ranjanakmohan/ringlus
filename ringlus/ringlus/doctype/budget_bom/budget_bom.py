@@ -51,7 +51,6 @@ class BudgetBOM(Document):
         raw_material_warehouse = frappe.db.get_single_value('Manufacturing Settings', 'default_raw_material_warehouse')
         for i in templates:
             template = frappe.get_doc("Modular Assembly", i)
-
             for x in template.raw_material:
                 if not self.existing_item(x, "fg_sellable_bom_raw_material", "item_code"):
                     item_master = frappe.get_doc("Item", x.item_code)
@@ -105,9 +104,10 @@ class BudgetBOM(Document):
     @frappe.whitelist()
     def existing_item(self, xx, table, item_field_name):
         for i in self.__dict__[table]:
-            if i.__dict__[item_field_name] == xx.__dict__[item_field_name]:
-                i.qty += xx.qty
-                return True
+            if i.__dict__[item_field_name]:
+                if i.__dict__[item_field_name] == xx.__dict__[item_field_name]:
+                    i.qty += xx.qty
+                    return True
         return False
     @frappe.whitelist()
     def get_templates(self, templates, raw_material_table):

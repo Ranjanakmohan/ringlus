@@ -41,6 +41,11 @@ cur_frm.cscript.modular_assembly_templates = function () {
     });
 }
 function get_modular_assembly_template(template_names, cur_frm){
+    if(cur_frm.doc.fg_sellable_bom_raw_materials && !cur_frm.doc.fg_sellable_bom_raw_materials[0].item_code){
+        cur_frm.clear_table("fg_sellable_bom_raw_materials")
+        cur_frm.refresh_field("fg_sellable_bom_raw_materials")
+
+    }
      cur_frm.call({
         doc: cur_frm.doc,
         method: 'get_modular_assembly_templates',
