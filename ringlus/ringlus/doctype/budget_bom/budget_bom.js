@@ -643,7 +643,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
 
                      if(d.amount > 0 && d.qty > 0){
-                         d.discount_rate = d.amount / d.qty
+                         d.discount_rate = d.amount / d.stock_qty
                         cur_frm.refresh_field(d.parentfield)
 
                     }
@@ -673,7 +673,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
 
 
          if(d.amount > 0 && d.qty > 0){
-             d.discount_rate = d.amount / d.qty
+             d.discount_rate = d.amount / d.stock_qty
             cur_frm.refresh_field(d.parentfield)
 
         }
@@ -698,7 +698,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         }
 
          if(d.amount > 0 && d.qty > 0){
-             d.discount_rate = d.amount / d.qty
+             d.discount_rate = d.amount / d.stock_qty
             cur_frm.refresh_field(d.parentfield)
 
         }
@@ -762,7 +762,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         }
 
         if(d.amount > 0 && d.qty > 0){
-             d.discount_rate = d.amount / d.qty
+             d.discount_rate = d.amount / d.stock_qty
             cur_frm.refresh_field(d.parentfield)
 
         }
@@ -782,7 +782,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         }
 
        if(d.amount > 0 && d.qty > 0){
-             d.discount_rate = d.amount / d.qty
+             d.discount_rate = d.amount / d.stock_qty
             cur_frm.refresh_field(d.parentfield)
 
         }
