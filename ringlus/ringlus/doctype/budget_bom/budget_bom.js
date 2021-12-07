@@ -804,24 +804,34 @@ if(d.rate > 0 && d.discount_percentage > 0){
     },
     save_discount_amount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
-        if(d.discount_rate > 0 && d.item_group){
-            frappe.db.insert({
-                doctype: 'Discount',
-                opportunity: cur_frm.doc.opportunity,
-                sellable_product: cur_frm.doc.sellable_product,
-                item_group: d.item_group,
-                discount_amount: d.discount_amount,
-                discount_rate: d.discount_rate,
-                discount_percentage: d.discount_percentage,
-            }).then(doc => {
-                frappe.show_alert({
-                    message:__('Discount created'),
-                    indicator:'green'
-                }, 3);
-                d.link_discount_amount = doc.name
-                cur_frm.refresh_field(d.parentfield)
+        if(d.discount_percentage > 0 && d.item_code){
+             cur_frm.call({
+                doc: cur_frm.doc,
+                method: 'add_or_save_discount',
+                args: {
+                    opportunity: cur_frm.doc.opportunity,
+                    sellable_product: cur_frm.doc.sellable_product,
+                    item_group: d.item_group,
+                    discount_percentage: d.discount_percentage,
+                    remarks: d.remarks ? d.remarks : '',
+                },
+                freeze: true,
+                freeze_message: "Discount...",
+                async:false,
+                callback: (r) => {
+                        frappe.show_alert({
+                            message:__('Discount created or updated'),
+                            indicator:'green'
+                        }, 3);
+                        d.link_discount_amount = r.message
+                        cur_frm.refresh_field(d.parentfield)
+                }
             })
+
         }
+
+
+
     },
     update_discount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]

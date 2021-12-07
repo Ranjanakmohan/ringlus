@@ -46,6 +46,31 @@ class BudgetBOM(Document):
             self.__dict__[table_name][0].item_code = item_created.item_code
             self.__dict__[table_name][0].item_name = item_created.item_name
             self.__dict__[table_name][0].uom = item_created.stock_uom
+
+    @frappe.whitelist()
+    def add_or_save_discount(self, opportunity, sellable_product, item_group, discount_percentage, remarks):
+        disc = frappe.db.sql(""" SELECT COUNT(*) as count, name FROM `tabDiscount` WHERE opportunity=%s """,
+                             opportunity, as_dict=1)
+        if disc[0].count > 0:
+            discount = frappe.get_doc("Discount", disc[0].name)
+            discount.append("discount_details", {
+                "item_group": item_group,
+                "discount_percentage": discount_percentage
+            })
+            discount.save()
+            return disc[0].name
+        else:
+            obj = {
+                "doctype": "Discount",
+                "opportunity": opportunity,
+                "discount_details": [{
+                    "item_group": item_group,
+                    "discount_percentage": discount_percentage,
+                    "remarks": remarks
+                }]
+            }
+            d = frappe.get_doc(obj).insert()
+            return d.name
     @frappe.whitelist()
     def get_modular_assembly_templates(self, templates):
         raw_material_warehouse = frappe.db.get_single_value('Manufacturing Settings', 'default_raw_material_warehouse')
