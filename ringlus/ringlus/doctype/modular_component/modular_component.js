@@ -16,8 +16,26 @@ frappe.ui.form.on('Modular Assembly Raw Material', {
             frappe.db.get_doc("Item", d.item_code)
                 .then(doc => {
                     d.uom = doc.stock_uom
-                        cur_frm.refresh_field("raw_material")
+                        cur_frm.refresh_field("raw_materials")
             })
         }
-    }
+    },
+     uom: function (frm, cdt,cdn) {
+        var d = locals[cdt][cdn]
+        if(d.item_code && d.uom){
+           frappe.call({
+                method: "ringlus.ringlus.doctype.budget_bom.budget_bom.get_conversion_factor",
+                args: {
+                    item_code: d.item_code,
+                    uoms: d.uom
+                },
+                async: false,
+                callback: function (r) {
+                    d.conversion_factor = r.message
+                    cur_frm.refresh_field("raw_materials")
+
+                }
+           })
+        }
+    },
 })

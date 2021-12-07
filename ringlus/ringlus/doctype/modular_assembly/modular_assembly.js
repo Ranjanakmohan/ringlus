@@ -79,9 +79,10 @@ frappe.ui.form.on('Modular Assembly Details', {
 								item_code: doc.raw_materials[i].item_code,
 								qty: doc.raw_materials[i].qty,
 								uom: doc.raw_materials[i].uom,
+								conversion_factor: doc.raw_materials[i].conversion_factor,
 								reference: JSON.stringify([{
-                                    item_code: d.item_code,
-                                    qty: doc.raw_materials[i].qty}]),
+                                item_code: d.item_code,
+                                qty: doc.raw_materials[i].qty}]),
 							})
 							cur_frm.refresh_field('raw_material')
 						}

@@ -60,11 +60,13 @@ class BudgetBOM(Document):
                         'item_name': item_master.item_name,
                         'item_group': item_master.item_group,
                         'stock_uom': item_master.stock_uom,
-                        'uom': x.uom,
+                        'uoms': x.uom,
+                        'uom_conversion_factor': x.conversion_factor,
                         'qty': x.qty,
+                        'stock_qty':  x.qty * x.conversion_factor,
                         'warehouse': raw_material_warehouse,
                         'rate': rate[0],
-                        'amount': rate[0] * x.qty,
+                        'amount': rate[0] * (x.qty * x.conversion_factor),
                         'discount_rate': (rate[0] * x.qty) / x.qty if rate[0] > 0 else 0,
                     }
                     discount = frappe.db.sql(""" 
