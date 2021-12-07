@@ -126,8 +126,23 @@ frappe.ui.form.on('Budget BOM', {
        // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
        // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.fontWeight ="bold"
 	    if(cur_frm.is_new()) {
+	        console.log(cur_frm.doc.posting_date)
+            var date = new Date(cur_frm.doc.posting_date);
+            date.setDate(date.getDate() + 30);
+            console.log(date)
+            console.log(date.getFullYear())
+            console.log(date.getMonth()+1 + "-" + date.getDate() + "-" + date.getFullYear())
+            var new_date = new Date(date.getMonth()+1 + "-" + date.getDate() + "-" + date.getFullYear())
+            console.log(new_date)
+            console.log(new_date.getMonth()+1)
+            console.log(new_date.getDate())
+            console.log(new_date.getFullYear())
+
+            cur_frm.doc.expected_closing_date = date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate()
+            // cur_frm.doc.expected_closing_date = "2021-12-31"
             cur_frm.doc.status = "Pending"
-            cur_frm.refresh_field("status")
+            cur_frm.refresh_fields(["status","expected_closing_date"])
+
         }
 	    cur_frm.set_query("opportunity", () => {
 	        return {
