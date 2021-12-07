@@ -100,7 +100,7 @@ class BudgetBOM(Document):
                     if len(discount) > 0:
                         obj['discount_percentage'] = discount[0].discount_percentage
                         obj['discount_amount'] = (discount[0].discount_percentage / 100) * rate[0] * x.qty
-                        obj['amount'] = (rate[0] * x.qty) - obj['discount_amount']
+                        obj['amount'] = (rate[0] * (x.qty * x.conversion_factor)) - obj['discount_amount']
                         obj['discount_rate'] = obj['amount'] / x.qty
                         obj['remarks'] = discount[0].remarks
                         obj['link_discount_amount'] = discount[0].name
