@@ -41,16 +41,17 @@ def generate_cost_centers(items, name, customer,project_code, company):
     items_data = json.loads(items)
 
     company = frappe.get_doc("Company", company)
-    generate_cc(project_code, customer, name, company, items_data)
+    default_project_code = frappe.db.get_single_value('Global Defaults', 'default_project_code')
+    generate_cc(project_code, customer, name, company, items_data,default_project_code)
 
-def generate_cc(project_code, customer, name, company, items_data):
+def generate_cc(project_code, customer, name, company, items_data,default_project_code):
     cc_name = ""
     if not project_code:
         args = {
             "doctype": "Cost Center",
             "cost_center_name": name,
             "is_group": 1,
-            "parent_cost_center": company.name + " - " + company.abbr,
+            "parent_cost_center": default_project_code,
             "sales_order": name,
             'is_root': 'true'
         }
