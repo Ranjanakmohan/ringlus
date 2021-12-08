@@ -473,7 +473,7 @@ class BudgetBOM(Document):
                 "item_code": i.item_code,
                 "item_name": i.item_name,
                 "rate": i.rate if 'rate' in i.__dict__ else 0,
-                "qty": i.stock_qty,
+                "qty": i.stock_qty if 'stock_qty' in i.__dict__ else i.qty,
                 "uom": i.stock_uom,
                 "operation_time_in_minutes": i.operation_time_in_minutes if 'operation_time_in_minutes' in i.__dict__ else 0,
                 "amount": i.amount if 'rate' in i.__dict__ else 0,
