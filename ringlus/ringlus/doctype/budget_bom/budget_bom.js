@@ -779,7 +779,7 @@ if(d.rate > 0 && d.discount_percentage > 0){
                         d.stock_qty = d.qty * values.conversion_factor
                         d.stock_uom = values.stock_uom
                         d.item_name = values.item_name
-                        d.discount_rate = values.discount_rate > 0 ? values.discount_rate : values.amount
+                        d.discount_rate = values.rate
                         d.link_discount_amount = values.link_discount_amount
                         d.discount_amount = values.discount_amount ? values.discount_amount : 0
                         d.discount_percentage = values.discount_percentage ? values.discount_percentage : 0
