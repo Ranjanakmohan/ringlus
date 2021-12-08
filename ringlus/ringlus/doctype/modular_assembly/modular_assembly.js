@@ -102,8 +102,11 @@ frappe.ui.form.on('Modular Assembly Details', {
 								uom: doc.raw_materials[i].uom,
 								conversion_factor: doc.raw_materials[i].conversion_factor,
 								reference: JSON.stringify([{
-                                item_code: d.item_code,
-                                qty: doc.raw_materials[i].qty}]),
+                                    item_code: d.item_code,
+                                    qty: doc.raw_materials[i].qty,
+                                    qty_mc: 1
+								}
+								]),
 							})
 							cur_frm.refresh_field('raw_material')
 						}
@@ -116,6 +119,13 @@ frappe.ui.form.on('Modular Assembly Details', {
         var d = locals[cdt][cdn]
 	    remove_row(cur_frm, d, 'raw_material')
 	    remove_row(cur_frm, d, 'operational_cost')
+    },
+    modular_assembly_remove: function (frm, cdt, cdn) {
+	   if(cur_frm.doc.modular_assembly.length === 0){
+	       cur_frm.clear_table("raw_material")
+	       cur_frm.clear_table("operational_cost")
+           cur_frm.refresh_fields(['raw_material', 'operational_cost'])
+       }
     },
     qty: function (frm, cdt, cdn) {
 	    var d =locals[cdt][cdn]
@@ -132,16 +142,11 @@ function remove_row(cur_frm, dd, table_name) {
                 var spliced = 0
                 var reference = JSON.parse(cur_frm.doc[table_name][x].reference)
                 for(var xx=0;xx<reference.length;xx+=1){
-                    console.log("NET HOUR RATE")
-                    console.log(reference[xx]['item_code'])
-                    console.log(reference[xx]['net_hour_rate'])
-                    console.log(dd.item_code)
                     if(reference[xx]['item_code'] === dd.item_code && table_name === 'operational_cost'){
                         console.log("OPERATIONAL COST")
-                        cur_frm.doc[table_name][x].net_hour_rate -= reference[xx]['net_hour_rate']
-                        cur_frm.doc[table_name][x].operation_time_in_minutes -= reference[xx]['operation_time_in_minutes']
+                        cur_frm.doc[table_name][x].operation_time_in_minutes -= (reference[xx]['operation_time_in_minutes'] * reference[xx]['qty'])
                         spliced = xx
-                         if(cur_frm.doc[table_name][x].net_hour_rate === 0 && cur_frm.doc[table_name][x].operation_time_in_minutes === 0){
+                         if(cur_frm.doc[table_name][x].operation_time_in_minutes === 0){
                             spliced_row = true
                             splice_index = x
                         }
@@ -158,6 +163,8 @@ function remove_row(cur_frm, dd, table_name) {
                 }
                 reference.splice(spliced, 1);
                 cur_frm.doc[table_name][x].reference = JSON.stringify(reference)
+                update_qty(cur_frm)
+                update_operational(cur_frm)
                 if(spliced_row){
                     cur_frm.doc[table_name].splice(x, 1);
                     spliced_row = false
@@ -168,29 +175,35 @@ function remove_row(cur_frm, dd, table_name) {
     }
 }
 function update_qty(cur_frm) {
-     for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
+    if(cur_frm.doc.raw_material.length > 0){
+        for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
             var item_row = cur_frm.doc.raw_material[x]
              var reference = JSON.parse(item_row.reference)
          var total_qty = 0
              for(var xx=0;xx<reference.length;xx+=1){
-                total_qty += reference[xx]['qty']
+                total_qty += reference[xx]['qty'] * reference[xx]['qty_mc']
              }
              item_row.qty = total_qty
             item_row.reference = JSON.stringify(reference)
             cur_frm.refresh_field("raw_material")
         }
+    }
+
 }
 function update_operational(cur_frm) {
-     for(var x=0;x<cur_frm.doc.operational_cost.length;x+=1){
-            var item_row = cur_frm.doc.operational_cost[x]
-             var reference = JSON.parse(item_row.reference)
-            var total_minutes = 0
-             for(var xx=0;xx<reference.length;xx+=1){
-                total_minutes += reference[xx]['qty'] * reference[xx]['operation_time_in_minutes']
-             }
-             item_row.operation_time_in_minutes = total_minutes
-            item_row.reference = JSON.stringify(reference)
-            cur_frm.refresh_field("operational_cost")
+        if(cur_frm.doc.operational_cost.length > 0) {
+
+            for (var x = 0; x < cur_frm.doc.operational_cost.length; x += 1) {
+                var item_row = cur_frm.doc.operational_cost[x]
+                var reference = JSON.parse(item_row.reference)
+                var total_minutes = 0
+                for (var xx = 0; xx < reference.length; xx += 1) {
+                    total_minutes += reference[xx]['qty'] * reference[xx]['operation_time_in_minutes']
+                }
+                item_row.operation_time_in_minutes = total_minutes
+                item_row.reference = JSON.stringify(reference)
+                cur_frm.refresh_field("operational_cost")
+            }
         }
 }
 function update_tables(cur_frm, d) {
@@ -200,7 +213,7 @@ function update_tables(cur_frm, d) {
              var reference = JSON.parse(item_row.reference)
              for(var xx=0;xx<reference.length;xx+=1){
                 if(reference[xx]['item_code'] === d.item_code){
-                    reference[xx]['qty'] = d.qty
+                    reference[xx]['qty_mc'] = d.qty
                 }
              }
             item_row.reference = JSON.stringify(reference)
