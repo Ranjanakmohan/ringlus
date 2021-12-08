@@ -518,7 +518,7 @@ def get_template_items(items):
             "item_name": i['item_name'],
             "batch": i['batch'] if 'batch' in i and i['batch'] else "",
             "qty": i['qty'],
-            "uom": i['stock_uom'] if 'stock_uom' in i and i['stock_uom'] else "",
+            "uom": i['uoms'] if 'uoms' in i and i['uoms'] else "",
         })
     return items_
 @frappe.whitelist()
