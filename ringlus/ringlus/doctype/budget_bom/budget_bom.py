@@ -567,7 +567,7 @@ def make_mr(source_name, target_doc=None):
             "doctype": "Material Request Item",
             "field_map":{
                 "name": "budget_bom_raw_material",
-                "uoms", "uom"
+                "uoms": "uom"
             }
         }
 
