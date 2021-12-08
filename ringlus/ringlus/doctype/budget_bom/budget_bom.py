@@ -118,16 +118,28 @@ class BudgetBOM(Document):
                         xx.__dict__[workstations[b]] = frappe.db.get_value("Operation", xx.__dict__[operations[b]], "workstation")
                         if xx.__dict__[workstations[b]]:
                             xx.__dict__[net_hour_rate[b]] = frappe.db.get_value("Workstation", xx.__dict__[workstations[b]], "hour_rate")
+
                     if xx.__dict__[workstations[b]] and xx.__dict__[operations[b]]:
-                        obj = {
-                            'item_code': template.modular_assembly[0].item_code,
-                            'qty': template.modular_assembly[0].qty,
-                            'workstation': xx.__dict__[workstations[b]],
-                            'operation': xx.__dict__[operations[b]],
-                            'operation_time_in_minutes': xx.__dict__[operation_time_in_minutes[b]],
-                            'net_hour_rate': xx.__dict__[net_hour_rate[b]],
-                        }
-                        self.append("modular_assembly_details", obj)
+                        if not self.check_operations(xx.__dict__):
+                            obj = {
+                                'item_code': template.modular_assembly[0].item_code,
+                                'qty': template.modular_assembly[0].qty,
+                                'workstation': xx.__dict__[workstations[b]],
+                                'operation': xx.__dict__[operations[b]],
+                                'operation_time_in_minutes': xx.__dict__[operation_time_in_minutes[b]],
+                                'net_hour_rate': xx.__dict__[net_hour_rate[b]],
+                            }
+                            self.append("modular_assembly_details", obj)
+
+    @frappe.whitelist()
+    def check_operations(self, operation):
+
+
+        for i in self.modular_assembly_details:
+            if i.operation == operation['operation']:
+                i.operation_time_in_minutes += operation['operation_time_in_minutes']
+                return True
+        return False
 
     @frappe.whitelist()
     def existing_item(self, xx, table, item_field_name):

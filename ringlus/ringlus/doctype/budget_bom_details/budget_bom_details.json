@@ -61,6 +61,7 @@
    "in_list_view": 1,
    "label": "Workstation",
    "options": "Workstation",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -70,6 +71,7 @@
    "in_list_view": 1,
    "label": "Operation",
    "options": "Operation",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -89,7 +91,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-09 00:12:44.959987",
+ "modified": "2021-12-09 00:54:16.270405",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Details",
