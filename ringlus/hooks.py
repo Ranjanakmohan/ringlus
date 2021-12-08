@@ -330,9 +330,10 @@ fixtures = [
 					"Work Order-additional_operating_cost-fetch_from",
 					"Work Order-additional_operating_cost-fetch_if_empty",
 					"Material Request Item-conversion_factor-precision",
-					"Purchase Order Item-conversion_factor-precision",
-					"Purchase Receipt Item-conversion_factor-precision",
-					"Purchase Invoice Item-conversion_factor-precision",
+					"Material Request Item-qty-precision",
+					"Purchase Order Item-qty-precision",
+					"Purchase Receipt Item-qty-precision",
+					"Purchase Invoice Item-qty-precision",
 				]
 			]
 		]
