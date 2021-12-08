@@ -151,7 +151,7 @@ class BudgetBOM(Document):
                     'item_name': x.item_name,
                     'item_group': item_master.item_group,
                     'stock_uom': item_master.stock_uom,
-                    'uom': x.uom,
+                    'uoms': x.uom,
                     'qty': x.qty,
                     'warehouse': raw_material_warehouse,
                     'rate': rate[0],
@@ -237,7 +237,7 @@ class BudgetBOM(Document):
                 "item_code": i.item_code,
                 "item_name": i.item_name,
                 "qty": i.qty,
-                "uom": i.uom,
+                "uom": i.uoms,
                 "estimated_bom_material_cost": self.total_raw_material_cost,
                 "estimated_bom_operation_cost": self.total_operation_cost,
             })
@@ -473,10 +473,10 @@ class BudgetBOM(Document):
                 "item_code": i.item_code,
                 "item_name": i.item_name,
                 "rate": i.rate if 'rate' in i.__dict__ else 0,
-                "qty": i.qty,
-                "uom": i.uom,
+                "qty": i.stock_qty,
+                "uom": i.stock_uom,
                 "operation_time_in_minutes": i.operation_time_in_minutes if 'operation_time_in_minutes' in i.__dict__ else 0,
-                "amount": i.qty * i.rate if 'rate' in i.__dict__ else 0,
+                "amount": i.amount if 'rate' in i.__dict__ else 0,
             }
             if bom == "Fourth" and raw_material == "mechanical_bom_details":
                 obj['bom_no'] = self.second_bom
