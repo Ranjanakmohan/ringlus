@@ -833,6 +833,8 @@ if(d.rate > 0 && d.discount_percentage > 0){
                     //     cur_frm.refresh_field(d.parentfield)
                     //
                     // }
+        d.triggered_discount_amount = d.discount_amount > 0 ? 1 : 0
+        cur_frm.refresh_field(d.parentfield)
         compute_total_cost(cur_frm)
 
     },

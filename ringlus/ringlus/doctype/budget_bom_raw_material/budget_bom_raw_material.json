@@ -27,8 +27,9 @@
   "discount_amount",
   "save_discount_amount",
   "unlink_discount",
+  "link_discount_amount",
   "unlinked",
-  "link_discount_amount"
+  "triggered_discount_amount"
  ],
  "fields": [
   {
@@ -106,6 +107,7 @@
   {
    "allow_on_submit": 1,
    "default": "0",
+   "depends_on": "eval: !doc.unlinked && !doc.triggered_discount_amount",
    "fieldname": "discount_percentage",
    "fieldtype": "Data",
    "label": "Discount Percentage"
@@ -114,7 +116,8 @@
    "default": "0",
    "fieldname": "discount_amount",
    "fieldtype": "Currency",
-   "label": "Discount on Rate"
+   "label": "Discount on Rate",
+   "read_only_depends_on": "eval: doc.link_discount_amount"
   },
   {
    "fetch_from": "item_code.description",
@@ -139,7 +142,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: !doc.link_discount_amount && !doc.unlinked",
+   "depends_on": "eval: !doc.link_discount_amount && !doc.unlinked && !doc.triggered_discount_amount",
    "fieldname": "save_discount_amount",
    "fieldtype": "Button",
    "label": "Save Discount Amount"
@@ -200,12 +203,19 @@
    "fieldtype": "Check",
    "hidden": 1,
    "label": "Unlinked"
+  },
+  {
+   "default": "0",
+   "fieldname": "triggered_discount_amount",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Triggered Discount Amount"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-08 09:47:30.309003",
+ "modified": "2021-12-08 10:40:23.108111",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
