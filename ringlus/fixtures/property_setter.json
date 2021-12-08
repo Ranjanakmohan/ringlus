@@ -49,5 +49,22 @@
   "property_type": "Small Text",
   "row_name": null,
   "value": "budget_bom.total_additional_operational_cost"
+ },
+ {
+  "default_value": null,
+  "doc_type": "Material Request Item",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "conversion_factor",
+  "modified": "2021-12-08 12:59:59.694932",
+  "name": "Material Request Item-conversion_factor-precision",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "precision",
+  "property_type": "Select",
+  "row_name": null,
+  "value": "9"
  }
 ]

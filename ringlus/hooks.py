@@ -329,6 +329,7 @@ fixtures = [
 					"Purchase Order Item-schedule_date-in_list_view",
 					"Work Order-additional_operating_cost-fetch_from",
 					"Work Order-additional_operating_cost-fetch_if_empty",
+					"Material Request Item-conversion_factor-precision",
 				]
 			]
 		]
