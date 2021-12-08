@@ -120,7 +120,17 @@ cur_frm.cscript.generate_item_template = function () {
 }
 
 frappe.ui.form.on('Budget BOM', {
+    sellable_product_category: function () {
+      cur_frm.set_query("sellable_product", () => {
+          return {
+              filters: {
+                  sellable_product_category: cur_frm.doc.sellable_product_category
+              }
+          }
+      })
+    },
 	refresh: function(frm) {
+
 
        //  document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
        // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"

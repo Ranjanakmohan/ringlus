@@ -8,8 +8,8 @@
  "field_order": [
   "status",
   "naming_series",
-  "sellable_product",
   "sellable_product_category",
+  "sellable_product",
   "opportunity",
   "customer",
   "customer_name",
@@ -338,6 +338,7 @@
    "label": "Declined"
   },
   {
+   "depends_on": "eval: doc.sellable_product_category",
    "fieldname": "sellable_product",
    "fieldtype": "Link",
    "label": "Sellable Product",
@@ -396,18 +397,17 @@
    "read_only": 1
   },
   {
-   "fetch_from": "sellable_product.sellable_product_category",
-   "fetch_if_empty": 1,
    "fieldname": "sellable_product_category",
-   "fieldtype": "Data",
+   "fieldtype": "Link",
    "label": "Sellable Product Category",
-   "read_only": 1
+   "options": "Sellable Product Category",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-12-08 10:03:49.254960",
+ "modified": "2021-12-09 00:08:07.711465",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -40,7 +40,7 @@ class BudgetBOM(Document):
                 "item_name": self.opportunity + "-" + self.sellable_product + "_" + i,
                 "description": self.opportunity + "-" + self.sellable_product + "_" + i,
                 "stock_uom": "Nos",
-                "item_group": "All Item Groups",
+                "item_group": "Budget BOM Items",
             }
             item_created = frappe.get_doc(obj).insert()
             self.__dict__[table_name][0].item_code = item_created.item_code
