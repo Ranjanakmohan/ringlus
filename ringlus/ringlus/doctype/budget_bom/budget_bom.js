@@ -632,6 +632,24 @@ function filter_uom_link_field(uom_options, cur_frm, table_name) {
     })
 }
 frappe.ui.form.on('Budget BOM Raw Material', {
+    unlink_discount: function (frm, cdt, cdn) {
+        var d = locals[cdt][cdn]
+        if(cur_frm.doc.docstatus){
+            frappe.call({
+                method: "ringlus.ringlus.doctype.budget_bom.budget_bom.unlink",
+                args: {
+                    name: d.name
+                },
+                async: false,
+                callback: function (r) {
+                    cur_frm.reload_doc()
+                }
+            })
+        } else{
+            d.link_discount_amount = ""
+            cur_frm.refresh_field(d.parentfield)
+        }
+    },
     uoms: function(frm, cdt, cdn) {
         var d = locals[cdt][cdn]
 
@@ -899,17 +917,6 @@ function compute_additional_costs(cur_frm) {
     cur_frm.doc.total_additional_operational_cost = total
     cur_frm.refresh_field("total_additional_operational_cost")
 }
-frappe.ui.form.on('Budget BOM Raw Material', {
-    electrical_bom_raw_material_remove: function(frm, cdt, cdn) {
-       compute_total_cost(cur_frm)
-	},
-    mechanical_bom_raw_material_remove: function(frm, cdt, cdn) {
-       compute_total_cost(cur_frm)
-	},
-	fg_sellable_bom_raw_material_remove: function(frm, cdt, cdn) {
-       compute_total_cost(cur_frm)
-	}
-});
 frappe.ui.form.on('Budget BOM Details', {
     workstation: function(frm, cdt, cdn) {
        compute_total_operation_cost(cur_frm)
@@ -1052,6 +1059,13 @@ cur_frm.cscript.electrical_bom_raw_material_on_form_rendered = function (frm, cd
            document.querySelectorAll("[data-fieldname='save_discount_amount']")[x].style.fontWeight ="bold"
         }
     }
+    for(var x=0;x<document.querySelectorAll("[data-fieldname='unlink_discount']").length;x+=1){
+        if(document.querySelectorAll("[data-fieldname='unlink_discount']")[x].className === 'btn btn-xs btn-default'){
+            document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.backgroundColor ="blue"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.color ="white"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.fontWeight ="bold"
+        }
+    }
      if(cur_frm.get_field("electrical_bom_raw_material").grid.df.read_only){
         for(var i=0;i<cur_frm.doc.electrical_bom_raw_material.length;i+=1){
             for(var x=0;x<frappe.meta.get_fieldnames("Budget BOM Raw Material").length;x+=1) {
@@ -1069,6 +1083,13 @@ cur_frm.cscript.mechanical_bom_raw_material_on_form_rendered = function (frm, cd
            document.querySelectorAll("[data-fieldname='save_discount_amount']")[x].style.fontWeight ="bold"
         }
     }
+    for(var x=0;x<document.querySelectorAll("[data-fieldname='unlink_discount']").length;x+=1){
+        if(document.querySelectorAll("[data-fieldname='unlink_discount']")[x].className === 'btn btn-xs btn-default'){
+            document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.backgroundColor ="blue"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.color ="white"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.fontWeight ="bold"
+        }
+    }
      if(cur_frm.get_field("mechanical_bom_raw_material").grid.df.read_only){
         for(var i=0;i<cur_frm.doc.mechanical_bom_raw_material.length;i+=1){
             for(var x=0;x<frappe.meta.get_fieldnames("Budget BOM Raw Material").length;x+=1) {
@@ -1084,6 +1105,13 @@ cur_frm.cscript.fg_sellable_bom_raw_material_on_form_rendered = function (frm, c
             document.querySelectorAll("[data-fieldname='save_discount_amount']")[x].style.backgroundColor ="blue"
            document.querySelectorAll("[data-fieldname='save_discount_amount']")[x].style.color ="white"
            document.querySelectorAll("[data-fieldname='save_discount_amount']")[x].style.fontWeight ="bold"
+        }
+    }
+    for(var x=0;x<document.querySelectorAll("[data-fieldname='unlink_discount']").length;x+=1){
+        if(document.querySelectorAll("[data-fieldname='unlink_discount']")[x].className === 'btn btn-xs btn-default'){
+            document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.backgroundColor ="blue"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.color ="white"
+           document.querySelectorAll("[data-fieldname='unlink_discount']")[x].style.fontWeight ="bold"
         }
     }
     if(cur_frm.get_field("fg_sellable_bom_raw_material").grid.df.read_only){

@@ -36,11 +36,11 @@
   "mechanical_bom_raw_material",
   "fgsellable_bom_section",
   "fg_sellable_bom_details",
-  "fg_sellable_bom_raw_material",
   "fg_sellable_from_template",
   "fg_sellable_item_template",
   "generate_fg_sellable_item_template",
   "section_break_29",
+  "fg_sellable_bom_raw_material",
   "modular_assembly_details",
   "section_break_34",
   "operational_costs",
@@ -254,8 +254,10 @@
    "label": "Generate Item Template"
   },
   {
+   "collapsible": 1,
    "fieldname": "section_break_29",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Modular Assembly"
   },
   {
    "allow_on_submit": 1,
@@ -356,7 +358,7 @@
   {
    "fieldname": "modular_assembly_details",
    "fieldtype": "Table",
-   "label": "Modular Assembly",
+   "label": "Modular Assembly Details",
    "options": "Budget BOM Modular Assembly"
   },
   {
@@ -405,7 +407,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-12-07 10:35:47.953340",
+ "modified": "2021-12-08 09:26:44.205641",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

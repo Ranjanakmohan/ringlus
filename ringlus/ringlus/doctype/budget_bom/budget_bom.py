@@ -631,3 +631,8 @@ def get_conversion_factor(item_code, uoms):
         return uom[0].conversion_factor
 
     return 1
+
+@frappe.whitelist()
+def unlink(name):
+    frappe.db.sql(""" UPDATE `tabBudget BOM Raw Material` SET link_discount_amount='', unlinked=1 WHERE name=%s""", name)
+    frappe.db.commit()

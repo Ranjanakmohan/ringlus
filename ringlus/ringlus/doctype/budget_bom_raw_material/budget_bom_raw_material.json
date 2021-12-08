@@ -26,6 +26,8 @@
   "discount_percentage",
   "discount_amount",
   "save_discount_amount",
+  "unlink_discount",
+  "unlinked",
   "link_discount_amount"
  ],
  "fields": [
@@ -137,7 +139,7 @@
    "read_only": 1
   },
   {
-   "depends_on": "eval: !doc.link_discount_amount",
+   "depends_on": "eval: !doc.link_discount_amount && !doc.unlinked",
    "fieldname": "save_discount_amount",
    "fieldtype": "Button",
    "label": "Save Discount Amount"
@@ -185,12 +187,25 @@
    "in_list_view": 1,
    "label": "Estimated UOM",
    "options": "UOM"
+  },
+  {
+   "depends_on": "eval: doc.link_discount_amount",
+   "fieldname": "unlink_discount",
+   "fieldtype": "Button",
+   "label": "Unlink Discount"
+  },
+  {
+   "default": "0",
+   "fieldname": "unlinked",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Unlinked"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-07 10:20:28.105442",
+ "modified": "2021-12-08 09:47:30.309003",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",

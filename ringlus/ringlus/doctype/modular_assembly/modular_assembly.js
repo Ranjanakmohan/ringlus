@@ -2,15 +2,35 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Modular Assembly', {
+    opportunity: function () {
+        cur_frm.call({
+            doc: cur_frm.doc,
+            method: 'get_sellable_product',
+            args: {},
+            freeze: true,
+            freeze_message: "Get Modular AssemblyTemplates...",
+            async:false,
+            callback: (r) => {
+                cur_frm.set_query("sellable_product", () => {
+                    return {
+                        filters:[
+                            ["name", 'in',r.message],
+
+                        ]
+                    }
+                })
+             }
+        })
+    },
 	refresh: function(frm) {
         cur_frm.set_query("opportunity", () => {
-	        return {
-	            filters:{
-	                status: 'Open'
-                }
-            }
-        })
+                    return {
+                        filters:[
+                            ["status", '=','Open']
 
+                        ]
+                    }
+                })
          cur_frm.fields_dict.modular_assembly.grid.get_field("item_code").get_query =
                 function() {
             var names = Array.from(cur_frm.doc.modular_assembly, x => "item_code" in x ? x.item_code:"")
