@@ -42,6 +42,8 @@ def generate_cost_centers(items, name, customer,project_code, company):
 
     company = frappe.get_doc("Company", company)
     default_project_code = frappe.db.get_single_value('Global Defaults', 'default_project_code')
+    if not default_project_code:
+        frappe.throw("Please Set Default Project Code in Global Defaults")
     generate_cc(project_code, customer, name, company, items_data,default_project_code)
 
 def generate_cc(project_code, customer, name, company, items_data,default_project_code):
