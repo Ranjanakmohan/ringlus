@@ -115,7 +115,7 @@ function check_items(item, cur_frm) {
         for(var x=0;x<cur_frm.doc.items.length;x+=1){
             var item_row = cur_frm.doc.items[x]
             if(item_row.item_code === item.item_code){
-                item_row.qty += item.qty
+                item_row.qty += item.stock_qty
                 cur_frm.refresh_field("items")
                 return true
             }
