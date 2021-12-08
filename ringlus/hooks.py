@@ -313,7 +313,7 @@ fixtures = [
 
                     "Additional Salary-additional_request_reference",
                     "Additional Salary-additional_request",
-                    "Additional Salary-fetch_attendance_requests"
+                    "Additional Salary-fetch_attendance_requests",
                     "Global Defaults-default_project_code"
 				]
 			]
