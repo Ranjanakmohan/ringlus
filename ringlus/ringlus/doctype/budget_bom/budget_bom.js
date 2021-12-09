@@ -1,6 +1,7 @@
 // Copyright (c) 2021, jan and contributors
 // For license information, please see license.txt
 var workstation = ""
+var m_workstation = ""
 var electrical_operation = ""
 var mechanical_operation = ""
 var fg_sellable_operation = ""
@@ -252,6 +253,17 @@ frappe.ui.form.on('Budget BOM', {
 	        frappe.db.get_single_value("Manufacturing Settings","default_workstation")
                 .then(d_workstation => {
                     workstation = d_workstation
+                if(d_workstation){
+                        frappe.db.get_doc('Workstation', d_workstation)
+                        .then(doc => {
+                            net_hour_rate = doc.hour_rate
+                        })
+                }
+
+            })
+        frappe.db.get_single_value("Manufacturing Settings","mechanical_bom_default_workstation")
+                .then(d_workstation => {
+                    m_workstation = d_workstation
                 if(d_workstation){
                         frappe.db.get_doc('Workstation', d_workstation)
                         .then(doc => {
@@ -519,7 +531,7 @@ frappe.ui.form.on('Budget BOM', {
             }
             if(cur_frm.doc.mechanical_bom_details.length === 0){
                 cur_frm.add_child("mechanical_bom_details", {
-                    workstation:workstation,
+                    workstation:m_workstation,
                     operation: mechanical_operation,
                     qty: 1,
                     net_hour_rate: net_hour_rate,
