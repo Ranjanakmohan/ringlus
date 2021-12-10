@@ -18,10 +18,10 @@ frappe.ui.form.on("Sales Order", {
                 }
             })
     },
-    onload_post_render: function () {
+    refresh: function () {
       if(cur_frm.doc.docstatus){
             cur_frm.remove_custom_button("Work Order", "Create")
-            cur_frm.add_custom_button(__('Work Order'), () => cur_frm.trigger("make_work_order_bb"), __('Create'));
+            cur_frm.add_custom_button(__('Custom Work Order'), () => cur_frm.trigger("make_work_order_bb"), __('Create'));
         }
     },
     make_work_order_bb: function() {
@@ -69,7 +69,7 @@ frappe.ui.form.on("Sales Order", {
 								return { filters: { item: doc.item_code } };
 							}
 						}, {
-							fieldtype: 'Read Only',
+							fieldtype: 'Float',
 							fieldname: 'pending_qty',
                             read_only: 1,
 							reqd: 1,
@@ -92,7 +92,13 @@ frappe.ui.form.on("Sales Order", {
 						title: __('Select Items to Manufacture'),
 						fields: fields,
 						primary_action: function() {
+
 							var data = d.get_values();
+							for(var x=0;x<data.items.length;x+=1){
+								if(data.items[x].pending_qty > 1){
+									frappe.throw("Qty should be 1")
+								}
+							}
 							frappe.call({
 								method: 'ringlus.doc_events.sales_order.make_work_orders',
 								args: {
