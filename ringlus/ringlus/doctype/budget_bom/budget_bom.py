@@ -249,7 +249,7 @@ class BudgetBOM(Document):
                 "item_code": i.item_code,
                 "item_name": i.item_name,
                 "qty": i.qty,
-                "uom": i.uoms,
+                "uom": i.uom,
                 "estimated_bom_material_cost": self.total_raw_material_cost,
                 "estimated_bom_operation_cost": self.total_operation_cost,
             })

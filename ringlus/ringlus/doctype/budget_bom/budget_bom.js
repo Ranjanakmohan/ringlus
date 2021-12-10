@@ -299,11 +299,11 @@ frappe.ui.form.on('Budget BOM', {
                     mechanical_operation_time_in_minute = time
 
             })
-        frappe.db.get_single_value("Manufacturing Settings","electrical_operation_time_in_minute")
-                .then(time => {
-                    electrical_operation_time_in_minute = time
-
-            })
+        // frappe.db.get_single_value("Manufacturing Settings","electrical_operation_time_in_minute")
+        //         .then(time => {
+        //             electrical_operation_time_in_minute = time
+        //
+        //     })
 
         if(cur_frm.doc.docstatus && cur_frm.doc.status === "Pending"){
 	        if(frappe.user.has_role("Sales User") || frappe.user.has_role("MD")){

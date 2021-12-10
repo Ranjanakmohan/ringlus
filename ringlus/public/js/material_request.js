@@ -49,10 +49,16 @@ frappe.ui.form.on("Material Request", {
                             target: cur_frm,
                             setters: [
                                 {
-                                    label: "Customer",
-                                    fieldname: "party_name",
+                                    label: "Budget BOM",
+                                    fieldname: "name",
                                     fieldtype: "Link",
-                                    options: "Customer",
+                                    options: "Budget BOM",
+                                    default:  undefined
+                                },
+                                 {
+                                    label: "Customer",
+                                    fieldname: "customer_name",
+                                    fieldtype: "Data",
                                     default: cur_frm.doc.party_name || undefined
                                 }
                             ],

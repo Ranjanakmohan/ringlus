@@ -105,7 +105,6 @@ doc_events = {
 		"validate": "ringlus.doc_events.material_request.validate_mr",
 		"on_submit": "ringlus.doc_events.material_request.on_submit_mr",
 		"on_cancel": "ringlus.doc_events.material_request.cancel_mr",
-		"on_trash": "ringlus.doc_events.material_request.on_trash",
 	},
 	"Purchase Order": {
 		"on_submit": "ringlus.doc_events.purchase_order.on_submit_po",
