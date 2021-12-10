@@ -98,30 +98,32 @@ def get_work_order_items(so,for_raw_material_request=0):
                 pending_qty = stock_qty - total_work_order_qty
             else:
                 pending_qty = stock_qty
-
-            if pending_qty and i.item_code not in product_bundle_parents:
-                if bom:
-                    items.append(dict(
-                        name= i.name,
-                        item_code= i.item_code,
-                        description= i.description,
-                        bom = bom,
-                        warehouse = i.warehouse,
-                        pending_qty = pending_qty,
-                        required_qty = pending_qty if for_raw_material_request else 0,
-                        sales_order_item = i.name
-                    ))
-                else:
-                    items.append(dict(
-                        name= i.name,
-                        item_code= i.item_code,
-                        description= i.description,
-                        bom = '',
-                        warehouse = i.warehouse,
-                        pending_qty = pending_qty,
-                        required_qty = pending_qty if for_raw_material_request else 0,
-                        sales_order_item = i.name
-                    ))
+            print("PENDIIIIING QQQTY")
+            print(pending_qty)
+            for ii in range(1,int(pending_qty + 1)):
+                if ii and i.item_code not in product_bundle_parents:
+                    if bom:
+                        items.append(dict(
+                            name= i.name,
+                            item_code= i.item_code,
+                            description= i.description,
+                            bom = bom,
+                            warehouse = i.warehouse,
+                            pending_qty = 1,
+                            required_qty = 1 if for_raw_material_request else 0,
+                            sales_order_item = i.name
+                        ))
+                    else:
+                        items.append(dict(
+                            name= i.name,
+                            item_code= i.item_code,
+                            description= i.description,
+                            bom = '',
+                            warehouse = i.warehouse,
+                            pending_qty = 1,
+                            required_qty = 1 if for_raw_material_request else 0,
+                            sales_order_item = i.name
+                        ))
     return items
 
 def get_default_bom_item(item_code):
