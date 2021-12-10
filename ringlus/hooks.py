@@ -131,6 +131,9 @@ doc_events = {
 	},
 	"Stock Entry": {
 		"on_submit": "ringlus.doc_events.stock_entry.on_submit_se",
+	},
+	"Opportunity": {
+		"on_trash": "ringlus.doc_events.opportunity.on_trash_o",
 	}
 }
 # Scheduled Tasks

@@ -7,6 +7,9 @@ from frappe.model.mapper import get_mapped_doc
 from erpnext.stock.stock_ledger import get_previous_sle
 
 class BudgetBOM(Document):
+    def on_trash(self):
+        frappe.db.sql(""" DELETE FROM `tabBudget BOM References` WHERE parent=%s and budget_bom=%s""", (self.opportunity, self.name))
+        frappe.db.commit()
     @frappe.whitelist()
     def update_discounts(self):
         fields = ['electrical_bom_raw_material','mechanical_bom_raw_material','fg_sellable_bom_raw_material']

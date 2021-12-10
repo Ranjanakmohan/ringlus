@@ -13,3 +13,9 @@ def make_bb(source_name, target_doc=None):
     }, ignore_permissions=True)
 
     return doc
+
+@frappe.whitelist()
+def on_trash_o(doc, method):
+    for i in doc.budget_bom_reference:
+        frappe.db.sql(""" UPDATE `tabBudget BOM` SET opportunity='' WHERE name=%s""", i.budget_bom)
+        frappe.db.commit()
