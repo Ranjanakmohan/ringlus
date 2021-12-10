@@ -50,7 +50,7 @@ frappe.ui.form.on("Material Request", {
                             setters: [
                                 {
                                     label: "Budget BOM",
-                                    fieldname: "name",
+                                    fieldname: "budget_bom",
                                     fieldtype: "Link",
                                     options: "Budget BOM",
                                     default:  undefined

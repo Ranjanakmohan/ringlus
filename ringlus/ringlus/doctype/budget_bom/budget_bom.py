@@ -166,7 +166,9 @@ class BudgetBOM(Document):
                     'item_name': x.item_name,
                     'item_group': item_master.item_group,
                     'stock_uom': item_master.stock_uom,
+                    'stock_qty': x.conversion_factor * x.qty,
                     'uoms': x.uom,
+                    'uom_conversion_factor': x.conversion_factor,
                     'qty': x.qty,
                     'warehouse': raw_material_warehouse,
                     'rate': rate[0],
@@ -534,6 +536,8 @@ def get_template_items(items):
             "batch": i['batch'] if 'batch' in i and i['batch'] else "",
             "qty": i['qty'],
             "uom": i['uoms'] if 'uoms' in i and i['uoms'] else "",
+            "conversion_factor": i['uom_conversion_factor'] if 'uom_conversion_factor' in i and i['uom_conversion_factor'] else "",
+            "stock_uom": i['stock_uom'] if 'stock_uom' in i and i['stock_uom'] else "",
         })
     return items_
 @frappe.whitelist()

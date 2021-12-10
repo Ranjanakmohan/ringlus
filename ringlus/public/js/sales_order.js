@@ -18,7 +18,7 @@ frappe.ui.form.on("Sales Order", {
                 }
             })
     },
-    refresh: function () {
+    onload_post_render: function () {
       if(cur_frm.doc.docstatus){
             cur_frm.remove_custom_button("Work Order", "Create")
             cur_frm.add_custom_button(__('Work Order'), () => cur_frm.trigger("make_work_order_bb"), __('Create'));

@@ -9,7 +9,10 @@
   "item_name",
   "batch",
   "qty",
-  "uom"
+  "column_break_5",
+  "uom",
+  "stock_uom",
+  "conversion_factor"
  ],
  "fields": [
   {
@@ -47,12 +50,29 @@
    "in_list_view": 1,
    "label": "Estimated UOM",
    "options": "UOM"
+  },
+  {
+   "fieldname": "stock_uom",
+   "fieldtype": "Link",
+   "label": "Stock UOM",
+   "options": "UOM"
+  },
+  {
+   "default": "0",
+   "fieldname": "conversion_factor",
+   "fieldtype": "Float",
+   "label": "Conversion Factor",
+   "precision": "9"
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-08 10:42:33.374854",
+ "modified": "2021-12-10 10:57:51.689802",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "BOM Item Template Details",
