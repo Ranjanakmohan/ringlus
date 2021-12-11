@@ -152,7 +152,7 @@ function remove_row(cur_frm, dd, table_name) {
                         }
                     } else if(reference[xx]['item_code'] === dd.item_code && table_name === 'raw_material'){
                         console.log("RAW MATERIAL")
-                        cur_frm.doc[table_name][x].qty -= reference[xx]['qty']
+                        cur_frm.doc[table_name][x].qty -= (reference[xx]['qty'] * reference[xx]['qty_mc'])
                         if(cur_frm.doc[table_name][x].qty === 0){
                             spliced_row = true
                             splice_index = x
@@ -245,7 +245,8 @@ function check_items(item, cur_frm, d) {
                 var reference = JSON.parse(item_row.reference)
                 reference.push({
                     item_code: d.item_code,
-                    qty: item.qty
+                    qty: item.qty,
+                    qty_mc: 1
                 })
                 console.log(reference)
                 item_row.qty += item.qty

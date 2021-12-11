@@ -32,7 +32,7 @@
    "fieldname": "uom",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Estimated BOM",
+   "label": "Estimated UOM",
    "options": "UOM"
   },
   {
@@ -53,7 +53,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-09 00:04:00.780929",
+ "modified": "2021-12-11 12:30:37.594608",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly Raw Material",
