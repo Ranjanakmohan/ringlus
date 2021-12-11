@@ -6,32 +6,15 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item_code",
-  "qty",
   "workstation",
-  "operation",
   "net_hour_rate",
+  "operation",
   "operation_time_in_minutes"
  ],
  "fields": [
   {
-   "fieldname": "item_code",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Item Name",
-   "options": "Modular Component"
-  },
-  {
-   "default": "0",
-   "fieldname": "qty",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Qty"
-  },
-  {
    "fieldname": "workstation",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Workstation",
    "options": "Workstation"
   },
@@ -57,7 +40,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-08 09:25:20.765509",
+ "modified": "2021-12-11 12:58:24.456186",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Modular Assembly",
