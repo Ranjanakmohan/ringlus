@@ -53,7 +53,7 @@
    "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
-   "label": "Estimated Qty"
+   "label": "Estimate Qty"
   },
   {
    "allow_on_submit": 1,
@@ -191,7 +191,7 @@
    "fieldname": "uoms",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Estimated UOM",
+   "label": "Estimate UOM",
    "mandatory_depends_on": "eval: doc.parentfield != 'fg_sellable_bom_raw_material'",
    "options": "UOM"
   },
@@ -219,7 +219,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-11 13:04:25.282831",
+ "modified": "2021-12-11 13:11:54.371469",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
