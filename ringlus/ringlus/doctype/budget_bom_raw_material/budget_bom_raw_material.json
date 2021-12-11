@@ -67,7 +67,8 @@
    "fieldname": "rate",
    "fieldtype": "Currency",
    "label": "Rate",
-   "precision": "9"
+   "precision": "9",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -167,14 +168,16 @@
    "fieldname": "stock_uom",
    "fieldtype": "Link",
    "label": "Stock UOM",
-   "options": "UOM"
+   "options": "UOM",
+   "read_only": 1
   },
   {
    "default": "1",
    "fieldname": "stock_qty",
    "fieldtype": "Float",
    "label": "Stock QTY",
-   "precision": "9"
+   "precision": "9",
+   "read_only": 1
   },
   {
    "default": "1",
@@ -216,7 +219,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-10 10:47:58.747328",
+ "modified": "2021-12-11 13:04:25.282831",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
