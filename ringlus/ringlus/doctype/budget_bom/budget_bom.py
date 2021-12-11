@@ -172,7 +172,7 @@ class BudgetBOM(Document):
                     'qty': x.qty,
                     'warehouse': raw_material_warehouse,
                     'rate': rate[0],
-                    'amount': rate[0] * x.qty,
+                    'amount': rate[0] * (x.conversion_factor * x.qty),
                     'discount_rate': (rate[0] * x.qty) / x.qty if rate[0] > 0 else 0
                 }
                 discount = frappe.db.sql(""" 
