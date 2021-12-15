@@ -131,6 +131,7 @@ class BudgetBOM(Document):
                                 'operation': xx.__dict__[operations[b]],
                                 'operation_time_in_minutes': xx.__dict__[operation_time_in_minutes[b]],
                                 'net_hour_rate': xx.__dict__[net_hour_rate[b]],
+                                'total_operation_cost': (xx.__dict__[operation_time_in_minutes[b]] / 60) * xx.__dict__[net_hour_rate[b]],
                             }
                             self.append("modular_assembly_details", obj)
 

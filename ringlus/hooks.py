@@ -237,13 +237,7 @@ fixtures = [
                     "Material Request Item-budget_bom_rate",
                     "Material Request-budget_bom",
                     "Purchase Order Item-budget_bom_rate",
-                    "Manufacturing Settings-default_routing",
-                    "Manufacturing Settings-default_operation",
-                    "Manufacturing Settings-mechanical_bom_default_operation",
-                    "Manufacturing Settings-mechanical_bom_default_workstation",
-                    "Manufacturing Settings-enclosure_default_operation",
-                    "Manufacturing Settings-default_workstation",
-                    "Manufacturing Settings-default_raw_material_warehouse",
+
                     "Purchase Order-approve_po_rate",
                     "Workstation-operation_time",
                     "Opportunity-budget_bom",
@@ -299,8 +293,22 @@ fixtures = [
 
 					"Work Order-budget_bom",
 
+
+                    "Manufacturing Settings-default_operation",
+					"Manufacturing Settings-default_workstation",
+					"Manufacturing Settings-electrical_operation_time_in_minute",
+					"Manufacturing Settings-cb_100",
+					"Manufacturing Settings-mechanical_bom_default_operation",
+                    "Manufacturing Settings-mechanical_bom_default_workstation",
 					"Manufacturing Settings-mechanical_operation_time_in_minute",
+					"Manufacturing Settings-cb_200",
+
+					"Manufacturing Settings-fg_bom_default_operation",
+					"Manufacturing Settings-fg_bom_default_workstation",
 					"Manufacturing Settings-fg_operation_time_in_minute",
+
+					"Manufacturing Settings-default_raw_material_warehouse",
+					"Manufacturing Settings-budget_bom_defaults",
 
 					"Sales Order Item-references",
 					"Sales Order Item-project_code",

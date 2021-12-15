@@ -2,20 +2,29 @@
 // For license information, please see license.txt
 var workstation = ""
 var m_workstation = ""
+var fg_workstation = ""
+
 var electrical_operation = ""
 var mechanical_operation = ""
 var fg_sellable_operation = ""
+
+var fg_net_hour_rate = 0
+var e_net_hour_rate = 0
+var m_net_hour_rate = 0
+
+var fg_operation_time_in_minute = 0
+var mechanical_operation_time_in_minute = 0
+var electrical_operation_time_in_minute = 0
+
 var routing = ""
 var has_quotation = false
 var has_so = false
 var generating_quotation = false
 var check_bom = false
 var table_name = ""
-var net_hour_rate = 0
+
 var operation_time = 0
-var fg_operation_time_in_minute = 0
-var mechanical_operation_time_in_minute = 0
-var electrical_operation_time_in_minute = 0
+
 var raw_material_warehouse = 0
 cur_frm.cscript.modular_assembly_templates = function () {
     var d = new frappe.ui.form.MultiSelectDialog({
@@ -256,7 +265,18 @@ frappe.ui.form.on('Budget BOM', {
                 if(d_workstation){
                         frappe.db.get_doc('Workstation', d_workstation)
                         .then(doc => {
-                            net_hour_rate = doc.hour_rate
+                            e_net_hour_rate = doc.hour_rate
+                        })
+                }
+
+            })
+        frappe.db.get_single_value("Manufacturing Settings","fg_bom_default_workstation")
+                .then(d_workstation => {
+                    fg_workstation = d_workstation
+                if(d_workstation){
+                        frappe.db.get_doc('Workstation', d_workstation)
+                        .then(doc => {
+                            fg_net_hour_rate = doc.hour_rate
                         })
                 }
 
@@ -267,7 +287,7 @@ frappe.ui.form.on('Budget BOM', {
                 if(d_workstation){
                         frappe.db.get_doc('Workstation', d_workstation)
                         .then(doc => {
-                            net_hour_rate = doc.hour_rate
+                            m_net_hour_rate = doc.hour_rate
                         })
                 }
 
@@ -282,6 +302,13 @@ frappe.ui.form.on('Budget BOM', {
                     mechanical_operation = d_operation
 
             })
+        frappe.db.get_single_value("Manufacturing Settings","fg_bom_default_operation")
+                .then(d_operation => {
+                    fg_sellable_operation = d_operation
+
+            })
+
+
 
         frappe.db.get_single_value("Manufacturing Settings","default_raw_material_warehouse")
                 .then(warehouse => {
@@ -297,6 +324,11 @@ frappe.ui.form.on('Budget BOM', {
         frappe.db.get_single_value("Manufacturing Settings","mechanical_operation_time_in_minute")
                 .then(time => {
                     mechanical_operation_time_in_minute = time
+
+            })
+        frappe.db.get_single_value("Manufacturing Settings","electrical_operation_time_in_minute")
+                .then(time => {
+                    electrical_operation_time_in_minute = time
 
             })
         // frappe.db.get_single_value("Manufacturing Settings","electrical_operation_time_in_minute")
@@ -512,30 +544,37 @@ frappe.ui.form.on('Budget BOM', {
 	        cur_frm.doc.status = "Pending"
             cur_frm.refresh_field(status)
             if(cur_frm.doc.fg_bom_details.length === 0){
+	            var fg_operation_time = fg_operation_time_in_minute > 0 ? fg_operation_time_in_minute : 0
                 cur_frm.add_child("fg_bom_details", {
-                    workstation: workstation,
-                    operation: electrical_operation,
+                    workstation: fg_workstation,
+                    operation: fg_sellable_operation,
                     qty: 1,
-                    net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: fg_operation_time_in_minute > 0 ? fg_operation_time_in_minute : ""
+                    net_hour_rate: fg_net_hour_rate,
+                    operation_time_in_minutes: fg_operation_time,
+                    total_operation_cost: (fg_operation_time / 60) * fg_net_hour_rate
                 })
             }
             if(cur_frm.doc.electrical_bom_details.length === 0){
+                var e_operation_time = electrical_operation_time_in_minute > 0 ? electrical_operation_time_in_minute : 0
                 cur_frm.add_child("electrical_bom_details", {
                     workstation: workstation,
                     operation: electrical_operation,
                     qty: 1,
-                    net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: electrical_operation_time_in_minute > 0 ? electrical_operation_time_in_minute : ""
+                    net_hour_rate: e_net_hour_rate,
+                    operation_time_in_minutes: e_operation_time,
+                    total_operation_cost: (e_operation_time / 60) * fg_net_hour_rate
                 })
             }
             if(cur_frm.doc.mechanical_bom_details.length === 0){
+                var m_operation_time = mechanical_operation_time_in_minute > 0 ? mechanical_operation_time_in_minute : 0
                 cur_frm.add_child("mechanical_bom_details", {
                     workstation:m_workstation,
                     operation: mechanical_operation,
                     qty: 1,
-                    net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: mechanical_operation_time_in_minute > 0 ? mechanical_operation_time_in_minute : ""
+                    net_hour_rate: m_net_hour_rate,
+                    operation_time_in_minutes: m_operation_time,
+                    total_operation_cost: (m_operation_time / 60) * fg_net_hour_rate
+
                 })
             }
             if(cur_frm.doc.fg_sellable_bom_details.length === 0){
@@ -544,8 +583,8 @@ frappe.ui.form.on('Budget BOM', {
                     routing:routing,
                     operation:fg_sellable_operation,
                     qty: 1,
-                    net_hour_rate: net_hour_rate,
-                    operation_time_in_minutes: operation_time > 0 ? operation_time : ""
+                    net_hour_rate: 0,
+                    operation_time_in_minutes: 0
                 })
             }
             compute_total_operation_cost(cur_frm)
@@ -967,8 +1006,7 @@ function compute_total_operation_cost(cur_frm) {
                 console.log(fieldnames[i])
                 console.log(parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate))
                 if(parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate) > 0){
-
-                    total_hour_rate += parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate)
+                    total_hour_rate += parseFloat(cur_frm.doc[fieldnames[i]][ii].total_operation_cost)
                 }
 
             }
