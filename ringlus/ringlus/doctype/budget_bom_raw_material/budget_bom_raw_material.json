@@ -60,7 +60,8 @@
    "default": "0",
    "fieldname": "valuation_rate",
    "fieldtype": "Currency",
-   "label": "Valuation Rate"
+   "label": "Valuation Rate",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -96,14 +97,16 @@
    "fieldname": "batch",
    "fieldtype": "Link",
    "label": "Brand",
-   "options": "Brand"
+   "options": "Brand",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
    "fieldname": "warehouse",
    "fieldtype": "Link",
    "label": "Warehouse",
-   "options": "Warehouse"
+   "options": "Warehouse",
+   "read_only": 1
   },
   {
    "allow_on_submit": 1,
@@ -185,7 +188,8 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "UOM Conversion Factor",
-   "precision": "9"
+   "precision": "9",
+   "read_only": 1
   },
   {
    "fieldname": "uoms",
@@ -220,7 +224,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-15 09:02:44.819707",
+ "modified": "2021-12-15 12:21:38.600528",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",

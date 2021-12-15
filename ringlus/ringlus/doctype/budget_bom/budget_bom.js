@@ -36,7 +36,7 @@ cur_frm.cscript.modular_assembly_templates = function () {
         get_query() {
             return {
                 filters: {
-                    docstatus: ['!=', 2],
+                    docstatus: ['=', 1],
                     sellable_product: cur_frm.doc.sellable_product,
                     opportunity: cur_frm.doc.opportunity,
                 }
@@ -139,8 +139,82 @@ frappe.ui.form.on('Budget BOM', {
           }
       })
     },
-	refresh: function(frm) {
+	refresh: function(frm,cdt, cdn) {
+            cur_frm.set_query("uoms", "mechanical_bom_raw_material", (frm, cdt, cdn) => {
 
+                var d = locals[cdt][cdn]
+                var uoms = []
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'get_uom',
+                    args: {
+                        item_code: d.item_code ? d.item_code : ""
+                    },
+                    freeze: true,
+                    freeze_message: "Get UOM...",
+                    async:false,
+                    callback: (r) => {
+                        uoms = r.message
+
+                    }
+                })
+                return {
+                                filters:{
+                                    name: ["in",uoms]
+                                }
+                            }
+
+        })
+cur_frm.set_query("uoms", "fg_sellable_bom_raw_material", (frm, cdt, cdn) => {
+
+                var d = locals[cdt][cdn]
+                var uoms = []
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'get_uom',
+                    args: {
+                        item_code: d.item_code ? d.item_code : ""
+                    },
+                    freeze: true,
+                    freeze_message: "Get UOM...",
+                    async:false,
+                    callback: (r) => {
+                        uoms = r.message
+
+                    }
+                })
+                return {
+                                filters:{
+                                    name: ["in",uoms]
+                                }
+                            }
+
+        })
+cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
+
+                var d = locals[cdt][cdn]
+                var uoms = []
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'get_uom',
+                    args: {
+                        item_code: d.item_code ? d.item_code : ""
+                    },
+                    freeze: true,
+                    freeze_message: "Get UOM...",
+                    async:false,
+                    callback: (r) => {
+                        uoms = r.message
+
+                    }
+                })
+                return {
+                                filters:{
+                                    name: ["in",uoms]
+                                }
+                            }
+
+        })
 
        //  document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.backgroundColor ="blue"
        // document.querySelectorAll("[data-fieldname='update_discounts']")[1].style.color ="white"
@@ -170,7 +244,9 @@ frappe.ui.form.on('Budget BOM', {
 	                status: 'Open'
                 }
             }
+
         })
+
 	    //ELECTRICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL
 	    cur_frm.fields_dict["electrical_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
 			function() {
