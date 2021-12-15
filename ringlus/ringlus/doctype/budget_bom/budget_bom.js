@@ -45,7 +45,7 @@ function get_modular_assembly_template(template_names, cur_frm){
     if(cur_frm.doc.fg_sellable_bom_raw_material.length > 0){
         if(!cur_frm.doc.fg_sellable_bom_raw_material[0].item_code){
             cur_frm.clear_table("fg_sellable_bom_raw_material")
-        cur_frm.refresh_field("fg_sellable_bom_raw_material")
+            cur_frm.refresh_field("fg_sellable_bom_raw_material")
         }
     }
      cur_frm.call({
@@ -548,8 +548,8 @@ frappe.ui.form.on('Budget BOM', {
                     operation_time_in_minutes: operation_time > 0 ? operation_time : ""
                 })
             }
-
-
+            compute_total_operation_cost(cur_frm)
+        }
             cur_frm.get_field("electrical_bom_details").grid.cannot_add_rows = true;
             cur_frm.get_field("mechanical_bom_details").grid.cannot_add_rows = true;
             cur_frm.get_field("fg_sellable_bom_details").grid.cannot_add_rows = true;
@@ -563,10 +563,6 @@ frappe.ui.form.on('Budget BOM', {
             cur_frm.refresh_field("electrical_bom_details")
             cur_frm.refresh_field("mechanical_bom_details")
             cur_frm.refresh_field("fg_sellable_bom_details")
-
-            compute_total_operation_cost(cur_frm)
-        }
-
 
 	},
     electrical_item_template: function(frm) {
@@ -963,12 +959,15 @@ function compute_total_cost(cur_frm) {
     cur_frm.refresh_field("total_raw_material_cost")
 }
 function compute_total_operation_cost(cur_frm) {
-    var fieldnames = ['electrical_bom_details','mechanical_bom_details','fg_sellable_bom_details','modular_assembly_details']
+    var fieldnames = ['electrical_bom_details','mechanical_bom_details','fg_bom_details','modular_assembly_details']
     var total_hour_rate = 0
     for(var i=0;i<fieldnames.length;i+=1){
         if(cur_frm.doc[fieldnames[i]]){
             for(var ii=0;ii<cur_frm.doc[fieldnames[i]].length;ii+=1){
+                console.log(fieldnames[i])
+                console.log(parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate))
                 if(parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate) > 0){
+
                     total_hour_rate += parseFloat(cur_frm.doc[fieldnames[i]][ii].net_hour_rate)
                 }
 
@@ -976,7 +975,7 @@ function compute_total_operation_cost(cur_frm) {
         }
 
     }
-
+console.log("TOTAL HOUR RAAAAATE")
     cur_frm.doc.total_operation_cost = total_hour_rate
     cur_frm.refresh_field("total_operation_cost")
 }

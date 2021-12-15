@@ -193,7 +193,8 @@
    "in_list_view": 1,
    "label": "Estimate UOM",
    "mandatory_depends_on": "eval: doc.parentfield != 'fg_sellable_bom_raw_material'",
-   "options": "UOM"
+   "options": "UOM",
+   "reqd": 1
   },
   {
    "depends_on": "eval: doc.link_discount_amount",
@@ -219,7 +220,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-11 13:11:54.371469",
+ "modified": "2021-12-15 09:02:44.819707",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Raw Material",
