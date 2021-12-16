@@ -13,7 +13,34 @@ frappe.ui.form.on('BOM Item Template', {
                     frappe.msgprint("Done Updating")
                 }
             })
-	}
+	},
+    refresh: function () {
+        cur_frm.set_query("uom", "items", (frm, cdt, cdn) => {
+
+                var d = locals[cdt][cdn]
+                var uoms = []
+                cur_frm.call({
+                    doc: cur_frm.doc,
+                    method: 'get_uom',
+                    args: {
+                        item_code: d.item_code ? d.item_code : ""
+                    },
+                    freeze: true,
+                    freeze_message: "Get UOM...",
+                    async:false,
+                    callback: (r) => {
+                        uoms = r.message
+
+                    }
+                })
+                return {
+                                filters:{
+                                    name: ["in",uoms]
+                                }
+                            }
+
+        })
+    }
 });
 
 frappe.ui.form.on('BOM Item Template Details', {
@@ -29,7 +56,8 @@ frappe.ui.form.on('BOM Item Template Details', {
                 },
                 async: false,
                 callback: function (r) {
-                    d.uom_conversion_factor = r.message
+                    d.conversion_factor = r.message
+                    cur_frm.refresh_field(d.parentfield)
                 }
             })
         }
