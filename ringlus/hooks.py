@@ -293,7 +293,6 @@ fixtures = [
 
 					"Work Order-budget_bom",
 
-
                     "Manufacturing Settings-default_operation",
 					"Manufacturing Settings-default_workstation",
 					"Manufacturing Settings-electrical_operation_time_in_minute",
