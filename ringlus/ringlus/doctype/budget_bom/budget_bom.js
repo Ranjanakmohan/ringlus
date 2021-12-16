@@ -165,6 +165,27 @@ frappe.ui.form.on('Budget BOM', {
                             }
 
         })
+        cur_frm.set_query("item_code", "fg_sellable_bom_raw_material", (frm, cdt, cdn) => {
+            return {
+                filters: {
+                    item_group: ["!=", "Budget BOM Items"]
+                }
+            }
+        })
+cur_frm.set_query("item_code", "electrical_bom_raw_material", (frm, cdt, cdn) => {
+            return {
+                filters: {
+                    item_group: ["!=", "Budget BOM Items"]
+                }
+            }
+        })
+        cur_frm.set_query("item_code", "mechanical_bom_raw_material", (frm, cdt, cdn) => {
+            return {
+                filters: {
+                    item_group: ["!=", "Budget BOM Items"]
+                }
+            }
+        })
 cur_frm.set_query("uoms", "fg_sellable_bom_raw_material", (frm, cdt, cdn) => {
 
                 var d = locals[cdt][cdn]
