@@ -1061,10 +1061,25 @@ frappe.ui.form.on('Budget BOM Details', {
         if(d.operation_time_in_minutes > 0){
                     d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
         cur_frm.refresh_field(d.parentfield)
+            compute_total_operation_cost(cur_frm)
         } else {
             d.total_operation_cost = 0
             cur_frm.refresh_field(d.parentfield)
-
+compute_total_operation_cost(cur_frm)
+        }
+    }
+});
+frappe.ui.form.on('Modular Assembly Details', {
+    operation_time_in_minutes: function (frm, cdt, cdn) {
+        var d = locals[cdt][cdn]
+        if(d.operation_time_in_minutes > 0 && d.net_hour_rate > 0){
+                    d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
+                cur_frm.refresh_field(d.parentfield)
+            compute_total_operation_cost(cur_frm)
+        } else {
+            d.total_operation_cost = 0
+            cur_frm.refresh_field(d.parentfield)
+            compute_total_operation_cost(cur_frm)
         }
     }
 });
