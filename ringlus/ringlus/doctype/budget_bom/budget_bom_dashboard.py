@@ -17,8 +17,13 @@ def get_data():
 				'label': _('Linked Forms'),
 				'items': [
 					"Quotation", "BOM", "Sales Order",
-					"Material Request", "Purchase Order",
-					"Purchase Invoice", "Purchase Receipt"]
-			}
+					"Material Request"]
+			},
+            {
+                'label': _('Linked Forms'),
+                'items': [
+                     "Purchase Order",
+                    "Purchase Invoice", "Purchase Receipt"]
+            }
 		]
 	}

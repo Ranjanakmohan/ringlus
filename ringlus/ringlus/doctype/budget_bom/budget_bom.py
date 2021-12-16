@@ -540,7 +540,6 @@ def get_template_items(items):
         items_.append({
             "item_code": i['item_code'],
             "item_name": i['item_name'],
-            "batch": i['batch'] if 'batch' in i and i['batch'] else "",
             "qty": i['qty'],
             "uom": i['uoms'] if 'uoms' in i and i['uoms'] else "",
             "conversion_factor": i['uom_conversion_factor'] if 'uom_conversion_factor' in i and i['uom_conversion_factor'] else "",
