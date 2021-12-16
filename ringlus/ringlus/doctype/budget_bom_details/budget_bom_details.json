@@ -54,6 +54,7 @@
    "in_list_view": 1,
    "label": "UOM",
    "options": "UOM",
+   "read_only": 1,
    "reqd": 1
   },
   {
@@ -99,7 +100,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-15 11:24:11.181154",
+ "modified": "2021-12-16 12:05:53.904323",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Details",
