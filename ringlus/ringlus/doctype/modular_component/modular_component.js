@@ -9,6 +9,23 @@ frappe.ui.form.on('Modular Component', {
 
 	}
 });
+frappe.ui.form.on('Operational Cost', {
+	operation: function(frm, cdt, cdn) {
+	    var d = locals[cdt][cdn]
+		frappe.db.get_doc("Operation", d.operation)
+            .then(operation => {
+        if(operation.workstation){
+                frappe.db.get_doc("Workstation", operation.workstation)
+                        .then(w => {
+                           frappe.model.set_value(d.doctype, d.name, "workstation",  operation.workstation)
+                           frappe.model.set_value(d.doctype, d.name, "net_hour_rate",  w.hour_rate)
+                })
+        }
+
+        })
+
+	}
+});
 frappe.ui.form.on('Modular Assembly Raw Material', {
     item_code: function (frm, cdt,cdn) {
         var d = locals[cdt][cdn]
