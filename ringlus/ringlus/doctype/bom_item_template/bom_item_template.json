@@ -9,6 +9,7 @@
  "field_order": [
   "naming_series",
   "description",
+  "update_custom_fields",
   "items"
  ],
  "fields": [
@@ -31,11 +32,16 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "BIT-.YYYY.-"
+  },
+  {
+   "fieldname": "update_custom_fields",
+   "fieldtype": "Button",
+   "label": "Update Custom Fields"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-05 11:16:08.812911",
+ "modified": "2021-12-16 10:36:44.996371",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "BOM Item Template",

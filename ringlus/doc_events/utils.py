@@ -140,7 +140,7 @@ def on_cancel_record(doc, method):
         frappe.db.commit()
 
 
-
+@frappe.whitelist()
 def create_custom_fields():
     fields = [
         {

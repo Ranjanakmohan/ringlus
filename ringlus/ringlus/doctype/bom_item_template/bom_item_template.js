@@ -2,9 +2,18 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('BOM Item Template', {
-	// refresh: function(frm) {
-
-	// }
+	update_custom_fields: function(frm) {
+            frappe.call({
+                method: "ringlus.doc_events.utils.create_custom_fields",
+                args: {},
+                freeze: true,
+                freeze_message: "Updating Custom Fields",
+                async: false,
+                callback: function (r) {
+                    frappe.msgprint("Done Updating")
+                }
+            })
+	}
 });
 
 frappe.ui.form.on('BOM Item Template Details', {
