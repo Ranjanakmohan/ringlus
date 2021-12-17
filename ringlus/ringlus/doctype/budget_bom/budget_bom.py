@@ -7,6 +7,12 @@ from frappe.model.mapper import get_mapped_doc
 from erpnext.stock.stock_ledger import get_previous_sle
 
 class BudgetBOM(Document):
+    def validate(self):
+        fields = ['electrical_bom_raw_material','mechanical_bom_raw_material','fg_sellable_bom_raw_material']
+        for x in fields:
+            for i in self.__dict__[x]:
+                if not i.uoms:
+                    frappe.throw("Estimated UOM is Mandatory")
     @frappe.whitelist()
     def get_uom(self, item_code):
         uom = frappe.db.sql(""" SELECT * FROM `tabUOM Conversion Detail` WHERE parent=%s""",item_code, as_dict=1)

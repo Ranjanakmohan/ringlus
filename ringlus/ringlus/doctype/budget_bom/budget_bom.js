@@ -659,7 +659,7 @@ cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
                     qty: 1,
                     net_hour_rate: e_net_hour_rate,
                     operation_time_in_minutes: e_operation_time,
-                    total_operation_cost: (e_operation_time / 60) * fg_net_hour_rate
+                    total_operation_cost: (e_operation_time / 60) * e_net_hour_rate
                 })
             }
             if(cur_frm.doc.mechanical_bom_details.length === 0){
@@ -670,7 +670,7 @@ cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
                     qty: 1,
                     net_hour_rate: m_net_hour_rate,
                     operation_time_in_minutes: m_operation_time,
-                    total_operation_cost: (m_operation_time / 60) * fg_net_hour_rate
+                    total_operation_cost: (m_operation_time / 60) * m_net_hour_rate
 
                 })
             }
@@ -1080,13 +1080,13 @@ frappe.ui.form.on('Budget BOM Details', {
     operation_time_in_minutes: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         if(d.operation_time_in_minutes > 0){
-                    d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
-        cur_frm.refresh_field(d.parentfield)
+            d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
+            cur_frm.refresh_field(d.parentfield)
             compute_total_operation_cost(cur_frm)
         } else {
             d.total_operation_cost = 0
             cur_frm.refresh_field(d.parentfield)
-compute_total_operation_cost(cur_frm)
+            compute_total_operation_cost(cur_frm)
         }
     }
 });
@@ -1094,8 +1094,8 @@ frappe.ui.form.on('Modular Assembly Details', {
     operation_time_in_minutes: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         if(d.operation_time_in_minutes > 0 && d.net_hour_rate > 0){
-                    d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
-                cur_frm.refresh_field(d.parentfield)
+            d.total_operation_cost = (d.operation_time_in_minutes / 60) * d.net_hour_rate
+            cur_frm.refresh_field(d.parentfield)
             compute_total_operation_cost(cur_frm)
         } else {
             d.total_operation_cost = 0
