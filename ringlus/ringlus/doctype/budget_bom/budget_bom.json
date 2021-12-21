@@ -28,18 +28,30 @@
   "electrical_item_template",
   "generate_electrical_item_template",
   "electrical_bom_raw_material",
+  "section_break_23",
+  "no_value",
+  "column_break_24",
+  "total_electrical_raw_material_cost",
   "mechanical_bom_section",
   "mechanical_bom_details",
   "mechanical_from_template",
   "mechanical_item_template",
   "generate_mechanical_item_template",
   "mechanical_bom_raw_material",
+  "section_break_90",
+  "no_value_1",
+  "column_break_243",
+  "total_mechanical_raw_material_cost",
   "fgsellable_bom_section",
   "fg_sellable_bom_details",
   "fg_sellable_bom_raw_material",
   "fg_sellable_from_template",
   "fg_sellable_item_template",
   "generate_fg_sellable_item_template",
+  "section_break_901",
+  "no_value_2",
+  "column_break_2433",
+  "total_enclosure_raw_material_cost",
   "section_break_29",
   "modular_assembly_details",
   "section_break_34",
@@ -402,12 +414,69 @@
    "label": "Sellable Product Category",
    "options": "Sellable Product Category",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_23",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_24",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_electrical_raw_material_cost",
+   "fieldtype": "Currency",
+   "label": "Total Electrical Raw Material Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "no_value",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "section_break_90",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "no_value_1",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_243",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_mechanical_raw_material_cost",
+   "fieldtype": "Currency",
+   "label": "Total Mechanical Raw Material Cost",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_901",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "no_value_2",
+   "fieldtype": "Data",
+   "hidden": 1
+  },
+  {
+   "fieldname": "column_break_2433",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_enclosure_raw_material_cost",
+   "fieldtype": "Currency",
+   "label": "Total Enclosure Raw Material Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-12-09 00:08:07.711465",
+ "modified": "2021-12-21 12:12:17.161937",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -134,6 +134,9 @@ class BudgetBOM(Document):
                         if xx.__dict__[workstations[b]]:
                             xx.__dict__[net_hour_rate[b]] = frappe.db.get_value("Workstation", xx.__dict__[workstations[b]], "hour_rate")
 
+                    if xx.__dict__[workstations[b]] and xx.__dict__[operations[b]] and xx.__dict__[net_hour_rate[b]] == 0:
+                        xx.__dict__[net_hour_rate[b]] = frappe.db.get_value("Workstation", xx.__dict__[workstations[b]], "hour_rate")
+
                     if xx.__dict__[workstations[b]] and xx.__dict__[operations[b]]:
                         if not self.check_operations(xx.__dict__):
                             obj = {

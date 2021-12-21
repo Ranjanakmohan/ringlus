@@ -1109,12 +1109,18 @@ function compute_total_cost(cur_frm) {
     var fieldnames = ['electrical_bom_raw_material','mechanical_bom_raw_material','fg_sellable_bom_raw_material']
     var total = 0
     for(var i=0;i<fieldnames.length;i+=1){
+            var total_field = fieldnames[i] === "electrical_bom_raw_material" ?
+                "total_electrical_raw_material_cost" : fieldnames[i] === "mechanical_bom_raw_material" ?
+                    "total_mechanical_raw_material_cost" : fieldnames[i] === "fg_sellable_bom_raw_material" ?"total_enclosure_raw_material_cost" : ""
+        var total_per_raw_material = 0
         if(cur_frm.doc[fieldnames[i]]){
             for(var ii=0;ii<cur_frm.doc[fieldnames[i]].length;ii+=1){
                 total += cur_frm.doc[fieldnames[i]][ii].amount
+                total_per_raw_material += cur_frm.doc[fieldnames[i]][ii].amount
             }
         }
-
+        cur_frm.doc[total_field] = total_per_raw_material
+        cur_frm.refresh_field(total_field)
     }
 
     cur_frm.doc.total_raw_material_cost = total
