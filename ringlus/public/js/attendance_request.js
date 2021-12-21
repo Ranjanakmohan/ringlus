@@ -2,7 +2,7 @@ frappe.ui.form.on("Attendance Request", {
     employee: function () {
         if(cur_frm.doc.employee){
             frappe.call({
-            method: "amsecc.doc_events.attendance_request.get_ss",
+            method: "ringlus.doc_events.attendance_request.get_ss",
             args:{
                 employee: cur_frm.doc.employee
             },
