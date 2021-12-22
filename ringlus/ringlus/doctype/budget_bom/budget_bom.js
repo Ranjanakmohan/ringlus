@@ -270,10 +270,10 @@ cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
         })
 
 	    //ELECTRICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL
-	    cur_frm.fields_dict["electrical_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
-			function() {
-	        cur_frm.trigger("refresh_electrical_available_stock")
-        }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
+	    // cur_frm.fields_dict["electrical_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
+			// function() {
+	    //     cur_frm.trigger("refresh_electrical_available_stock")
+        // }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
 
 	    cur_frm.fields_dict["electrical_bom_raw_material"].grid.add_custom_button(__('Generate Item Template'),
 			function() {
@@ -289,10 +289,10 @@ cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
         }).css('background-color','brown').css('color','white').css('font-weight','bold')
 
         //MECHANICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL
-	    cur_frm.fields_dict["mechanical_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
-			function() {
-            cur_frm.trigger("refresh_mechanical_available_stock")
-        }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
+        // cur_frm.fields_dict["mechanical_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
+			// function() {
+        //     cur_frm.trigger("refresh_mechanical_available_stock")
+        // }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
 
 	    cur_frm.fields_dict["mechanical_bom_raw_material"].grid.add_custom_button(__('Generate Item Template'),
 			function() {
@@ -309,11 +309,11 @@ cur_frm.set_query("uoms", "electrical_bom_raw_material", (frm, cdt, cdn) => {
         //ENCLOSUUUUUUUUUURE
 
 
-	    cur_frm.fields_dict["fg_sellable_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
-			function() {
-                cur_frm.trigger("refresh_fg_sellable_available_stock")
-
-        }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
+        // cur_frm.fields_dict["fg_sellable_bom_raw_material"].grid.add_custom_button(__('Refresh Available Stock'),
+			// function() {
+        //         cur_frm.trigger("refresh_fg_sellable_available_stock")
+        //
+        // }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
 
         cur_frm.fields_dict["fg_sellable_bom_raw_material"].grid.add_custom_button(__('Modular Assembly'),
 			function() {
