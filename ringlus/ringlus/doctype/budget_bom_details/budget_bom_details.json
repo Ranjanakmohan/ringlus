@@ -9,7 +9,6 @@
   "item_name",
   "qty",
   "operation_time_in_minutes",
-  "long_description",
   "rfq_si_no",
   "product_description",
   "column_break_4",
@@ -17,8 +16,7 @@
   "workstation",
   "operation",
   "net_hour_rate",
-  "total_operation_cost",
-  "short_description"
+  "total_operation_cost"
  ],
  "fields": [
   {
@@ -102,18 +100,6 @@
   },
   {
    "depends_on": "eval: doc.parentfield == 'fg_bom_details'",
-   "fieldname": "long_description",
-   "fieldtype": "Small Text",
-   "label": "Long Description"
-  },
-  {
-   "depends_on": "eval: doc.parentfield == 'fg_bom_details'",
-   "fieldname": "short_description",
-   "fieldtype": "Small Text",
-   "label": "Short Description"
-  },
-  {
-   "depends_on": "eval: doc.parentfield == 'fg_bom_details'",
    "fieldname": "rfq_si_no",
    "fieldtype": "Data",
    "label": "RFQ SI No"
@@ -128,7 +114,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-21 12:46:05.984917",
+ "modified": "2021-12-22 10:17:46.534833",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM Details",
