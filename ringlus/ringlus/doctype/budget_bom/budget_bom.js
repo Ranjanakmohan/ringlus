@@ -1085,6 +1085,11 @@ function compute_additional_costs(cur_frm) {
     cur_frm.doc.total_additional_operational_cost = total
     cur_frm.refresh_field("total_additional_operational_cost")
 }
+frappe.ui.form.on('Budget BOM Modular Assembly', {
+modular_assembly_details_remove: function(frm, cdt, cdn) {
+       compute_total_operation_cost(cur_frm)
+	},
+})
 frappe.ui.form.on('Budget BOM Details', {
     workstation: function(frm, cdt, cdn) {
        compute_total_operation_cost(cur_frm)
