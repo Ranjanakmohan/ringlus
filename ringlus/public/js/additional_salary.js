@@ -2,7 +2,7 @@ frappe.ui.form.on("Additional Salary", {
     fetch_attendance_requests: function () {
         if(cur_frm.doc.employee && (cur_frm.doc.from_date && cur_frm.doc.to_date || cur_frm.doc.payroll_date)){
            frappe.call({
-               method: "amsecc.doc_events.additional_salary.get_attendance_requests",
+               method: "ringlus.doc_events.additional_salary.get_attendance_requests",
                args: {
                    employee: cur_frm.doc.employee,
                    from_date: cur_frm.doc.from_date ? cur_frm.doc.from_date : "",
