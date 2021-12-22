@@ -1,4 +1,8 @@
 frappe.ui.form.on("Attendance Request", {
+    from_date: function () {
+        cur_frm.doc.to_date = cur_frm.doc.from_date
+        refresh_field("to_date")
+    },
     employee: function () {
         if(cur_frm.doc.employee){
             frappe.call({
