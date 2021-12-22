@@ -347,6 +347,7 @@ fixtures = [
 					"Purchase Order Item-qty-precision",
 					"Purchase Receipt Item-qty-precision",
 					"Purchase Invoice Item-qty-precision",
+					"Attendance Request-to_date-read_only",
 				]
 			]
 		]
