@@ -135,6 +135,9 @@ doc_events = {
 	},
 	"Opportunity": {
 		"on_trash": "ringlus.doc_events.opportunity.on_trash_o",
+	},
+	"Addtional Salary": {
+		"validate": "ringlus.doc_events.additional_salary.validate_as",
 	}
 }
 # Scheduled Tasks
@@ -329,6 +332,7 @@ fixtures = [
                     "Additional Salary-total_working_hour",
                     "Employee-overtime_multiplication_factor",
                     "Attendance Request-overtime_multiplication_factor",
+                    "Attendance Request-additional_salary",
                     "Global Defaults-default_project_code"
 				]
 			]
