@@ -68,6 +68,7 @@ function get_modular_assembly_template(template_names, cur_frm){
         async:false,
         callback: (r) => {
             compute_total_operation_cost(cur_frm)
+                compute_total_cost(cur_frm)
          }
     })
 }
@@ -786,6 +787,17 @@ function filter_uom_link_field(uom_options, cur_frm, table_name) {
     })
 }
 frappe.ui.form.on('Budget BOM Raw Material', {
+    electrical_bom_raw_material_remove: function () {
+        compute_total_cost(cur_frm)
+    },
+    mechanical_bom_raw_material_remove: function () {
+                compute_total_cost(cur_frm)
+
+    },
+    fg_sellable_bom_raw_material_remove: function () {
+        compute_total_cost(cur_frm)
+
+    },
     unlink_discount: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         if(cur_frm.doc.docstatus){
