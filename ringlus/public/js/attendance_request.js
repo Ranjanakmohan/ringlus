@@ -16,7 +16,7 @@ frappe.ui.form.on("Attendance Request", {
 
     },
       overtime_hour: function () {
-       cur_frm.doc.overtime_amount =((cur_frm.doc.base / 8) * 1.5) * cur_frm.doc.overtime_hour
+       cur_frm.doc.overtime_amount =((cur_frm.doc.base / 30 / 8) * 1.5) * cur_frm.doc.overtime_hour
           cur_frm.refresh_field("overtime_amount")
 
     }
