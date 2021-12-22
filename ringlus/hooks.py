@@ -327,6 +327,8 @@ fixtures = [
                     "Additional Salary-fetch_attendance_requests",
                     "Additional Salary-is_hour_based",
                     "Additional Salary-total_working_hour",
+                    "Employee-overtime_multiplication_factor",
+                    "Attendance Request-overtime_multiplication_factor",
                     "Global Defaults-default_project_code"
 				]
 			]
