@@ -1166,7 +1166,7 @@ function compute_total_operation_cost(cur_frm) {
     compute_total_production_cost(cur_frm)
 }
 function compute_total_production_cost(cur_frm) {
-    cur_frm.doc.total_production_cost = cur_frm.doc.total_operation_cost + cur_frm.doc.total_additional_operational_cost + total_raw_material_cost
+    cur_frm.doc.total_production_cost = cur_frm.doc.total_operation_cost + cur_frm.doc.total_additional_operational_cost + cur_frm.doc.total_raw_material_cost
     cur_frm.refresh_field("total_production_cost")
 }
 function get_template(template_names, raw_material_table, cur_frm){
