@@ -61,6 +61,7 @@
   "total_additional_operational_cost",
   "column_break_35",
   "total_raw_material_cost",
+  "total_production_cost",
   "more_information_section",
   "rejection_note",
   "amended_from",
@@ -471,12 +472,19 @@
    "fieldtype": "Currency",
    "label": "Total Enclosure Raw Material Cost",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "total_production_cost",
+   "fieldtype": "Currency",
+   "label": "Total Production Cost",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-12-21 12:12:17.161937",
+ "modified": "2021-12-23 13:15:31.561182",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Budget BOM",

@@ -1142,6 +1142,7 @@ function compute_total_cost(cur_frm) {
 
     cur_frm.doc.total_raw_material_cost = total
     cur_frm.refresh_field("total_raw_material_cost")
+    compute_total_production_cost(cur_frm)
 }
 function compute_total_operation_cost(cur_frm) {
     var fieldnames = ['electrical_bom_details','mechanical_bom_details','fg_bom_details','modular_assembly_details']
@@ -1159,9 +1160,14 @@ function compute_total_operation_cost(cur_frm) {
         }
 
     }
-console.log("TOTAL HOUR RAAAAATE")
+    console.log("TOTAL HOUR RAAAAATE")
     cur_frm.doc.total_operation_cost = total_hour_rate
     cur_frm.refresh_field("total_operation_cost")
+    compute_total_production_cost(cur_frm)
+}
+function compute_total_production_cost(cur_frm) {
+    cur_frm.doc.total_production_cost = cur_frm.doc.total_operation_cost + cur_frm.doc.total_additional_operational_cost + total_raw_material_cost
+    cur_frm.refresh_field("total_production_cost")
 }
 function get_template(template_names, raw_material_table, cur_frm){
     if(cur_frm.doc[raw_material_table].length > 0 && !cur_frm.doc[raw_material_table][0].item_code){

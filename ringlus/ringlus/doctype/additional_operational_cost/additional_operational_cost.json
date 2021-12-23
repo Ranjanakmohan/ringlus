@@ -16,7 +16,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Cost Type",
-   "options": "\nTransportation Charge\nLoading\nUnloading"
+   "options": "\nTransportation Charge\nLoading\nUnloading\nSurface Finishing"
   },
   {
    "allow_on_submit": 1,
@@ -37,7 +37,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-25 19:00:13.832374",
+ "modified": "2021-12-23 13:18:32.735506",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Additional Operational Cost",
