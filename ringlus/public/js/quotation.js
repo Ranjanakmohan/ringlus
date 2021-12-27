@@ -163,6 +163,8 @@ function fetch_boms(cur_frm, selections) {
                             cur_frm.refresh_field("budget_bom_reference")
 
                     for(var ii=0;ii<doc.fg_bom_details.length;ii+=1){
+                                var material_cost = doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))
+                                var operation_cost = doc.total_operation_cost + (doc.total_operation_cost *(cur_frm.doc.default_operation_overhead / 100 ))
                                   cur_frm.add_child("items",{
                                         "item_code": doc.fg_bom_details[ii].item_code,
                                         "item_name": doc.fg_bom_details[ii].item_name,
@@ -174,20 +176,20 @@ function fetch_boms(cur_frm, selections) {
                                         "estimated_bom_material_cost": doc.total_raw_material_cost,
                                         "material_overhead": cur_frm.doc.default_material_overhead,
                                         "material_overhead_amount": doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ),
-                                        "material_cost": doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 )),
+                                        "material_cost": material_cost,
 
                                         "estimated_bom_operation_cost": doc.total_operation_cost,
                                         "operation_overhead": cur_frm.doc.default_operation_overhead,
                                         "operation_overhead_amount": doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 ),
-                                        "operation_cost": doc.total_operation_cost + (doc.total_operation_cost *(cur_frm.doc.default_operation_overhead / 100 )),
+                                        "operation_cost": operation_cost,
 
                                         "material_margin": cur_frm.doc.default_material_margin,
-                                        "material_margin_amount": cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))),
+                                        "material_margin_amount":  (material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - material_cost,
                                         "total_margin_cost": (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))),
 
                                         "operation_margin": cur_frm.doc.default_operation_margin,
                                         "operation_margin_amount": cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 ))),
-                                        "total_operation_cost": doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 )))),
+                                        "total_operation_cost": (operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost,
 
                                         "total_cost": ((doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 )))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 )))))),
                                         "rate": ((doc.total_raw_material_cost + (doc.total_raw_material_cost *(cur_frm.doc.default_material_overhead / 100 ))) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 )))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 )))))) > 0? ((doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))) + cur_frm.doc.default_material_margin * (doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 )))) + ((doc.total_operation_cost + (cur_frm.doc.default_operation_margin * (doc.total_operation_cost + (doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 )))))) : 0
@@ -250,10 +252,13 @@ function compute_margin_operations(cur_frm) {
             item_row.operation_overhead_amount = item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 )
             item_row.operation_cost = item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 ))
 
-            item_row.material_margin_amount = item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )))
+            item_row.material_margin_amount = (item_row.material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - item_row.material_cost
             item_row.total_margin_cost = (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 ))) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )))
-            item_row.operation_margin_amount = item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 )))
+
+
+            item_row.operation_margin_amount = (item_row.operation_cost / (1 - (cur_frm.doc.default_operation_margin / 100 ))) - item_row.operation_cost
             item_row.total_operation_cost = item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 ))))
+
 
             item_row.total_cost = ((item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 ))) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )))) + ((item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 ))))))
             item_row.rate = item_row.total_cost
