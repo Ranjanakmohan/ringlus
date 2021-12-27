@@ -16,6 +16,13 @@ frappe.ui.form.on('Quotation Item', {
     },
     operation_overhead: function(frm) {
         compute_margin_operations(cur_frm)
+    },
+    items_add: function (frm, cdt, cdn) {
+        var item_row = locals[cdt][cdn]
+        item_row.material_overhead = cur_frm.doc.default_material_overhead
+        item_row.operation_overhead = cur_frm.doc.default_operation_overhead
+        item_row.material_margin = cur_frm.doc.default_material_margin
+        item_row.operation_margin = cur_frm.doc.default_operation_margin
     }
 })
 function update_items(item, cur_frm) {
@@ -31,10 +38,11 @@ function update_items(item, cur_frm) {
                 item_row.operation_overhead_amount = item_row.estimated_bom_operation_cost * item_row.operation_overhead
                 item_row.operation_cost = item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)
 
-                item_row.material_margin_amount = item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))
-                item_row.total_margin_cost = (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))
-                item_row.operation_margin_amount = item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead))
-                item_row.total_operation_cost = item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))
+
+                item_row.material_margin_amount = (item_row.material_cost / (1 - (item_row.material_margin / 100 ))) - item_row.material_cost
+                item_row.total_margin_cost = item_row.material_cost + item_row.material_margin_amount
+                item_row.operation_margin_amount = (item_row.operation_cost / (1 - (item_row.operation_margin / 100 ))) - item_row.operation_cost
+                item_row.total_operation_cost = item_row.operation_cost + item_row.operation_margin_amount
 
                 item_row.total_cost = ((item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))) + ((item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))))
                 item_row.rate = item_row.total_cost
@@ -63,16 +71,16 @@ function compute_total(cur_frm) {
     cur_frm.refresh_fields(["total",'grand_total','rounded_total'])
 }
 frappe.ui.form.on('Quotation', {
-	default_material_overhead: function(frm) {
+	default_material_overhead: function(frm, cdt, cdn) {
         compute_margin_operations(cur_frm)
     },
-    default_operation_overhead: function(frm) {
+    default_operation_overhead: function(frm, cdt, cdn) {
         compute_margin_operations(cur_frm)
     },
-    default_material_margin: function(frm) {
+    default_material_margin: function(frm, cdt, cdn) {
         compute_margin_operations(cur_frm)
     },
-    default_operation_margin: function(frm) {
+    default_operation_margin: function(frm, cdt, cdn) {
         compute_margin_operations(cur_frm)
     },
     update_cost: function(frm) {
@@ -237,14 +245,14 @@ function check_opportunity(name) {
 
         return false
 }
-function compute_margin_operations(cur_frm) {
+function compute_margin_operations(cur_frm, d = {}) {
     if(cur_frm.doc.items){
         for(var x=0;x<cur_frm.doc.items.length;x+=1){
             var item_row = cur_frm.doc.items[x]
-            item_row.material_overhead = cur_frm.doc.default_material_overhead
-            item_row.operation_overhead = cur_frm.doc.default_operation_overhead
-            item_row.material_margin = cur_frm.doc.default_material_margin
-            item_row.operation_margin = cur_frm.doc.default_operation_margin
+            item_row.material_overhead = item_row.material_overhead === 0 ? cur_frm.doc.default_material_overhead : item_row.material_overhead
+            item_row.operation_overhead = item_row.operation_overhead === 0 ?  cur_frm.doc.default_operation_overhead : item_row.operation_overhead
+            item_row.material_margin = item_row.material_margin === 0 ?  cur_frm.doc.default_material_margin : item_row.material_margin
+            item_row.operation_margin = item_row.operation_margin === 0 ?  cur_frm.doc.default_operation_margin : item_row.operation_margin
 
             item_row.material_overhead_amount = item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )
             item_row.material_cost = item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 ))
@@ -252,11 +260,11 @@ function compute_margin_operations(cur_frm) {
             item_row.operation_overhead_amount = item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 )
             item_row.operation_cost = item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * (item_row.operation_overhead / 100 ))
 
-            item_row.material_margin_amount = (item_row.material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - item_row.material_cost
+            item_row.material_margin_amount = (item_row.material_cost / (1 - (item_row.material_margin / 100 ))) - item_row.material_cost
             item_row.total_margin_cost = item_row.material_cost + item_row.material_margin_amount
 
 
-            item_row.operation_margin_amount = (item_row.operation_cost / (1 - (cur_frm.doc.default_operation_margin / 100 ))) - item_row.operation_cost
+            item_row.operation_margin_amount = (item_row.operation_cost / (1 - (item_row.operation_margin/ 100 ))) - item_row.operation_cost
             item_row.total_operation_cost = item_row.operation_cost + item_row.operation_margin_amount
 
             item_row.total_cost = item_row.total_margin_cost + item_row.total_operation_cost
