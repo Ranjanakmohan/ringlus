@@ -269,6 +269,7 @@ class BudgetBOM(Document):
             items.append({
                 "item_code": i.item_code,
                 "item_name": i.item_name,
+                "description": i.item_name + "<br> RFQ Si No - " + i.rfq_si_no + "<br> Product Description - " + i.product_description ,
                 "qty": i.qty,
                 "uom": i.uom,
                 "estimated_bom_material_cost": self.total_raw_material_cost,
