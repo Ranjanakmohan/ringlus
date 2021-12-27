@@ -1070,9 +1070,11 @@ if(d.rate > 0 && d.discount_percentage > 0){
 frappe.ui.form.on('Additional Operational Cost', {
     amount: function(frm, cdt, cdn) {
         compute_additional_costs(cur_frm)
+        compute_total_production_cost
 	},
     operational_costs_remove: function () {
         compute_additional_costs(cur_frm)
+        compute_total_production_cost
     }
 });
 function compute_additional_costs(cur_frm) {
