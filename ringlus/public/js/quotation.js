@@ -192,7 +192,6 @@ function fetch_boms(cur_frm, selections) {
                                         "item_name": doc.fg_bom_details[ii].item_name,
                                         "qty": doc.fg_bom_details[ii].qty,
                                         "uom": doc.fg_bom_details[ii].uom,
-                                        "amount": doc.total_cost * doc.fg_bom_details[ii].qty,
 
                                         "estimated_bom_material_cost": doc.total_raw_material_cost,
                                         "material_overhead": cur_frm.doc.default_material_overhead,
@@ -213,8 +212,10 @@ function fetch_boms(cur_frm, selections) {
                                         "total_operation_cost": operation_cost + ((operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost),
 
                                         "total_cost": (material_cost + ((material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - material_cost)) + (operation_cost + ((operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost)),
-                                        "rate": (material_cost + ((material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - material_cost)) + (operation_cost + ((operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost))
-                                    })
+                                        "rate": (material_cost + ((material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - material_cost)) + (operation_cost + ((operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost)),
+                                          "amount": ((material_cost + ((material_cost / (1 - (cur_frm.doc.default_material_margin / 100 ))) - material_cost)) + (operation_cost + ((operation_cost /  (1 - (cur_frm.doc.default_operation_margin / 100 ))) - operation_cost))) * doc.fg_bom_details[ii].qty,
+
+                                  })
                                     cur_frm.refresh_field("items")
 
 
