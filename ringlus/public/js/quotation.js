@@ -43,7 +43,7 @@ function update_items(item, cur_frm) {
                 item_row.operation_margin_amount = (item_row.operation_cost / (1 - (item_row.operation_margin / 100 ))) - item_row.operation_cost
                 item_row.total_operation_cost = item_row.operation_cost + item_row.operation_margin_amount
 
-                item_row.total_cost = ((item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead)) + item_row.material_margin * (item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * item_row.material_overhead))) + ((item_row.estimated_bom_operation_cost + (item_row.operation_margin * (item_row.estimated_bom_operation_cost + (item_row.estimated_bom_operation_cost * item_row.operation_overhead)))))
+                item_row.total_cost = item_row.total_margin_cost + item_row.total_operation_cost
                 item_row.rate = item_row.total_cost
                 item_row.base_rate = item_row.total_cost
                 item_row.net_rate = item_row.total_cost
