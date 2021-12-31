@@ -791,7 +791,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         compute_total_cost(cur_frm)
     },
     mechanical_bom_raw_material_remove: function () {
-                compute_total_cost(cur_frm)
+        compute_total_cost(cur_frm)
 
     },
     fg_sellable_bom_raw_material_remove: function () {
@@ -876,9 +876,9 @@ frappe.ui.form.on('Budget BOM Raw Material', {
             d.amount = d.stock_qty * d.discount_rate
             cur_frm.refresh_field(d.parentfield)
         } else {
-                        d.discount_rate = d.rate
-                        cur_frm.refresh_field(d.parentfield)
-                    }
+            d.discount_rate = d.rate
+            cur_frm.refresh_field(d.parentfield)
+        }
 
 
                     //  if(d.amount > 0 && d.qty > 0){
@@ -895,7 +895,7 @@ frappe.ui.form.on('Budget BOM Raw Material', {
         d.amount = d.stock_qty * d.rate
         cur_frm.refresh_field(d.parentfield)
 
-if(d.rate > 0 && d.discount_percentage > 0){
+                if(d.rate > 0 && d.discount_percentage > 0){
                         d.discount_rate = (d.rate * (1 - (d.discount_percentage / 100)))
                         d.discount_amount = (d.discount_percentage / 100) * d.rate
                         d.amount = d.stock_qty * d.discount_rate

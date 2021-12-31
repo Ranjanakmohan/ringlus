@@ -30,7 +30,7 @@ function update_items(item, cur_frm) {
             var item_row = cur_frm.doc.items[x]
             if(item_row.item_code === item.item_code){
                 item_row.estimated_bom_material_cost  = item.total_raw_material_cost
-                item_row.estimated_bom_operation_cost  = item.total_operation_cost
+                item_row.estimated_bom_operation_cost  = item.total_operation_cost + item.total_additional_operational_cost
 
                 item_row.material_overhead_amount = item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )
                 item_row.material_cost = item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 ))
@@ -70,6 +70,13 @@ function compute_total(cur_frm) {
     cur_frm.refresh_fields(["total",'grand_total','rounded_total'])
 }
 frappe.ui.form.on('Quotation', {
+    apply_default: function (frm, cdt, cdn) {
+        frappe.confirm('Are you sure you want to apply default?',
+        () => {
+             compute_margin_operations(cur_frm, true)
+        }, () => {})
+
+    },
 	default_material_overhead: function(frm, cdt, cdn) {
         compute_margin_operations(cur_frm)
     },
@@ -100,9 +107,16 @@ frappe.ui.form.on('Quotation', {
         })
     },
 	refresh: function(frm) {
+         document.querySelectorAll("[data-fieldname='apply_default']")[1].style.backgroundColor ="blue"
+       document.querySelectorAll("[data-fieldname='apply_default']")[1].style.color ="white"
+       document.querySelectorAll("[data-fieldname='apply_default']")[1].style.fontWeight ="bold"
         cur_frm.fields_dict["items"].grid.add_custom_button(__('Update Cost'),
 			function() {
-	        cur_frm.trigger("update_cost")
+             frappe.confirm('Are you sure you want to update cost?',
+                () => {
+                    cur_frm.trigger("update_cost")
+                }, () => {})
+
         }).css('background-color','#00008B').css('color','white').css('margin-left','10px').css('margin-right','10px').css('font-weight','bold')
 
         cur_frm.add_custom_button(__('Opportunity with Budget BOM'),
@@ -185,7 +199,7 @@ function fetch_boms(cur_frm, selections) {
                                         "material_overhead_amount": doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ),
                                         "material_cost": material_cost,
 
-                                        "estimated_bom_operation_cost": doc.total_operation_cost,
+                                        "estimated_bom_operation_cost": doc.total_operation_cost + doc.total_additional_operational_cost,
                                         "operation_overhead": cur_frm.doc.default_operation_overhead,
                                         "operation_overhead_amount": doc.total_operation_cost * (cur_frm.doc.default_operation_overhead / 100 ),
                                         "operation_cost": operation_cost,
@@ -244,14 +258,14 @@ function check_opportunity(name) {
 
         return false
 }
-function compute_margin_operations(cur_frm, d = {}) {
+function compute_margin_operations(cur_frm, apply = false) {
     if(cur_frm.doc.items){
         for(var x=0;x<cur_frm.doc.items.length;x+=1){
             var item_row = cur_frm.doc.items[x]
-            item_row.material_overhead = item_row.material_overhead === 0 ? cur_frm.doc.default_material_overhead : item_row.material_overhead
-            item_row.operation_overhead = item_row.operation_overhead === 0 ?  cur_frm.doc.default_operation_overhead : item_row.operation_overhead
-            item_row.material_margin = item_row.material_margin === 0 ?  cur_frm.doc.default_material_margin : item_row.material_margin
-            item_row.operation_margin = item_row.operation_margin === 0 ?  cur_frm.doc.default_operation_margin : item_row.operation_margin
+            item_row.material_overhead = item_row.material_overhead === 0 || apply ? cur_frm.doc.default_material_overhead : item_row.material_overhead
+            item_row.operation_overhead = item_row.operation_overhead === 0 || apply ?  cur_frm.doc.default_operation_overhead : item_row.operation_overhead
+            item_row.material_margin = item_row.material_margin === 0 || apply ?  cur_frm.doc.default_material_margin : item_row.material_margin
+            item_row.operation_margin = item_row.operation_margin === 0 || apply ?  cur_frm.doc.default_operation_margin : item_row.operation_margin
 
             item_row.material_overhead_amount = item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 )
             item_row.material_cost = item_row.estimated_bom_material_cost + (item_row.estimated_bom_material_cost * (item_row.material_overhead / 100 ))
