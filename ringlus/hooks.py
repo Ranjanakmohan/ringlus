@@ -282,6 +282,7 @@ fixtures = [
 					"Quotation Item-total_cost",
 					"Quotation Item-total_margin_cost",
 					"Quotation Item-total_operation_cost",
+					"Quotation-apply_default",
 
 					"Quotation-additional_operating_cost",
 					"Quotation-budget_bom_opportunity",
