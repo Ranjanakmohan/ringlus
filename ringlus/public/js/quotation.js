@@ -167,6 +167,8 @@ function fetch_boms(cur_frm, selections) {
                     docstatus: 1
                 }
             }).then(records => {
+                console.log("RECOOOOORDS")
+                console.log(records)
                          if(cur_frm.doc.items && !cur_frm.doc.items[0].item_code){
                                 cur_frm.clear_table("items")
                                 cur_frm.refresh_field("items")
