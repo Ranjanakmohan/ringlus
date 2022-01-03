@@ -148,6 +148,9 @@ frappe.ui.form.on('Quotation', {
                             }
                         });
 				}, __("Get Items From"), "btn-default");
+
+
+
     }
 })
 
@@ -165,7 +168,8 @@ function fetch_boms(cur_frm, selections) {
                    opportunity: selections[x],
                     status: 'To Quotation',
                     docstatus: 1
-                }
+                },
+                limit:50
             }).then(records => {
                 console.log("RECOOOOORDS")
                 console.log(records)
