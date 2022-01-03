@@ -185,7 +185,7 @@ function fetch_boms(cur_frm, selections) {
 
                         for(var ii=0;ii<doc.fg_bom_details.length;ii+=1){
                                 var material_cost = doc.total_raw_material_cost + (doc.total_raw_material_cost * (cur_frm.doc.default_material_overhead / 100 ))
-                                var operation_cost = doc.total_operation_cost + (doc.total_operation_cost *(cur_frm.doc.default_operation_overhead / 100 ))
+                                var operation_cost = (doc.total_operation_cost + doc.total_additional_operational_cost) + ((doc.total_operation_cost + doc.total_additional_operational_cost) *(cur_frm.doc.default_operation_overhead / 100 ))
                                   cur_frm.add_child("items",{
                                         "description": doc.fg_bom_details[ii].item_name + "<br>RFQ Si No - " + doc.fg_bom_details[ii].rfq_si_no + "<br>" + "Product Description - " + doc.fg_bom_details[ii].product_description,
                                         "item_code": doc.fg_bom_details[ii].item_code,
