@@ -24,3 +24,12 @@ class ModularAssembly(Document):
 			if i.sellable_product not in sps:
 				sps.append(i.sellable_product)
 		return sps
+
+
+@frappe.whitelist()
+def get_modular_component(name):
+	details = frappe.db.sql(""" SELECT * FROM `tabModular Component Details` WHERE parent=%s""", name,as_dict=1)
+	details_rm = frappe.db.sql(""" SELECT * FROM `tabModular Assembly Raw Material` WHERE parent=%s""", name,as_dict=1)
+	details_oc = frappe.db.sql(""" SELECT * FROM `tabOperational Cost` WHERE parent=%s""", name,as_dict=1)
+
+	return details, details_rm, details_oc
