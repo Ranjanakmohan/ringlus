@@ -56,21 +56,18 @@ frappe.ui.form.on('Modular Assembly Raw Material', {
         }
     }
 })
-frappe.ui.form.on('Modular Assembly Details', {
-	item_code: function(frm, cdt, cdn) {
-       var d = locals[cdt][cdn]
+function add_component(cur_frm) {
+    cur_frm.clear_table("operational_cost")
+            cur_frm.refresh_field("operational_cost")
+            cur_frm.clear_table("raw_material")
+            cur_frm.refresh_field("raw_material")
+    for(var t=0;t<cur_frm.doc.modular_assembly.length;t+=1){
+         var d = cur_frm.doc.modular_assembly[t]
 		if(d.item_code){
+
        		frappe.db.get_doc("Modular Component", d.item_code)
 				.then(doc => {
 
-            if(cur_frm.doc.operational_cost.length > 0 && !cur_frm.doc.operational_cost[0].workstation && !cur_frm.doc.operational_cost[0].operation){
-                cur_frm.clear_table("operational_cost")
-                cur_frm.refresh_field("operational_cost")
-            }
-            if(cur_frm.doc.raw_material.length > 0 && !cur_frm.doc.raw_material[0].item_code){
-                cur_frm.clear_table("raw_material")
-                cur_frm.refresh_field("raw_material")
-            }
                 for(var xy=0;xy<doc.items.length;xy+=1){
                         d.uom = doc.items[0].uom
                         d.remarks= doc.items[0].item_description
@@ -113,6 +110,11 @@ frappe.ui.form.on('Modular Assembly Details', {
 					}
 			})
 		}
+    }
+}
+frappe.ui.form.on('Modular Assembly Details', {
+	item_code: function(frm, cdt, cdn) {
+      add_component(cur_frm)
 	},
 	before_modular_assembly_remove: function (frm, cdt, cdn) {
 	    console.log("naa man")
