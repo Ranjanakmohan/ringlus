@@ -61,63 +61,35 @@ function add_component(cur_frm,d) {
         cur_frm.clear_table("raw_material")
         cur_frm.refresh_field("raw_material")
     }
-    if(cur_frm.doc.operational_cost.length > 0 && !cur_frm.doc.operational_cost[0].item_code){
+    if(cur_frm.doc.operational_cost.length > 0 && !cur_frm.doc.operational_cost[0].operation){
         cur_frm.clear_table("operational_cost")
         cur_frm.refresh_field("operational_cost")
     }
     if(d.item_code){
-        frappe.call({
-            method: "ringlus.ringlus.doctype.modular_assembly.modular_assembly.get_modular_component",
+        if(!d.old_modular_component){
+            d.old_modular_component = d.item_code
+            cur_frm.refresh_field(d.parentfield)
+        }
+        cur_frm.call({
+            doc: cur_frm.doc,
+            method: 'get_modular_component',
             args: {
-                name: d.item_code
+                name: d.item_code,
+                qty: d.qty,
+                old_mc: d.old_modular_component
             },
-            async: false,
-            callback: function (r) {
-                for(var xy=0;xy<r.message[0].length;xy+=1){
-                    d.uom = r.message[0][0].uom
-                    d.remarks= r.message[0][0].item_description
-                    cur_frm.refresh_field("modular_assembly")
-                }
-                 for(var x=0;x<r.message[2].length;x+=1){
-                    if(!check_operational_cost(r.message[2][x], cur_frm, d)) {
-                        cur_frm.add_child("operational_cost", {
-                            workstation: r.message[2][x].workstation,
-                            net_hour_rate: r.message[2][x].net_hour_rate,
-                            operation: r.message[2][x].operation,
-                            operation_time_in_minutes: r.message[2][x].operation_time_in_minutes,
-                            reference: JSON.stringify([{
-                                item_code: d.item_code,
-                                net_hour_rate: r.message[2][x].net_hour_rate,
-                                operation_time_in_minutes: r.message[2][x].operation_time_in_minutes,
-                                qty: d.qty
-                            }]),
-                        })
+            freeze: true,
+            freeze_message: "Get Modular AssemblyTemplates...",
+            async:false,
+            callback: (r) => {
+                // for(var xy=0;xy<r.message[0].length;xy+=1){
+                //     d.uom = r.message[0][0].uom
+                //     d.remarks= r.message[0][0].item_description
+                //     cur_frm.refresh_field("modular_assembly")
+                // }
 
-                        cur_frm.refresh_field('operational_cost')
 
-                    }
-                }
-                 for(var i=0;i<r.message[1].length;i+=1){
-                    if(!check_items(r.message[1][i], cur_frm, d)) {
-                        console.log("QUANTITIIIIES")
-                        console.log(d.item_code)
-                        console.log(d.qty)
-                        cur_frm.add_child("raw_material", {
-                            item_code: r.message[1][i].item_code,
-                            qty: r.message[1][i].qty * d.qty,
-                            uom: r.message[1][i].uom,
-                            conversion_factor: r.message[1][i].conversion_factor,
-                            reference: JSON.stringify([{
-                                item_code: d.item_code,
-                                qty: r.message[1][i].qty,
-                                qty_mc: d.qty
-                            }
-                            ]),
-                        })
-                        cur_frm.refresh_field('raw_material')
-                    }
-                }
-            }
+             }
         })
     }
 

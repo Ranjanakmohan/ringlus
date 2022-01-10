@@ -9,7 +9,8 @@
   "item_code",
   "qty",
   "uom",
-  "remarks"
+  "remarks",
+  "old_modular_component"
  ],
  "fields": [
   {
@@ -39,12 +40,18 @@
    "fieldtype": "Small Text",
    "in_list_view": 1,
    "label": "Description"
+  },
+  {
+   "fieldname": "old_modular_component",
+   "fieldtype": "Data",
+   "label": "Old Modular Component",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-11-05 13:20:26.294309",
+ "modified": "2022-01-10 19:05:59.925263",
  "modified_by": "Administrator",
  "module": "Ringlus",
  "name": "Modular Assembly Details",
