@@ -58,9 +58,9 @@ frappe.ui.form.on('Modular Assembly Raw Material', {
 })
 function add_component(cur_frm) {
     cur_frm.clear_table("operational_cost")
-            cur_frm.refresh_field("operational_cost")
-            cur_frm.clear_table("raw_material")
-            cur_frm.refresh_field("raw_material")
+    cur_frm.refresh_field("operational_cost")
+    cur_frm.clear_table("raw_material")
+    cur_frm.refresh_field("raw_material")
     for(var t=0;t<cur_frm.doc.modular_assembly.length;t+=1){
          var d = cur_frm.doc.modular_assembly[t]
 		if(d.item_code){
@@ -87,7 +87,8 @@ function add_component(cur_frm) {
                                     item_code: d.item_code,
                                     net_hour_rate: r.message[2][x].net_hour_rate,
                                     operation_time_in_minutes: r.message[2][x].operation_time_in_minutes,
-                                    qty: 1}]),
+                                    qty: d.qty
+                                }]),
                             })
 
                             cur_frm.refresh_field('operational_cost')
@@ -96,15 +97,18 @@ function add_component(cur_frm) {
                     }
                      for(var i=0;i<r.message[1].length;i+=1){
                         if(!check_items(r.message[1][i], cur_frm, d)) {
+                            console.log("QUANTITIIIIES")
+                            console.log(d.item_code)
+                            console.log(d.qty)
                             cur_frm.add_child("raw_material", {
                                 item_code: r.message[1][i].item_code,
-                                qty: r.message[1][i].qty,
+                                qty: r.message[1][i].qty * d.qty,
                                 uom: r.message[1][i].uom,
                                 conversion_factor: r.message[1][i].conversion_factor,
                                 reference: JSON.stringify([{
                                     item_code: d.item_code,
                                     qty: r.message[1][i].qty,
-                                    qty_mc: 1
+                                    qty_mc: r.message[1][i].qty * d.qty
                                 }
                                 ]),
                             })
@@ -249,15 +253,18 @@ function check_items(item, cur_frm, d) {
             var item_row = cur_frm.doc.raw_material[x]
             if(item_row.item_code === item.item_code){
                 var reference = JSON.parse(item_row.reference)
+                console.log("=============")
+                console.log(item_row.reference)
+                console.log(reference)
                 reference.push({
                     item_code: d.item_code,
                     qty: item.qty,
-                    qty_mc: 1
+                    qty_mc: d.qty
                 })
-                console.log(reference)
-                item_row.qty += item.qty
+                item_row.qty += (d.qty * item.qty)
                 item_row.reference = JSON.stringify(reference)
                 cur_frm.refresh_field("raw_material")
+                update_tables(cur_frm, item_row)
                 return true
             }
         }
@@ -282,7 +289,7 @@ function check_operational_cost(operational_cost, cur_frm,d) {
                 item_row.operation_time_in_minutes += operational_cost.operation_time_in_minutes
                 item_row.reference = JSON.stringify(reference)
                 cur_frm.refresh_field("operational_cost")
-return true
+                return true
             }
         }
         return false
