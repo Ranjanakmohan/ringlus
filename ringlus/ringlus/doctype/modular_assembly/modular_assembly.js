@@ -82,11 +82,11 @@ function add_component(cur_frm,d) {
             freeze_message: "Get Modular AssemblyTemplates...",
             async:false,
             callback: (r) => {
-                // for(var xy=0;xy<r.message[0].length;xy+=1){
-                //     d.uom = r.message[0][0].uom
-                //     d.remarks= r.message[0][0].item_description
-                //     cur_frm.refresh_field("modular_assembly")
-                // }
+                for(var xy=0;xy<r.message.length;xy+=1){
+                    d.uom = r.message[0].uom
+                    d.remarks= r.message[0].item_description
+                    cur_frm.refresh_field("modular_assembly")
+                }
 
 
              }

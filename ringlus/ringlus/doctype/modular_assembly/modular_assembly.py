@@ -37,8 +37,10 @@ class ModularAssembly(Document):
 	@frappe.whitelist()
 	def get_modular_component(self, name,qty, old_mc):
 		mc = frappe.get_doc("Modular Component", name)
+
 		for i in mc.raw_materials:
 			if not self.check_items(i,qty,name,old_mc):
+
 				self.append("raw_material",{
 					"item_code": i.item_code,
 					"qty": i.qty,
@@ -64,7 +66,7 @@ class ModularAssembly(Document):
 						"qty": qty
 					}]),
 				})
-
+		return mc.items
 	def check_operational_cost(self, row,qty,name,old_mc):
 		for i in self.operational_cost:
 			print(i.operation)
@@ -75,16 +77,21 @@ class ModularAssembly(Document):
 				print(old_mc)
 				if name != old_mc:
 					del reference[self.get_index(reference, old_mc, name)]
-
-				reference.append({
-					"item_code": name,
-                    "net_hour_rate": row.net_hour_rate,
-                    "operation_time_in_minutes": row.operation_time_in_minutes,
-                    "qty": qty
-				})
+				if not self.existing(reference,name):
+					reference.append({
+						"item_code": name,
+						"net_hour_rate": row.net_hour_rate,
+						"operation_time_in_minutes": row.operation_time_in_minutes,
+						"qty": qty
+					})
 				i.operation_time_in_minutes = self.compute_minutes(reference)
 				i.reference = json.dumps(reference)
 
+				return True
+		return False
+	def existing(self, reference,name):
+		for i in reference:
+			if i['item_code'] == name:
 				return True
 		return False
 	def check_items(self, row,qty,name,old_mc):
@@ -94,12 +101,12 @@ class ModularAssembly(Document):
 
 				if name != old_mc:
 					del reference[self.get_index(reference, old_mc,name)]
-
-				reference.append({
-					"item_code": name,
-					"qty": row.qty,
-					"qty_mc": qty
-				})
+				if not self.existing(reference, name):
+					reference.append({
+						"item_code": name,
+						"qty": row.qty,
+						"qty_mc": qty
+					})
 				i.qty = self.compute_qty(reference)
 				i.reference = json.dumps(reference)
 
