@@ -6,6 +6,35 @@ from frappe.model.document import Document
 
 class ModularAssembly(Document):
 	@frappe.whitelist()
+	def delete_modular_component(self, name, qty, old_mc):
+		self.delete_raw_material(name,old_mc)
+		self.delete_operations(name, old_mc)
+	def delete_operations(self, name,old_mc):
+		for x in self.operational_cost:
+
+			reference = json.loads(x.reference)
+			print("IN OPERATIONAL COST")
+			if self.get_index(reference, old_mc, name) or self.get_index(reference, old_mc, name) == 0:
+				del reference[self.get_index(reference, old_mc, name)]
+			if self.compute_minutes(reference) > 0:
+				x.operation_time_in_minutes = self.compute_minutes(reference)
+				x.reference = json.dumps(reference)
+			else:
+				self.get('operational_cost').remove(x)
+
+	def delete_raw_material(self, name,old_mc):
+		for i in range(len(self.raw_material) - 1, -1, -1):
+			reference = json.loads(self.raw_material[i].reference)
+			if self.get_index(reference, old_mc, name) or self.get_index(reference, old_mc, name) == 0:
+				del reference[self.get_index(reference, old_mc, name)]
+			if len(reference) > 0:
+
+				self.raw_material[i].qty = self.compute_qty(reference)
+				self.raw_material[i].reference = json.dumps(reference)
+			else:
+				self.get('raw_material').remove(self.raw_material[i])
+
+	@frappe.whitelist()
 	def get_modular_component(self, name,qty, old_mc):
 		mc = frappe.get_doc("Modular Component", name)
 		for i in mc.raw_materials:

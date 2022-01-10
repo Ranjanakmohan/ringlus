@@ -102,8 +102,21 @@ frappe.ui.form.on('Modular Assembly Details', {
 	before_modular_assembly_remove: function (frm, cdt, cdn) {
 	    console.log("naa man")
         var d = locals[cdt][cdn]
-	    remove_row(cur_frm, d, 'raw_material')
-	    remove_row(cur_frm, d, 'operational_cost')
+	  cur_frm.call({
+            doc: cur_frm.doc,
+            method: 'delete_modular_component',
+            args: {
+                name: d.item_code,
+                qty: d.qty,
+                old_mc: d.old_modular_component
+            },
+            freeze: true,
+            freeze_message: "Get Modular AssemblyTemplates...",
+            async:false,
+            callback: (r) => {
+                    cur_frm.trigger("opportunity")
+             }
+        })
     },
     modular_assembly_remove: function (frm, cdt, cdn) {
 	   if(cur_frm.doc.modular_assembly.length === 0){
