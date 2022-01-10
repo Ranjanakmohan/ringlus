@@ -108,7 +108,7 @@ function add_component(cur_frm) {
                                 reference: JSON.stringify([{
                                     item_code: d.item_code,
                                     qty: r.message[1][i].qty,
-                                    qty_mc: r.message[1][i].qty * d.qty
+                                    qty_mc: d.qty
                                 }
                                 ]),
                             })
@@ -253,17 +253,16 @@ function check_items(item, cur_frm, d) {
             var item_row = cur_frm.doc.raw_material[x]
             if(item_row.item_code === item.item_code){
                 var reference = JSON.parse(item_row.reference)
-                console.log("=============")
-                console.log(item_row.reference)
-                console.log(reference)
+                console.log("CHECK ITEMS QTY")
+                console.log(d.qty)
                 reference.push({
                     item_code: d.item_code,
                     qty: item.qty,
                     qty_mc: d.qty
                 })
-                item_row.qty += (d.qty * item.qty)
                 item_row.reference = JSON.stringify(reference)
                 cur_frm.refresh_field("raw_material")
+                console.log(item_row)
                 update_tables(cur_frm, item_row)
                 return true
             }
