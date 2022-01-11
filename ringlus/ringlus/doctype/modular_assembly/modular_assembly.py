@@ -49,7 +49,7 @@ class ModularAssembly(Document):
 					"reference": json.dumps([{
 						"item_code": name,
 						"qty": i.qty,
-						"qty_mc": i.qty
+						"qty_mc": qty
 					}])
 				})
 		for x in mc.operational_cost:
