@@ -6,9 +6,8 @@ from frappe import _
 
 def get_columns():
 	columns = [
-		{"label": _("SI No"), "fieldname": "si_no", "fieldtype": "Data", "width": 70},
 		{"label": _("Date"), "fieldname": "transaction_date", "fieldtype": "Date", "width": 150},
-		{"label": _("Customer Name"), "fieldname": "customer_name", "fieldtype": "Date", "width": 200},
+		{"label": _("Customer Name"), "fieldname": "customer_name", "fieldtype": "Data", "width": 200},
 		{"label": _("RFQ SI No"), "fieldname": "rfq_si_no", "fieldtype": "Date", "width": 200},
 		{"label": _("Item Name"), "fieldname": "item_name", "fieldtype": "Data","width": 150},
 		{"label": _("Product Description"), "fieldname": "product_description", "fieldtype": "Data","width": 200},
@@ -37,7 +36,6 @@ def get_columns():
 def execute(filters=None):
 	columns, data = get_columns(), []
 	query = """ SELECT 
- ROW_NUMBER() OVER() as si_no,
  					Q.transaction_date,
  					Q.customer_name,
  					QI.*,
