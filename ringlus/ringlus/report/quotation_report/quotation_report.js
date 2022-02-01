@@ -8,7 +8,6 @@ frappe.query_reports["Quotation Report"] = {
 			"fieldname":"opportunity",
 			"label": __("Opportunity"),
 			"fieldtype": "MultiSelectList",
-			"reqd": 1,
 			get_data: function(txt) {
                 return frappe.db.get_link_options("Opportunity", txt);
             }
@@ -17,7 +16,6 @@ frappe.query_reports["Quotation Report"] = {
 			"fieldname":"quotation",
 			"label": __("Quotation"),
 			"fieldtype": "MultiSelectList",
-			"reqd": 1,
 			get_data: function(txt) {
                 return frappe.db.get_link_options("Quotation", txt);
             }
@@ -33,12 +31,17 @@ frappe.query_reports["Quotation Report"] = {
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
+						"reqd": 1,
+
 		},
 		{
 			"fieldname":"to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
-			"default": frappe.datetime.get_today()
+			"default": frappe.datetime.get_today(),
+						"reqd": 1,
+
+
 		},
 	]
 };
