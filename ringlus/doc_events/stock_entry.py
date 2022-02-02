@@ -7,5 +7,5 @@ def on_submit_se(doc, method):
         for i in wo.budget_bom_reference:
             if i.budget_bom:
                 frappe.db.sql(""" UPDATE `tabBudget BOM` SET status=%s WHERE name=%s  """,
-                              ("To Deliver and Bill ", i.budget_bom))
+                              ("To Deliver and Bill", i.budget_bom))
                 frappe.db.commit()

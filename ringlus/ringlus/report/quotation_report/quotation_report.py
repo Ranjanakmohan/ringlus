@@ -70,8 +70,7 @@ def get_condition(filters):
 	if len(filters.get("status")) == 1:
 		condition += " and Q.status='{0}'".format(filters.get("status")[0])
 	elif len(filters.get("status")) > 1:
-		for i in filters.get("status"):
-			condition += " and Q.status in {0} ".format(tuple(filters.get("status")))
+		condition += " and Q.status in {0} ".format(tuple(filters.get("status")))
 
 	if filters.get("customer"):
 		condition += " and Q.customer = '{0}'".format(filters.get("customer"))
@@ -80,8 +79,7 @@ def get_condition(filters):
 	if len(filters.get("quotation")) == 1:
 		condition += " and Q.name='{0}'".format(filters.get("quotation")[0])
 	elif len(filters.get("quotation")) > 1:
-		for i in filters.get("quotation"):
-			condition += " and Q.name in {0} ".format(tuple(filters.get("quotation")))
+		condition += " and Q.name in {0} ".format(tuple(filters.get("quotation")))
 
 
 	return condition
