@@ -47,8 +47,7 @@ def execute(filters=None):
  				INNER JOIN `tabBudget BOM References` BBR ON BBR.parent = Q.name 
  				INNER JOIN `tabBudget BOM Details` BBF ON BBF.parent = BBR.budget_bom 
  				INNER JOIN `tabQuotation Item` QI ON QI.parent = Q.name and QI.item_code = BBF.item_code
- 				{0}
- 				WHERE Q.docstatus = 1 {1}
+ 				{0} {1}
 			""".format(o_conditions,conditions)
 	print("==========================================")
 	print(query)
@@ -67,7 +66,7 @@ def get_o_conditions(filters,conditions):
 
 	return condition
 def get_condition(filters):
-	condition = " and Q.transaction_date BETWEEN '{0}' and '{1}' ".format(filters.get("from_date"),filters.get("to_date"))
+	condition = " WHERE Q.transaction_date BETWEEN '{0}' and '{1}' ".format(filters.get("from_date"),filters.get("to_date"))
 	if len(filters.get("status")) == 1:
 		condition += " and Q.status='{0}'".format(filters.get("status")[0])
 	elif len(filters.get("status")) > 1:
