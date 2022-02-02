@@ -43,5 +43,22 @@ frappe.query_reports["Quotation Report"] = {
 
 
 		},
+		{
+			"fieldname":"status",
+			"label": __("Status"),
+			"fieldtype": "MultiSelectList",
+			"reqd": 1,
+			get_data: function(txt) {
+                return [
+                	{value: 'Draft', description: 'Draft'},
+					{value: 'Open', description: 'Open'},
+					{value: 'Replied', description: 'Replied'},
+					{value: 'Ordered', description: 'Ordered'},
+					{value: 'Lost', description: 'Lost'},
+					{value: 'Cancelled', description: 'Cancelled'},
+					{value: 'Expired', description: 'Expired'},
+					]
+            }
+		},
 	]
 };
