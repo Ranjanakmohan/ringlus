@@ -27,7 +27,7 @@ def get_conditions(filters):
 	conditions = " and BB.posting_date BETWEEN '{0}' and '{1}' ".format(filters.get("from_date"),filters.get("to_date"))
 
 	if filters.get("product_category"):
-		conditions += " and BB.sellable_produce_category = '{0}' ".format(filters.get("product_category"))
+		conditions += " and BB.sellable_product_category = '{0}' ".format(filters.get("product_category"))
 
 	if filters.get("item_group") and filters.get("based_on") == "Material":
 		conditions += " and BBRM.item_group = '{0}' ".format(filters.get("item_group"))
