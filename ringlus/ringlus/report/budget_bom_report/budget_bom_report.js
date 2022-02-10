@@ -9,7 +9,7 @@ frappe.query_reports["Budget BOM Report"] = {
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
-						"reqd": 1,
+			"reqd": 1
 
 		},
 		{
@@ -17,15 +17,45 @@ frappe.query_reports["Budget BOM Report"] = {
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.get_today(),
-						"reqd": 1,
-
-
+			"reqd": 1
+		},
+		{
+			"fieldname":"item",
+			"label": __("Item"),
+			"fieldtype": "MultiSelectList",
+			get_data: function(txt) {
+                return frappe.db.get_link_options("Item", txt);
+            }
+		},
+		{
+			"fieldname":"item_category",
+			"label": __("Item Category"),
+			"fieldtype": "MultiSelectList",
+			get_data: function(txt) {
+                return frappe.db.get_link_options("Item Category", txt);
+            }
 		},
 		{
 			"fieldname":"product_category",
 			"label": __("Product Category"),
 			"fieldtype": "Link",
 			"options": "Sellable Product Category",
+		},
+		{
+			"fieldname":"budget_bom",
+			"label": __("Budget BOM"),
+			"fieldtype": "MultiSelectList",
+			get_data: function(txt) {
+                return frappe.db.get_link_options("Budget BOM", txt);
+            }
+		},
+		{
+			"fieldname":"opportunity",
+			"label": __("Opportunity"),
+			"fieldtype": "MultiSelectList",
+			get_data: function(txt) {
+                return frappe.db.get_link_options("Opportunity", txt);
+            }
 		},
 		{
 			"fieldname":"item_group",

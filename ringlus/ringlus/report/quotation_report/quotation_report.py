@@ -8,10 +8,10 @@ def get_columns():
 	columns = [
 		{"label": _("Date"), "fieldname": "transaction_date", "fieldtype": "Date", "width": 150},
 		{"label": _("Customer Name"), "fieldname": "customer_name", "fieldtype": "Data", "width": 200},
-		{"label": _("RFQ SI No"), "fieldname": "rfq_si_no", "fieldtype": "Date", "width": 200},
-		{"label": _("Item Name"), "fieldname": "item_name", "fieldtype": "Data","width": 150},
+		{"label": _("Item Name"), "fieldname": "item_name", "fieldtype": "Data", "width": 150},
+		{"label": _("RFQ SI No"), "fieldname": "rfq_si_no", "fieldtype": "Data", "width": 200},
 		{"label": _("Product Description"), "fieldname": "product_description", "fieldtype": "Data","width": 200},
-		{"label": _("Budget BOM Name"), "fieldname": "budget_bom", "fieldtype": "Data", "width": 150},
+		{"label": _("Budget BOM Name"), "fieldname": "budget_bom", "fieldtype": "Link", "options": "Budget BOM", "width": 300},
 		{"label": _("Estimated BOM Material Cost"), "fieldname": "estimated_bom_material_cost", "fieldtype": "Currency", "width": 150},
 		{"label": _("Material Overhead %"), "fieldname": "material_overhead", "fieldtype": "Float", "width": 150},
 		{"label": _("Material Overhead Amount"), "fieldname": "material_overhead_amount", "fieldtype": "Currency", "width": 150},
