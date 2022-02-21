@@ -223,7 +223,7 @@ function fetch_boms(cur_frm, selections) {
 
                                   })
                                     cur_frm.refresh_field("items")
-
+compute_gross_profit(cur_frm)
 
 
                     }
@@ -265,6 +265,20 @@ function check_opportunity(name) {
 
         return false
 }
+function compute_gross_profit(cur_frm) {
+    var total_product_cost_of_sale = 0
+    var total_sale_value = 0
+     for(var x=0;x<cur_frm.doc.items.length;x+=1){
+        var row = cur_frm.doc.items[x]
+       total_product_cost_of_sale += ((row.material_cost + row.operation_cost) * row.qty)
+         total_sale_value += (row.total_cost * row.qty)
+    }
+    cur_frm.doc.total_product_cost_of_sale = total_product_cost_of_sale
+    cur_frm.doc.total_sale_value = total_sale_value
+    cur_frm.doc.total_gross_profit_amount = total_sale_value - total_product_cost_of_sale
+    cur_frm.doc.gross_profit_percentage =((total_sale_value - total_product_cost_of_sale) / total_sale_value) * 100
+    cur_frm.refresh_fields(['total_product_cost_of_sale',"total_sale_value","total_gross_profit_amount","gross_profit_percentage"])
+}
 function compute_margin_operations(cur_frm, apply = false) {
     if(cur_frm.doc.items){
         for(var x=0;x<cur_frm.doc.items.length;x+=1){
@@ -298,7 +312,7 @@ function compute_margin_operations(cur_frm, apply = false) {
             item_row.net_amount = item_row.amount
             item_row.base_net_amount = item_row.amount
             cur_frm.refresh_field("items")
-
+compute_gross_profit(cur_frm)
         }
     }
 

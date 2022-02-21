@@ -334,7 +334,13 @@ fixtures = [
                     "Employee-overtime_multiplication_factor",
                     "Attendance Request-overtime_multiplication_factor",
                     "Attendance Request-additional_salary",
-                    "Global Defaults-default_project_code"
+                    "Global Defaults-default_project_code",
+
+                    "Quotation-total_product_cost_of_sale",
+                    "Quotation-total_sale_value",
+                    "Quotation-column_break_48",
+                    "Quotation-total_gross_profit_amount",
+                    "Quotation-gross_profit_percentage",
 				]
 			]
 		]
