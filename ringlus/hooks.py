@@ -341,6 +341,7 @@ fixtures = [
                     "Quotation-column_break_48",
                     "Quotation-total_gross_profit_amount",
                     "Quotation-gross_profit_percentage",
+                    "Quotation-gross_profit_",
 				]
 			]
 		]
