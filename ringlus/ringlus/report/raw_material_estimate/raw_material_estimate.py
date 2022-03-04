@@ -48,8 +48,7 @@ def execute(filters=None):
 									INNER JOIN `tabBudget BOM References` BBR ON BBR.parent = Q.name
 									INNER JOIN `tabBudget BOM` BB ON BB.name = BBR.budget_bom
 									INNER JOIN `tabBudget BOM Raw Material` BBRM ON BBRM.parent = BB.name
-									INNER JOIN `tabItem` I ON I.name = BBRM.item_code
-									WHERE Q.docstatus = 1 {0}
+									INNER JOIN `tabItem` I ON I.name = BBRM.item_code  {0}
 								""".format(condition), as_dict=1)
 	print(data)
 	return columns, data
@@ -58,19 +57,36 @@ def get_conditions(filters):
 	conditions = ""
 
 	if filters.get("customer"):
-		conditions += " and Q.customer = '{0}' ".format(filters.get("customer"))
+		conditions += "WHERE"
+		conditions += " BB.customer = '{0}' ".format(filters.get("customer"))
 
 	if filters.get("quotation"):
-		conditions += " and Q.name = '{0}' ".format(filters.get("quotation"))
+		if conditions:
+			conditions += " and "
+		else:
+			conditions += "WHERE"
+		conditions += " Q.name = '{0}' ".format(filters.get("quotation"))
 
 	if filters.get("budget_bom"):
-		conditions += " and BB.name = '{0}' ".format(filters.get("budget_bom"))
+		if conditions:
+			conditions += " and "
+		else:
+			conditions += "WHERE"
+		conditions += " BB.name = '{0}' ".format(filters.get("budget_bom"))
 
 	if filters.get("item_code"):
-		conditions += " and BBRM.item_code = '{0}' ".format(filters.get("item_code"))
+		if conditions:
+			conditions += " and "
+		else:
+			conditions += "WHERE"
+		conditions += " BBRM.item_code = '{0}' ".format(filters.get("item_code"))
 
 	if filters.get("item_group"):
-		conditions += " and BBRM.item_group = '{0}' ".format(filters.get("item_group"))
+		if conditions:
+			conditions += " and "
+		else:
+			conditions += "WHERE"
+		conditions += "  BBRM.item_group = '{0}' ".format(filters.get("item_group"))
 
 
 	return conditions
