@@ -42,8 +42,6 @@ def execute(filters=None):
   										BBRM.amount,
   										BBRM.idx,
   										BBRM.parentfield
-  										
-  										
 									FROM `tabQuotation` Q 
 									INNER JOIN `tabBudget BOM References` BBR ON BBR.parent = Q.name
 									INNER JOIN `tabBudget BOM` BB ON BB.name = BBR.budget_bom
@@ -51,8 +49,20 @@ def execute(filters=None):
 									INNER JOIN `tabItem` I ON I.name = BBRM.item_code  {0}
 								""".format(condition), as_dict=1)
 	print(data)
+	if filters.get("item_code"):
+		data.append({
+			"item_code":"TOTALS",
+			"estimate_qty": get_sum(data, 'estimate_qty'),
+			"stock_qty": get_sum(data, 'stock_qty'),
+			"rate": get_sum(data, 'rate'),
+			"amount": get_sum(data, 'amount'),
+		})
 	return columns, data
-
+def get_sum(data, field):
+	total = 0
+	for i in data:
+		total += i[field]
+	return total
 def get_conditions(filters):
 	conditions = ""
 
