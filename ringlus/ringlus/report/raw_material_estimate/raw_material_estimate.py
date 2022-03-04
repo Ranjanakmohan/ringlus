@@ -10,7 +10,7 @@ def get_columns():
 		{"label": _("Budget BOM"),"fieldname": "budget_bom","fieldtype": "Link","options":"Budget BOM","width": 320},
 		{"label": _("Item Code"),"fieldname": "item_code","fieldtype": "Link", "options": "Item","width": 200},
 		{"label": _("Estimate Qty"),"fieldname": "estimate_qty","fieldtype": "Float","width": 150},
-		{"label": _("Estimate UOM"),"fieldname": "estimated_uom","fieldtype": "Float","width": 200},
+		{"label": _("Estimate UOM"),"fieldname": "estimated_uom","fieldtype": "Data","width": 200},
 		{"label": _("UOM Conversion Factor"),"fieldname": "uom_conversion_factor","fieldtype": "Float","width": 200},
 		{"label": _("Stock Qty"),"fieldname": "stock_qty","fieldtype": "Float","width": 150},
 		{"label": _("Stock UOM"),"fieldname": "stock_uom","fieldtype": "Link","options": "UOM","width": 150},
