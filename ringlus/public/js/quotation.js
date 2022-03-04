@@ -107,9 +107,9 @@ frappe.ui.form.on('Quotation', {
         })
     },
 	refresh: function(frm) {
-         document.querySelectorAll("[data-fieldname='apply_default']")[1].style.backgroundColor ="blue"
-       document.querySelectorAll("[data-fieldname='apply_default']")[1].style.color ="white"
-       document.querySelectorAll("[data-fieldname='apply_default']")[1].style.fontWeight ="bold"
+        document.querySelectorAll("[data-fieldname='apply_default']")[1].style.backgroundColor ="blue"
+        document.querySelectorAll("[data-fieldname='apply_default']")[1].style.color ="white"
+        document.querySelectorAll("[data-fieldname='apply_default']")[1].style.fontWeight ="bold"
         cur_frm.fields_dict["items"].grid.add_custom_button(__('Update Cost'),
 			function() {
              frappe.confirm('Are you sure you want to update cost?',
@@ -143,6 +143,7 @@ frappe.ui.form.on('Quotation', {
                                 return query_args
                             },
                             action(selections) {
+                                console.log("TEST")
                                 fetch_boms(cur_frm, selections)
                                 d.dialog.hide()
                             }
