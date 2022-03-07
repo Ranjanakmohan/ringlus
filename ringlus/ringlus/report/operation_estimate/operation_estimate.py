@@ -33,7 +33,7 @@ def execute(filters=None):
  				INNER JOIN `tabBudget BOM References` BBR ON BBR.parent = Q.name
  				INNER JOIN `tabBudget BOM` BB ON BB.name = BBR.budget_bom
  				INNER JOIN `tabBudget BOM Details` BBD ON BBD.parent = BB.name
- 				{0} GROUP BY BBD.operation
+ 				{0} GROUP BY BB.name,BBD.operation
  				
 			""".format(condition)
 	data = frappe.db.sql(query, as_dict=1)
