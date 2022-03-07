@@ -4,7 +4,7 @@
 
 frappe.query_reports["Raw Material Estimate"] = {
 	"filters": [
-{
+		{
 			"fieldname":"customer",
 			"label": __("Customer"),
 			"fieldtype": "Link",
