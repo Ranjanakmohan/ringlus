@@ -22,6 +22,12 @@ frappe.query_reports["Operation Estimate"] = {
 			"options": "Budget BOM"
 		},
 		{
+			"fieldname":"section_name",
+			"label": __("Section Name"),
+			"fieldtype": "Select",
+			"options": "FG BOM\nElectrical BOM\nMechanical BOM\nEnclosure"
+		},
+		{
 			"fieldname":"operation",
 			"label": __("Operation"),
 			"fieldtype": "Link",

@@ -23,6 +23,12 @@ frappe.query_reports["Raw Material Estimate"] = {
 			"options": "Budget BOM"
 		},
 		{
+			"fieldname":"section_name",
+			"label": __("Section Name"),
+			"fieldtype": "Select",
+			"options": "FG BOM\nElectrical BOM\nMechanical BOM\nEnclosure"
+		},
+		{
 			"fieldname":"item_code",
 			"label": __("Item"),
 			"fieldtype": "Link",
@@ -33,6 +39,17 @@ frappe.query_reports["Raw Material Estimate"] = {
 			"label": __("Item Group"),
 			"fieldtype": "Link",
 			"options": "Item Group"
+		},
+		{
+			"fieldname":"item_category",
+			"label": __("Item Category"),
+			"fieldtype": "Link",
+			"options": "Item Category"
+		},
+		{
+			"fieldname":"make",
+			"label": __("Make"),
+			"fieldtype": "Data",
 		},
 	]
 };
