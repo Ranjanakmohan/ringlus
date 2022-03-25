@@ -1,0 +1,180 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-18 13:17:11.862554",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "status",
+  "sellable_product_category",
+  "sellable_product",
+  "opportunity",
+  "customer",
+  "get_items",
+  "column_break_6",
+  "posting_date",
+  "expected_closing_date",
+  "rate_of_material_based_on",
+  "price_list",
+  "fg_bom_section",
+  "fg_bom_details",
+  "raw_materials_section",
+  "raw_materials",
+  "total_of_raw_material_cost",
+  "operations_section",
+  "operations",
+  "total_of_operation_cost",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Pending\nTo Quotation"
+  },
+  {
+   "fieldname": "sellable_product_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sellable Product Category ",
+   "options": "Sellable Product Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sellable_product",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sellable Product",
+   "options": "Sellable Product",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "opportunity",
+   "fieldtype": "Link",
+   "label": "Opportunity",
+   "options": "Opportunity"
+  },
+  {
+   "fieldname": "get_items",
+   "fieldtype": "Button",
+   "label": "Get Items",
+   "options": "generate_items"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "expected_closing_date",
+   "fieldtype": "Date",
+   "label": "Expected Closing Date"
+  },
+  {
+   "default": "Price List",
+   "fieldname": "rate_of_material_based_on",
+   "fieldtype": "Select",
+   "label": "Rate Of Material Based On",
+   "options": "Last Purchase Rate\nValuation Rate\nPrice List"
+  },
+  {
+   "default": "Standard Selling",
+   "fieldname": "price_list",
+   "fieldtype": "Select",
+   "label": "Price List",
+   "options": "Standard Buying\nStandard Selling"
+  },
+  {
+   "fieldname": "fg_bom_section",
+   "fieldtype": "Section Break",
+   "label": "FG BOM"
+  },
+  {
+   "fieldname": "fg_bom_details",
+   "fieldtype": "Table",
+   "label": "FG BOM Details",
+   "options": "Budget BOM Details"
+  },
+  {
+   "fieldname": "raw_materials_section",
+   "fieldtype": "Section Break",
+   "label": "Raw Materials"
+  },
+  {
+   "fieldname": "raw_materials",
+   "fieldtype": "Table",
+   "label": "Raw Materials",
+   "options": "Budget BOM Raw Material"
+  },
+  {
+   "fieldname": "total_of_raw_material_cost",
+   "fieldtype": "Currency",
+   "label": "Total of Raw Material Cost"
+  },
+  {
+   "fieldname": "operations_section",
+   "fieldtype": "Section Break",
+   "label": "Operations"
+  },
+  {
+   "fieldname": "operations",
+   "fieldtype": "Table",
+   "label": "Operations",
+   "options": "Workstation New"
+  },
+  {
+   "fieldname": "total_of_operation_cost",
+   "fieldtype": "Currency",
+   "label": "Total of Operation Cost"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Budget BOM New",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "opportunity.party_name",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-03-18 13:45:55.533956",
+ "modified_by": "Administrator",
+ "module": "Ringlus",
+ "name": "Budget BOM New",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "track_seen": 1
+}

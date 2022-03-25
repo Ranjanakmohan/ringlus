@@ -1,0 +1,66 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-03-18 13:16:57.160042",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "workstation_name",
+  "electricity_cost",
+  "consumable_cost",
+  "operation_time",
+  "rent_cost",
+  "wage",
+  "net_hour_rate"
+ ],
+ "fields": [
+  {
+   "fieldname": "workstation_name",
+   "fieldtype": "Link",
+   "label": "Workstation Name",
+   "options": "Workstation"
+  },
+  {
+   "fieldname": "electricity_cost",
+   "fieldtype": "Currency",
+   "label": "Electricity Cost"
+  },
+  {
+   "fieldname": "consumable_cost",
+   "fieldtype": "Currency",
+   "label": "Consumable Cost"
+  },
+  {
+   "fieldname": "operation_time",
+   "fieldtype": "Float",
+   "label": "Operation Time"
+  },
+  {
+   "fieldname": "rent_cost",
+   "fieldtype": "Currency",
+   "label": "Rent Cost"
+  },
+  {
+   "fieldname": "wage",
+   "fieldtype": "Currency",
+   "label": "Wage"
+  },
+  {
+   "fieldname": "net_hour_rate",
+   "fieldtype": "Currency",
+   "label": "Net Hour Rate"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-18 13:16:57.160042",
+ "modified_by": "Administrator",
+ "module": "Ringlus",
+ "name": "Workstation New",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
